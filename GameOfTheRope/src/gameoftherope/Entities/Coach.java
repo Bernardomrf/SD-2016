@@ -12,5 +12,5 @@ package gameoftherope.Entities;
 public class Coach {
     public Coach(){
     
-}
+    }
 }

@@ -11,6 +11,8 @@ package gameoftherope.Interfaces;
  */
 public interface IPlaygroundRef {
     public void callTrial();
+    public void waitForCoach(); // Esperar pelo inform referee dos dois treinadores
+    
     public void startTrial();
     public void assertTrialDecision();
 }

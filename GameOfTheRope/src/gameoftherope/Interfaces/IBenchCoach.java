@@ -10,6 +10,9 @@ package gameoftherope.Interfaces;
  * @author brunosilva
  */
 public interface IBenchCoach {
-    public void reviewNotes();
-    public void callContestants();
+    public void reviewNotes();  //Esperar que os jogadores se sentem
+    
+    public void callContestants(); //Chamar n jogadores aleatoriamente para a trial e chamar informReferee
+    
+    public void waitForRefCommand(); //Esperar que o árbitro faça callTrial
 }

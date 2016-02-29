@@ -11,5 +11,6 @@ package gameoftherope.Interfaces;
  */
 public interface IBenchPlayer {
     public void seatDown();
-    public void followCoachAdvice();
+    public void followCoachAdvice(); //
+    
 }

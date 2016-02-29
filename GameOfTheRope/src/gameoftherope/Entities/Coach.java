@@ -5,12 +5,15 @@
  */
 package gameoftherope.Entities;
 
+import gameoftherope.Interfaces.IBenchCoach;
+import gameoftherope.Interfaces.IPlaygroundCoach;
+
 /**
  *
  * @author brunosilva
  */
 public class Coach {
-    public Coach(){
-    
+    public Coach(IBenchCoach bench, IPlaygroundCoach playground){
+        
     }
 }

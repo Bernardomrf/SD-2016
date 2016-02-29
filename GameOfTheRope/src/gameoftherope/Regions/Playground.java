@@ -48,5 +48,10 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     public void assertTrialDecision() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void iamDone() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

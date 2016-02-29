@@ -12,4 +12,5 @@ package gameoftherope.Interfaces;
 public interface IPlaygroundPlayer {
     public void getReady();
     public void pullTheRope();
+    public void iamDone();
 }

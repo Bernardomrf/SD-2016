@@ -5,12 +5,15 @@
  */
 package gameoftherope.Entities;
 
+import gameoftherope.Interfaces.IBenchPlayer;
+import gameoftherope.Interfaces.IPlaygroundPlayer;
+
 /**
  *
  * @author brunosilva
  */
 public class Player {
-    public Player(){
+    public Player(IPlaygroundPlayer playground, IBenchPlayer bench){
         
     }
 }

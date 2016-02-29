@@ -13,7 +13,7 @@ import gameoftherope.Interfaces.IBenchPlayer;
  * @author brunosilva
  */
 public class Bench implements IBenchCoach, IBenchPlayer{
-    public Bench(){dsa
+    public Bench(){
         
     }
 

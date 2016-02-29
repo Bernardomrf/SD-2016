@@ -5,12 +5,15 @@
  */
 package gameoftherope.Entities;
 
+import gameoftherope.Interfaces.IPlaygroundRef;
+import gameoftherope.Interfaces.IRefSiteRef;
+
 /**
  *
  * @author brunosilva
  */
 public class Referee {
-    public Referee(){
+    public Referee(IRefSiteRef refSite, IPlaygroundRef playground){
         
     }
 }

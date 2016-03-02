@@ -11,9 +11,16 @@ import gameoftherope.Interfaces.IPlaygroundCoach;
 /**
  *
  * @author brunosilva
+ * @author bernardoferreira
  */
 public class Coach {
+    
+    private IBenchCoach bench;
+    private IPlaygroundCoach playground;
+
+    
     public Coach(IBenchCoach bench, IPlaygroundCoach playground){
-        
+        this.bench = bench;
+        this.playground = playground;
     }
 }

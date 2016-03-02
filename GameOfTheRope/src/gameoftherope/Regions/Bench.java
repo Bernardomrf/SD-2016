@@ -18,22 +18,22 @@ public class Bench implements IBenchCoach, IBenchPlayer{
     }
 
     @Override
-    public void reviewNotes() {
+    public synchronized void reviewNotes() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void callContestants() {
+    public synchronized void callContestants() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void seatDown() {
+    public synchronized void seatDown() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void followCoachAdvice() {
+    public synchronized void followCoachAdvice() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

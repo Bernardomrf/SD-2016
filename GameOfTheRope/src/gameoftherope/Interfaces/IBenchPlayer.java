@@ -10,7 +10,9 @@ package gameoftherope.Interfaces;
  * @author brunosilva
  */
 public interface IBenchPlayer {
-    public void seatDown();
-    public void followCoachAdvice(); //
+    public void seatAtTheBench(); // Fica bloqueado no banco
+    
+    public void followCoachAdvice(); // passa para o playgound; Jogadores no banco decrementa, jogadores para jogar aumenta
+                                    // Variavel independente para cada equipa
     
 }

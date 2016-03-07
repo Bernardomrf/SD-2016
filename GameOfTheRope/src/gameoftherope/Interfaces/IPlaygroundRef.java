@@ -24,6 +24,9 @@ public interface IPlaygroundRef {
                                         // Se for o ultimo trial mudar o estado para refSite
                                         // Se nao for o ultmo trial acorda treinador do watchTrial e voltar a chamar callTrial
     
+    public void setGameFinish(); // altera a variavel globar gamefinish
+    
+    
 }
 
 

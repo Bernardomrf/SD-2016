@@ -17,7 +17,7 @@ public interface IPlaygroundRef {
     public void startTrial(); // Dá inicio a trial
                                 // Reinicia variavel nCoachesReady
     
-    public void waitForTrialConclusion(); // bloqueia a espera que um jogador acabe (imDone)
+    public void waitForTrialConclusion(); // bloqueia a espera que o ultimo jogador acabe (imDone)
     
     public void assertTrialDecision(); // Ve se todos os jogadores ja jogaram (playersDone) se não volta a bloquear em waitForTrialConclusion
                                         // Se todos os jogadores já tiverem jogado da uma decisao do trial

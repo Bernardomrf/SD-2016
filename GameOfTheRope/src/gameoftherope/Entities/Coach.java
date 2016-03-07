@@ -13,6 +13,8 @@ import gameoftherope.Interfaces.IPlaygroundCoach;
  * @author brunosilva
  * @author bernardoferreira
  */
+
+// Maquina de estados com um switch-case
 public class Coach {
     
     private IBenchCoach bench;

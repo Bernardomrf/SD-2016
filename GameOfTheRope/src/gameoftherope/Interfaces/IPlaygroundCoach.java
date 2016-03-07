@@ -13,4 +13,6 @@ public interface IPlaygroundCoach {
     public void informReferee();
     
     public void waitForTrial(); // Esperar que o trial acabe 
+    
+    public boolean hasGameFinish();
 }

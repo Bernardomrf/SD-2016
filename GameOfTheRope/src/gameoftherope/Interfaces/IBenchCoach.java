@@ -15,4 +15,7 @@ public interface IBenchCoach {
     public void callContestants(String team); //Chamar n jogadores aleatoriamente para a trial e chamar informReferee
     
     public void waitForRefCommand(); //Esperar que o árbitro faça callTrial
+    
+    public boolean hasMatchFinished();
+
 }

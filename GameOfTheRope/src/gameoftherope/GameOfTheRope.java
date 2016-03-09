@@ -14,6 +14,7 @@ import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
+import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.Regions.Bench;
 import gameoftherope.Regions.Playground;
@@ -45,8 +46,8 @@ public class GameOfTheRope extends Thread {
         
         Coach [] coach =  new Coach [nCoaches];
         for(int i = 0; i<nCoaches; i++){
-            if(i<1) coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground,"A");
-            else coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground,"B");
+            if(i<1) coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground,(IRefSiteCoach) refSite ,"A");
+            else coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "B");
             coach[i].start();
         }
         
@@ -66,6 +67,7 @@ public class GameOfTheRope extends Thread {
             } catch (InterruptedException ex) {
                 //Escrever para o log
             }
+            System.err.println("Coach Morreu");
         }
         
         
@@ -76,13 +78,14 @@ public class GameOfTheRope extends Thread {
             } catch (InterruptedException ex) {
                 //Escrever para o log
             }
+            System.err.println("Player Morreu");
         }
         try {
             ref.join();
         } catch (InterruptedException ex) {
             //Escrever para o log
         }
-        
+        System.err.println("Ref Morreu");
         
     }
 

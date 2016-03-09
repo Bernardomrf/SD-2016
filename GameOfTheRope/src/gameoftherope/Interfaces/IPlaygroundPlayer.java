@@ -16,7 +16,5 @@ public interface IPlaygroundPlayer {
     
     public void iamDone(); // incrementa uma variavel de jogadores que já acabaram, ultimo faz notify ao arbitro
                             // Muda o estado para o bench
-    
-    public boolean hasGameFinish();
-
+ 
 }

@@ -9,8 +9,7 @@ package gameoftherope.Interfaces;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public interface IBenchRef {
-    public void signalCoaches(); //acorda os treinadores
+public interface IRefSiteCoach {
     
-    public void setMatchFinish();
+    public void informReferee();
 }

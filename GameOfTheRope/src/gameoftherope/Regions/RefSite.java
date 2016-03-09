@@ -5,29 +5,59 @@
  */
 package gameoftherope.Regions;
 
+import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
 
 /**
  *
  * @author brunosilva
  */
-public class RefSite implements IRefSiteRef{
+public class RefSite implements IRefSiteRef, IRefSiteCoach{
+    
+    private int aWins;
+    private int bWins;
+    private int coachesReady;
+    
     public RefSite(){
-        
+        this.aWins = 0;
+        this.bWins = 0;
+        coachesReady = 0;
     }
 
     @Override
-    public void announceNewGame() {
-        
+    public synchronized void announceNewGame() {
+        try {
+            Thread.sleep((int)(Math.random() * 4000 + 1000));
+        } catch (InterruptedException ex) {
+        }
     }
 
     @Override
-    public void declareGameWinner() {
-        
+    public synchronized void declareGameWinner() {
+        // Escreve no Log
+        System.err.println("Jogo Acabou");
     }
 
     @Override
-    public void declareMatchWinner() {
-        
+    public synchronized void declareMatchWinner() {
+        // Escreve no Log e da ordem de suicidio aos outros todos
+        System.err.println("Partida Acabou");
+    }
+
+    @Override
+    public synchronized void waitForCoach() {
+        while(coachesReady != 2){
+            try {
+                wait();
+            } catch (InterruptedException ex) {
+            }
+        }
+        coachesReady = 0;
+    }
+
+    @Override
+    public synchronized void informReferee() {
+        coachesReady++;
+        notifyAll();
     }
 }

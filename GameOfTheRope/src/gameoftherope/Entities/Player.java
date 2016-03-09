@@ -36,10 +36,14 @@ public class Player extends Thread{
     @Override
     public void run(){
         while(goOn){
-            goOn=!playground.hasGameFinish();
             switch(internalState){
                 case SEAT_AT_THE_BENCH:
+                    bench.seatDown(team);
                     bench.seatAtTheBench(team); // bloqueante - espera pelo coach
+                    if(bench.hasMatchFinished()){
+                        goOn = false;
+                        break;
+                    }
                     bench.followCoachAdvice(); // sai do banco(variaveis!!!!)
                     internalState= State.STAND_IN_POSITION;
                     break;
@@ -50,6 +54,7 @@ public class Player extends Thread{
                 case DO_YOUR_BEST:
                     playground.pullTheRope(strength, team); // puxa a corda(variaveis!!!!)
                     playground.iamDone(); //o sexto jogador a chamar faz notify ao arbitro
+                    
                     internalState= State.SEAT_AT_THE_BENCH;
                     break;
             }

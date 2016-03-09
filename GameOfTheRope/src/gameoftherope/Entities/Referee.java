@@ -52,7 +52,7 @@ public class Referee extends Thread{
                     internalState= State.TEAMS_READY;
                     break;
                 case TEAMS_READY:
-                    playground.waitForCoach();
+                    refSite.waitForCoach();
                     playground.startTrial();
                     internalState= State.WAIT_FOR_TRIAL_CONCLUSION;
                     break;
@@ -60,22 +60,28 @@ public class Referee extends Thread{
                     playground.waitForTrialConclusion();
                     playground.assertTrialDecision();
                     trialsDone ++;
+                    System.err.println("trial Done");
                     if (trialsDone == nTrials){
                         internalState= State.END_OF_A_GAME;
                     }
-                    internalState= State.TEAMS_READY;
+                    else{
+                        internalState= State.START_OF_A_GAME;
+                    }
                     break;
                 case END_OF_A_GAME:
+                    trialsDone = 0;
                     refSite.declareGameWinner();
                     gamesDone ++;
                     if (gamesDone == nGames){
                         internalState= State.END_OF_THE_MATCH;
                     }
-                    internalState= State.START_OF_A_GAME;
+                    else{
+                        internalState= State.START_OF_A_GAME;
+                    }
                     break;
                 case END_OF_THE_MATCH:
                     refSite.declareMatchWinner();
-                    playground.setGameFinish();
+                    bench.setMatchFinish();
                     goOn = false;
                     break;    
                     

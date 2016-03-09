@@ -15,16 +15,21 @@ import gameoftherope.Interfaces.IBenchRef;
  */
 public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     
-    private int nBenchPlayers;
     private int nBenchPlayersA;
     private int nBenchPlayersB;
     private int wakeCoaches;
+    private boolean matchFinish;
+    private int callPlayersA;
+    private int callPlayersB;
     
     public Bench(){
-        nBenchPlayers = 10;
-        nBenchPlayersA = 5;
-        nBenchPlayersB = 5;
+        nBenchPlayersA = 0;
+        nBenchPlayersB = 0;
         wakeCoaches = 0;
+        matchFinish = false;
+        callPlayersA = 0;
+        callPlayersB = 0;
+
     }
     
 
@@ -50,6 +55,12 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
 
     @Override
     public synchronized void callContestants(String team) {
+        if (team.equals("A")){
+            callPlayersA = 3;
+        }
+        else if (team.equals("B")){
+            callPlayersB = 3;
+        }
         notifyAll();
     }
 
@@ -63,6 +74,9 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         while(wakeCoaches == 0){
             try {
                 wait();
+                if (matchFinish){
+                    return;
+                }
             } catch (InterruptedException ex) {
             }
         }
@@ -74,9 +88,50 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         wakeCoaches = 2;
         notifyAll();
     }
+    
+    
 
     @Override
     public synchronized void seatAtTheBench(String team) {
+        if (team.equals("A")){
+            while(callPlayersA == 0){
+                try {
+                    wait();
+                    if (matchFinish){
+                        return;
+                    }
+                } catch (InterruptedException ex) {}
+            }
+            callPlayersA--;
+            nBenchPlayersA--;
+        }
+        else if (team.equals("B")){
+            while(callPlayersB == 0){
+                try {
+                    wait();
+                    if (matchFinish){
+                        return;
+                    }
+                } catch (InterruptedException ex) {}
+            }
+            callPlayersB--;
+            nBenchPlayersB--;
+        }
+    }
+
+    @Override
+    public synchronized boolean hasMatchFinished() {
+        return matchFinish;
+    }
+
+    @Override
+    public synchronized void setMatchFinish() {
+        matchFinish = true;
+        notifyAll();
+    }
+
+    @Override
+    public synchronized void seatDown(String team) {
         if (team.equals("A")){
             nBenchPlayersA++;
         }
@@ -84,30 +139,5 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
             nBenchPlayersB++;
         }
         notifyAll();
-        
-        if (team.equals("A")){
-            while(true){
-                try {
-                    wait();
-                } catch (InterruptedException ex) {
-                }
-                if (nBenchPlayersA > 2){
-                    nBenchPlayersA--;
-                    break;
-                }
-            }
-        }
-        else if (team.equals("B")){
-            while(true){
-                try {
-                    wait();
-                } catch (InterruptedException ex) {
-                }
-                if (nBenchPlayersB > 2){
-                    nBenchPlayersB--;
-                    break;
-                }
-            }
-        }
     }
 }

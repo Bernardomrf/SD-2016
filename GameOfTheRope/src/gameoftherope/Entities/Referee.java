@@ -5,6 +5,7 @@
  */
 package gameoftherope.Entities;
 
+import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
 
@@ -19,6 +20,7 @@ public class Referee extends Thread{
     }
     private final IRefSiteRef refSite;
     private final IPlaygroundRef playground;
+    private final IBenchRef bench;
     private boolean goOn = true;
     private State internalState;
     private int trialsDone;
@@ -27,9 +29,10 @@ public class Referee extends Thread{
     private final int nGames = 3;
     
     
-    public Referee(IRefSiteRef refSite, IPlaygroundRef playground){
+    public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench){
         this.refSite = refSite;
         this.playground = playground;
+        this.bench = bench;
         this.internalState = State.START_OF_THE_MATCH;
         this.trialsDone = 0;
         this.gamesDone = 0;
@@ -45,6 +48,7 @@ public class Referee extends Thread{
                     break;
                 case START_OF_A_GAME:
                     playground.callTrial();
+                    bench.signalCoaches();
                     internalState= State.TEAMS_READY;
                     break;
                 case TEAMS_READY:

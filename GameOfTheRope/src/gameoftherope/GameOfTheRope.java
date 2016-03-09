@@ -10,6 +10,7 @@ import gameoftherope.Entities.Player;
 import gameoftherope.Entities.Referee;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
+import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
@@ -39,7 +40,7 @@ public class GameOfTheRope extends Thread {
         RefSite refSite = new RefSite();
         
         
-        Referee ref =  new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground);
+        Referee ref =  new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench);
         ref.start();
         
         Coach [] coach =  new Coach [nCoaches];

@@ -35,7 +35,7 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     @Override
     public synchronized void declareGameWinner() {
         // Escreve no Log
-        System.err.println("Jogo Acabou");
+        System.err.print("Jogo Acabou ");
     }
 
     @Override

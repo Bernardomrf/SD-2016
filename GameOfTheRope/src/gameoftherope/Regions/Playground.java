@@ -24,6 +24,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private boolean trialFinished;
     private boolean wakeRef;
     private int playersReady;
+    private int coachesWaiting;
     
     public Playground(){
         this.rope = 0;
@@ -35,6 +36,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         this.trialFinished = false;
         this.wakeRef = false;
         this.playersReady = 0;
+        this.coachesWaiting = 2;
     }
 
     @Override
@@ -53,10 +55,18 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             Thread.sleep(500);
         } catch (InterruptedException ex) {
         }*/
+        while(coachesWaiting != 2){
+            try {
+                wait();
+            } catch (InterruptedException ex) {}
+        }
         rope = 0;
         playersDone = 0;
         trialFinished = false;
         startTrial = false;
+        aTrialWins = 0;
+        bTrialWins = 0;
+        coachesWaiting = 0;
     }
 
     @Override
@@ -95,13 +105,14 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
 
     @Override
     public synchronized void waitForTrial() {
-        int a = 0;
         while(!trialFinished){
             try {
                 wait();
             } catch (InterruptedException ex) {
             }
         }
+        coachesWaiting++;
+        notifyAll();
     }
 
     @Override

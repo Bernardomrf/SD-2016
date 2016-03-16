@@ -17,5 +17,6 @@ public interface IBenchCoach {
     public void waitForRefCommand(); //Esperar que o árbitro faça callTrial
     
     public boolean hasMatchFinished();
-
+    
+    public void playersReady(String team);
 }

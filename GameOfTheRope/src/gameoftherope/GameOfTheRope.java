@@ -42,19 +42,22 @@ public class GameOfTheRope extends Thread {
         
         
         Referee ref =  new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench);
+        ref.setName("Ref");
         ref.start();
         
         Coach [] coach =  new Coach [nCoaches];
         for(int i = 0; i<nCoaches; i++){
             if(i<1) coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground,(IRefSiteCoach) refSite ,"A");
             else coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "B");
+            coach[i].setName("Coach"+i);
             coach[i].start();
         }
         
         Player [] player = new Player[nPlayers];
         for(int i = 0; i<nPlayers; i++){
-            if(i<5) player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "A");
-            else player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "B");
+            if(i<5) player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "A", i);
+            else player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "B", i-5);
+            player[i].setName("Player"+i);
             player[i].start();
         }
         

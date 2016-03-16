@@ -48,6 +48,7 @@ public class Coach extends Thread{
                     break;
                 case ASSEMBLE_TEAM:
                     bench.callContestants(team); //nao bloqueante
+                    bench.playersReady(team); // bloqueia espera que os jogadores estejam todos no campo
                     refSite.informReferee(); //transiçao
                     internalState = State.WATCH_TRIAL;
                     break;

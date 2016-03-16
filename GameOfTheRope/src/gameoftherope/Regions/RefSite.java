@@ -26,22 +26,22 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
 
     @Override
     public synchronized void announceNewGame() {
-        try {
+        /*try {
             Thread.sleep((int)(Math.random() * 4000 + 1000));
         } catch (InterruptedException ex) {
-        }
+        }*/
     }
 
     @Override
     public synchronized void declareGameWinner() {
         // Escreve no Log
-        System.err.print("Jogo Acabou ");
+        //System.out.print("Jogo Acabou ");
     }
 
     @Override
     public synchronized void declareMatchWinner() {
         // Escreve no Log e da ordem de suicidio aos outros todos
-        System.err.println("Partida Acabou");
+        //System.out.println("Partida Acabou");
     }
 
     @Override

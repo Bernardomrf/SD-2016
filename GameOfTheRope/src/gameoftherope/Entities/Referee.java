@@ -26,7 +26,7 @@ public class Referee extends Thread{
     private int trialsDone;
     private int gamesDone;
     private final int nTrials = 6;
-    private final int nGames = 10000;
+    private final int nGames = 100000;
     
     
     public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench){
@@ -60,7 +60,7 @@ public class Referee extends Thread{
                     playground.waitForTrialConclusion();
                     playground.assertTrialDecision();
                     trialsDone ++;
-                    System.err.println("trial Done");
+                    //System.err.println("trial Done");
                     if (trialsDone == nTrials){
                         internalState= State.END_OF_A_GAME;
                     }
@@ -71,7 +71,7 @@ public class Referee extends Thread{
                 case END_OF_A_GAME:
                     trialsDone = 0;
                     refSite.declareGameWinner();
-                    System.err.println(gamesDone);
+                    //System.out.println(gamesDone);
                     gamesDone ++;
                     if (gamesDone == nGames){
                         internalState= State.END_OF_THE_MATCH;

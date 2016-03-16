@@ -12,7 +12,7 @@ package gameoftherope.Interfaces;
 public interface IBenchCoach {
     public void reviewNotes(String team);  //Esperar que os jogadores se sentem                      
     
-    public void callContestants(String team); //Chamar n jogadores aleatoriamente para a trial e chamar informReferee
+    public void callContestants(String team, int elements[]); //Chamar n jogadores aleatoriamente para a trial e chamar informReferee
     
     public void waitForRefCommand(); //Esperar que o árbitro faça callTrial
     

@@ -26,16 +26,16 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
 
     @Override
     public synchronized void announceNewGame() {
-        try {
-            Thread.sleep((int)(Math.random() * 4000 + 1000));
-        } catch (InterruptedException ex) {
-        }
+        //try {
+            //Thread.sleep((int)(Math.random() * 4000 + 1000));
+        //} catch (InterruptedException ex) {
+        //}
     }
 
     @Override
     public synchronized void declareGameWinner() {
         // Escreve no Log
-        System.err.print("Jogo Acabou ");
+        //System.err.print("Jogo Acabou ");
     }
 
     @Override

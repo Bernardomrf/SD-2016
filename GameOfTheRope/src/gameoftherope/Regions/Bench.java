@@ -19,17 +19,22 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     private int nBenchPlayersB;
     private int wakeCoaches;
     private boolean matchFinish;
-    private int callPlayersA;
-    private int callPlayersB;
+    private boolean callPlayersA;
+    private boolean callPlayersB;
+    private int ncallPlayersA;
+    private int ncallPlayersB;
+    private int [] teamAPlayers;
+    private int [] teamBPlayers;
     
     public Bench(){
         nBenchPlayersA = 0;
         nBenchPlayersB = 0;
         wakeCoaches = 0;
         matchFinish = false;
-        callPlayersA = 0;
-        callPlayersB = 0;
-
+        callPlayersA = false;
+        callPlayersB = false;
+        ncallPlayersA = 0;
+        ncallPlayersB = 0;
     }
     
 
@@ -54,19 +59,22 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     @Override
-    public synchronized void callContestants(String team) {
+    public synchronized void callContestants(String team, int elements[]) {
         if (team.equals("A")){
-            callPlayersA = 3;
+            callPlayersA = true;
+            ncallPlayersA = 3;
+            teamAPlayers = elements;
         }
         else if (team.equals("B")){
-            callPlayersB = 3;
+            callPlayersB = true;
+            ncallPlayersB = 3;
+            teamBPlayers = elements;
         }
         notifyAll();
     }
 
     @Override
     public synchronized void followCoachAdvice() {
-        // Empty for now
     }
 
     @Override
@@ -92,29 +100,47 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     
 
     @Override
-    public synchronized void seatAtTheBench(String team) {
+    public synchronized void seatAtTheBench(String team, int id) {
         if (team.equals("A")){
-            while(callPlayersA == 0){
+            while(!callPlayersA){
                 try {
                     wait();
                     if (matchFinish){
                         return;
                     }
+                    if (ncallPlayersA != 0){
+                        for (int i = 0; i < teamAPlayers.length; i++) {
+                            if (teamAPlayers[i] == id) {
+                                ncallPlayersA--;
+                                nBenchPlayersA--;
+                                return;
+                            }
+                        }
+                    }
+                    callPlayersA = false;                    
                 } catch (InterruptedException ex) {}
             }
-            callPlayersA--;
             nBenchPlayersA--;
         }
         else if (team.equals("B")){
-            while(callPlayersB == 0){
+            while(!callPlayersB){
                 try {
                     wait();
                     if (matchFinish){
                         return;
                     }
+                    if (ncallPlayersB != 0){
+                        for (int i = 0; i < teamBPlayers.length; i++) {
+                            if (teamBPlayers[i] == id) {
+                                ncallPlayersB--;
+                                nBenchPlayersB--;
+                                return;
+                            }
+                        }
+                    }
+                    callPlayersB = false;                    
                 } catch (InterruptedException ex) {}
             }
-            callPlayersB--;
             nBenchPlayersB--;
         }
     }
@@ -140,4 +166,6 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         }
         notifyAll();
     }
+    
+    
 }

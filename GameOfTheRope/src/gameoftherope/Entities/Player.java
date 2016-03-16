@@ -24,13 +24,15 @@ public class Player extends Thread{
     private State internalState;
     private final String team;
     private final int strength;
+    private final int id;
         
-    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team){
+    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id){
         this.team = team;
         this.bench = bench;
         this.playground = playground;
         this.internalState = State.SEAT_AT_THE_BENCH;
         this.strength = (int) (Math.random() * maxStrength + 1);
+        this.id = id;
     }
     
     @Override
@@ -39,12 +41,11 @@ public class Player extends Thread{
             switch(internalState){
                 case SEAT_AT_THE_BENCH:
                     bench.seatDown(team);
-                    bench.seatAtTheBench(team); // bloqueante - espera pelo coach
+                    bench.seatAtTheBench(team, id); // bloqueante - espera pelo coach
                     if(bench.hasMatchFinished()){
                         goOn = false;
                         break;
                     }
-                    bench.followCoachAdvice(); // sai do banco(variaveis!!!!)
                     internalState= State.STAND_IN_POSITION;
                     break;
                 case STAND_IN_POSITION:

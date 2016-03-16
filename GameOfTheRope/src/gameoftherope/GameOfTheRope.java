@@ -53,8 +53,8 @@ public class GameOfTheRope extends Thread {
         
         Player [] player = new Player[nPlayers];
         for(int i = 0; i<nPlayers; i++){
-            if(i<5) player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "A");
-            else player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "B");
+            if(i<5) player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "A", i);
+            else player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "B", i-5);
             player[i].start();
         }
         

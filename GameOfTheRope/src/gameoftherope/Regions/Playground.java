@@ -111,8 +111,6 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             } catch (InterruptedException ex) {
             }
         }
-        coachesWaiting++;
-        notifyAll();
     }
 
     @Override
@@ -136,5 +134,11 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             }
         }
         wakeRef = false;
+    }
+
+    @Override
+    public synchronized void informReferee() {
+        coachesWaiting++;
+        notifyAll();
     }
 }

@@ -26,7 +26,7 @@ public class Referee extends Thread{
     private int trialsDone;
     private int gamesDone;
     private final int nTrials = 6;
-    private final int nGames = 10000;
+    private final int nGames = 10;
     
     
     public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench){

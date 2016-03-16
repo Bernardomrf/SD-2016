@@ -48,6 +48,15 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             rope -= strenght;
         }
     }
+    
+    @Override
+    public synchronized void waitInitialState(){
+        while(coachesWaiting != 2){
+            try {
+                wait();
+            } catch (InterruptedException ex) {}
+        }
+    }
 
     @Override
     public synchronized void callTrial() {
@@ -55,11 +64,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             Thread.sleep(500);
         } catch (InterruptedException ex) {
         }*/
-        while(coachesWaiting != 2){
-            try {
-                wait();
-            } catch (InterruptedException ex) {}
-        }
+        
         rope = 0;
         playersDone = 0;
         trialFinished = false;

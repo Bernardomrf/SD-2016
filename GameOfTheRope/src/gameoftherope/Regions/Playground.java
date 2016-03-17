@@ -96,7 +96,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             aTrialWins++;
         }
         else if (rope < 0){
-            if(rope >= 4){
+            if(rope <= 4){
                 knockOutB = true;
             }
             bTrialWins++;

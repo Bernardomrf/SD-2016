@@ -10,7 +10,7 @@ package gameoftherope.Interfaces;
  * @author brunosilva
  */
 public interface IBenchPlayer {
-    public void seatAtTheBench(String team, int id); // Fica bloqueado no banco
+    public boolean seatAtTheBench(String team, int id); // Fica bloqueado no banco
     
     public void seatDown(String team);
     

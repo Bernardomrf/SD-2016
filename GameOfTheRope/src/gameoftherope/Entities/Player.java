@@ -13,6 +13,7 @@ import gameoftherope.Interfaces.IPlaygroundPlayer;
  * @author brunosilva
  */
 public class Player extends Thread{
+
     private enum State { 
         SEAT_AT_THE_BENCH, STAND_IN_POSITION, DO_YOUR_BEST
     }
@@ -23,8 +24,10 @@ public class Player extends Thread{
     private boolean goOn = true;
     private State internalState;
     private final String team;
-    private final int strength;
+    private int strength;
     private final int id;
+    private boolean iWillPlay;
+    
         
     public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id){
         this.team = team;
@@ -33,6 +36,7 @@ public class Player extends Thread{
         this.internalState = State.SEAT_AT_THE_BENCH;
         this.strength = (int) (Math.random() * maxStrength + 1);
         this.id = id;
+        this.iWillPlay = false;
     }
     
     @Override
@@ -41,9 +45,15 @@ public class Player extends Thread{
             switch(internalState){
                 case SEAT_AT_THE_BENCH:
                     bench.seatDown(team);
-                    bench.seatAtTheBench(team, id); // bloqueante - espera pelo coach
+                    iWillPlay = bench.seatAtTheBench(team, id); // bloqueante - espera pelo coach
                     if(bench.hasMatchFinished()){
                         goOn = false;
+                        break;
+                    }
+                    if (!iWillPlay){
+                        if(strength < 5){
+                            strength++;
+                        }
                         break;
                     }
                     bench.followCoachAdvice(team); // sai do banco(variaveis!!!!)
@@ -56,7 +66,9 @@ public class Player extends Thread{
                 case DO_YOUR_BEST:
                     playground.pullTheRope(strength, team); // puxa a corda(variaveis!!!!)
                     playground.iamDone(); //o sexto jogador a chamar faz notify ao arbitro
-                    
+                    if(strength > 0){
+                        strength--;
+                    }
                     internalState= State.SEAT_AT_THE_BENCH;
                     break;
             }

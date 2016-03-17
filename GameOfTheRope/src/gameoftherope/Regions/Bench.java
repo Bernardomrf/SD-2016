@@ -110,47 +110,46 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     
 
     @Override
-    public synchronized void seatAtTheBench(String team, int id) {
+    public synchronized boolean seatAtTheBench(String team, int id) {
         if (team.equals("A")){
             while(callPlayersA == 0){
                 try {
                     wait();
                     if (matchFinish){
-                        return;
+                        return false;
                     }
                 } catch (InterruptedException ex) {}
                 if(!contains(playersToPlayA, id)){
-                    try {
-                        wait();
-                        if (matchFinish){
-                            return;
-                        }
-                    } catch (InterruptedException ex) {}
+                    if (callPlayersA != 0){
+                        nBenchPlayersA--;
+                        return false;
+                    }
                 }
             }
             callPlayersA--;
             nBenchPlayersA--;
+            return true;
         }
         else if (team.equals("B")){
             while(callPlayersB == 0){
                 try {
                     wait();
                     if (matchFinish){
-                        return;
+                        return false;
                     }
                 } catch (InterruptedException ex) {}
                 if(!contains(playersToPlayB, id)){
-                    try {
-                        wait();
-                        if (matchFinish){
-                            return;
-                        }
-                    } catch (InterruptedException ex) {}
+                    if (callPlayersB != 0){
+                        nBenchPlayersB--;
+                        return false;
+                    }
                 }
             }
             callPlayersB--;
             nBenchPlayersB--;
+            return true;
         }
+        return false;
     }
 
     @Override

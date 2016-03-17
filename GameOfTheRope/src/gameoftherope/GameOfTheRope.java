@@ -17,8 +17,10 @@ import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.Regions.Bench;
+import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.Regions.Playground;
 import gameoftherope.Regions.RefSite;
+import java.io.FileNotFoundException;
 
 
 /**
@@ -30,7 +32,7 @@ public class GameOfTheRope extends Thread {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         
         
         int nCoaches = 2;
@@ -39,7 +41,9 @@ public class GameOfTheRope extends Thread {
         Bench bench = new Bench();
         Playground playground = new Playground();
         RefSite refSite = new RefSite();
+        GeneralRepository repo = new GeneralRepository();
         
+        repo.printHeader();
         
         Referee ref =  new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench);
         ref.setName("Ref");

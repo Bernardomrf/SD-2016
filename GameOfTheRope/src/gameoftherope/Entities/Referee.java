@@ -60,11 +60,13 @@ public class Referee extends Thread{
                     break;
                 case WAIT_FOR_TRIAL_CONCLUSION:
                     playground.waitForTrialConclusion();
+                    System.out.println("Novo Trial");
                     playground.assertTrialDecision();
                     trialsDone ++;
                     knockOut = playground.checkKnockout();
-                    System.err.println("trial Done");
+                    //System.err.println("trial Done");
                     if (trialsDone == nTrials || !knockOut.equals("X")){
+                        System.out.println("Knockout " + knockOut);
                         internalState= State.END_OF_A_GAME;
                     }
                     else{
@@ -73,6 +75,7 @@ public class Referee extends Thread{
                     break;
                 case END_OF_A_GAME:
                     trialsDone = 0;
+    
                     refSite.declareGameWinner(knockOut);
                     System.out.println(gamesDone);
                     gamesDone ++;

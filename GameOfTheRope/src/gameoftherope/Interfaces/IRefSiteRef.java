@@ -16,7 +16,7 @@ public interface IRefSiteRef {
     public void announceNewGame(); // espera tempo aleatorio para começar um jogo novo
                                     // Muda o estado para o playground
     
-    public void declareGameWinner(); // espera que o estado mude para refSite
+    public void declareGameWinner(String knockOut); // espera que o estado mude para refSite
                                         // ver se é o ultimo jogo atraves da variavel aWins, bWins
                                         // Se for o ultimo jogo chamar declareMatchWinner
                                         // Se nao for o ultimo jogo chamar announceNewGame

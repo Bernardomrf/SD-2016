@@ -33,9 +33,15 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     }
 
     @Override
-    public synchronized void declareGameWinner() {
+    public synchronized void declareGameWinner(String knockOut) {
         // Escreve no Log
         //System.out.print("Jogo Acabou ");
+        if(knockOut.equals("A")){
+            System.out.println("KnockOut A");
+        }
+        if(knockOut.equals("B")){
+            System.out.println("KnockOut B");
+        }
     }
 
     @Override

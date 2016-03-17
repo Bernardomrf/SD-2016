@@ -8,6 +8,7 @@ package gameoftherope.Regions;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
+import java.util.Random;
 
 /**
  *
@@ -65,16 +66,12 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     public synchronized void callContestants(String team) {
         if (team.equals("A")){
             callPlayersA = 3;
-            playersToPlayA[0] = 4;
-            playersToPlayA[1] = 3;
-            playersToPlayA[2] = 2;
+            playersToPlayA = generateRandom(5);
 
         }
         else if (team.equals("B")){
             callPlayersB = 3;
-            playersToPlayB[0] = 4;
-            playersToPlayB[1] = 3;
-            playersToPlayB[2] = 2;
+            playersToPlayB = generateRandom(5);
         }
         notifyAll();
     }
@@ -204,5 +201,19 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
                 return true;
         }
         return false;
+    }
+    
+    private int [] generateRandom(int maxValue){
+        int i = 0;
+        int tmp;
+        int [] array = new int[3];
+        while(i != 3){
+            tmp = new Random().nextInt(maxValue);
+            if (!contains(array, tmp)){
+                array[i] = tmp;
+                i++;
+            }
+        }
+        return array;
     }
 }

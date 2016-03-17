@@ -25,6 +25,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private boolean wakeRef;
     private int playersReady;
     private int coachesWaiting;
+    private boolean knockOutA;
+    private boolean knockOutB;
     
     public Playground(){
         this.rope = 0;
@@ -37,6 +39,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         this.wakeRef = false;
         this.playersReady = 0;
         this.coachesWaiting = 2;
+        this.knockOutA = false;
+        this.knockOutB = false;
     }
 
     @Override
@@ -67,6 +71,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         aTrialWins = 0;
         bTrialWins = 0;
         coachesWaiting = 0;
+        knockOutA = false;
+        knockOutB = false;
     }
 
     @Override
@@ -84,9 +90,15 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     @Override
     public synchronized void assertTrialDecision() {
         if (rope > 0){
+            if(rope >= 4){
+                knockOutA = true;
+            }
             aTrialWins++;
         }
         else if (rope < 0){
+            if(rope >= 4){
+                knockOutB = true;
+            }
             bTrialWins++;
         }
         
@@ -137,4 +149,15 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         }
         wakeRef = false;
     }
+
+    @Override
+    public synchronized String checkKnockout() {
+        if (knockOutA){
+            return "A";
+        }
+        else if (knockOutB){
+            return "B";
+        }
+        return "X";
+        }
 }

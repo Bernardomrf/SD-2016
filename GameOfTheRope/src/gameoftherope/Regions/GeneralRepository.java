@@ -5,6 +5,9 @@
  */
 package gameoftherope.Regions;
 
+import gameoftherope.coachState;
+import gameoftherope.playerState;
+import gameoftherope.refState;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -17,12 +20,13 @@ import java.util.Date;
  * @author brunosilva
  */
 public class GeneralRepository {
+    
     private int [] playersStrengthA;
     private int [] playersStrengthB;
-    private int [] playersStatesA;
-    private int [] playersStatesB;
-    private int [] coachesStates;
-    private int refState;
+    private playerState [] playersStatesA;
+    private playerState [] playersStatesB;
+    private coachState [] coachesStates;
+    private refState refereeState;
     private int [] trialPosA;
     private int [] trialPosB;
     private int trialN;
@@ -30,7 +34,7 @@ public class GeneralRepository {
     private int games;
     private int gamesA;
     private int gamesB;
-    
+
     private final File log;
     private String filename;
     private static PrintWriter pw;
@@ -38,10 +42,10 @@ public class GeneralRepository {
     public GeneralRepository() throws FileNotFoundException{
         playersStrengthA = new int[5];
         playersStrengthB = new int[5];
-        playersStatesA = new int[5];
-        playersStatesB = new int[5];
-        coachesStates = new int[2];
-        refState = 0;
+        playersStatesA = new playerState[5];
+        playersStatesB = new playerState[5];
+        coachesStates = new coachState[2];
+        refereeState = null;
         trialPosA = new int[3];
         trialPosB = new int[3];
         trialN = 0;
@@ -64,7 +68,94 @@ public class GeneralRepository {
     public synchronized void printHeader(){
             pw.println("Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5       Trial");
             pw.println("Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS");
-            pw.flush();
+    }
+    
+    public synchronized void changeRefState(refState state){
+        refereeState = state;
+        printLine();
+    }
+    
+    public synchronized void changePlayerState(playerState state, int id, String team){
+        if (team.equals("A")){
+            if (state == playersStatesA[id]) {
+                return;
+            }
+            playersStatesA[id] = state;
+        }
+        else if (team.equals("B")){
+            if (state == playersStatesB[id]) {
+                return;
+            }
+            playersStatesB[id] = state;
+        }
         
+        printLine();
+    }
+    
+    public synchronized void changeCoachState(coachState state, String team){
+        if (team.equals("A")){
+            if (state == coachesStates[0]) {
+                return;
+            }
+            coachesStates[0] = state;
+        }
+        else if (team.equals("B")){
+            if (state == coachesStates[1]) {
+                return;
+            }
+            coachesStates[1] = state;
+        }
+        
+        printLine();
+    }
+    
+    public synchronized void initPlayer(playerState state, int strength, int id, String team){
+        if (team.equals("A")){
+            playersStatesA[id] = state;
+            playersStrengthA[id] = strength;
+        }
+        else if (team.equals("B")){
+            playersStatesB[id] = state;
+            playersStrengthB[id] = strength;
+        }
+    }
+    
+    public synchronized void initCoach(coachState state, String team){
+        if (team.equals("A")){
+            coachesStates[0] = state;
+        }
+        else if (team.equals("B")){
+            coachesStates[1] = state;
+        }        
+    }
+    
+    public synchronized void initRef(refState state){
+        refereeState = state;
+    }
+    
+    public void printLine(){
+        pw.print(refereeState);
+        pw.print("  ");
+        pw.print(coachesStates[0]);
+        pw.print(" ");
+        for(int i = 0; i < playersStatesA.length; i++){
+            pw.print(playersStatesA[i]);
+            pw.print("  ");
+            pw.print(playersStrengthA[i]);
+            pw.print(" ");
+        }
+        pw.print(" ");
+        pw.print(coachesStates[1]);
+        pw.print(" ");
+        for(int i = 0; i < playersStatesB.length; i++){
+            pw.print(playersStatesB[i]);
+            pw.print("  ");
+            pw.print(playersStrengthB[i]);
+            pw.print(" ");
+        }
+        pw.println("- - - . - - - -- --");
+                    
+        pw.flush();
+
     }
 }

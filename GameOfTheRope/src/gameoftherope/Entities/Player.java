@@ -7,6 +7,8 @@ package gameoftherope.Entities;
 
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
+import gameoftherope.Regions.GeneralRepository;
+import gameoftherope.playerState;
 
 /**
  *
@@ -14,29 +16,30 @@ import gameoftherope.Interfaces.IPlaygroundPlayer;
  */
 public class Player extends Thread{
 
-    private enum State { 
-        SEAT_AT_THE_BENCH, STAND_IN_POSITION, DO_YOUR_BEST
-    }
+    
     private static final int maxStrength = 4;
     
     private final IBenchPlayer bench;
     private final IPlaygroundPlayer playground;
+    private final GeneralRepository repo;
     private boolean goOn = true;
-    private State internalState;
+    private playerState internalState;
     private final String team;
     private int strength;
     private final int id;
     private boolean iWillPlay;
     
         
-    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id){
+    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo){
         this.team = team;
         this.bench = bench;
         this.playground = playground;
-        this.internalState = State.SEAT_AT_THE_BENCH;
+        this.internalState = playerState.SEAT_AT_THE_BENCH;
         this.strength = (int) (Math.random() * maxStrength + 1);
         this.id = id;
         this.iWillPlay = false;
+        this.repo = repo;
+        repo.initPlayer(internalState, strength, id, team);
     }
     
     @Override
@@ -44,6 +47,7 @@ public class Player extends Thread{
         while(goOn){
             switch(internalState){
                 case SEAT_AT_THE_BENCH:
+                    
                     bench.seatDown(team);
                     iWillPlay = bench.seatAtTheBench(team, id); // bloqueante - espera pelo coach
                     if(bench.hasMatchFinished()){
@@ -57,11 +61,11 @@ public class Player extends Thread{
                         break;
                     }
                     bench.followCoachAdvice(team); // sai do banco(variaveis!!!!)
-                    internalState= State.STAND_IN_POSITION;
+                    internalState= playerState.STAND_IN_POSITION;
                     break;
                 case STAND_IN_POSITION:
                     playground.standInPosition(); // bloqueante - espera pelo arbitro
-                    internalState= State.DO_YOUR_BEST;
+                    internalState= playerState.DO_YOUR_BEST;
                     break;
                 case DO_YOUR_BEST:
                     playground.pullTheRope(strength, team); // puxa a corda(variaveis!!!!)
@@ -69,7 +73,7 @@ public class Player extends Thread{
                     if(strength > 0){
                         strength--;
                     }
-                    internalState= State.SEAT_AT_THE_BENCH;
+                    internalState= playerState.SEAT_AT_THE_BENCH;
                     break;
             }
         }

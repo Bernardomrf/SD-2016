@@ -8,6 +8,8 @@ package gameoftherope.Entities;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
+import gameoftherope.Regions.GeneralRepository;
+import gameoftherope.coachState;
 
 /**
  *
@@ -16,22 +18,23 @@ import gameoftherope.Interfaces.IRefSiteCoach;
  */
 public class Coach extends Thread{
     
-    private enum State { 
-        WAIT_REFEREE_COMMAND, ASSEMBLE_TEAM, WATCH_TRIAL
-    }
+    
     private final IBenchCoach bench;
     private final IPlaygroundCoach playground;
     private final IRefSiteCoach refSite;
+    private final GeneralRepository repo;
     private boolean goOn = true;
-    private State internalState;
+    private coachState internalState;
     private final String team;
     
-    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team){
+    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, GeneralRepository repo){
         this.bench = bench;
         this.playground = playground;
-        this.internalState = State.WAIT_REFEREE_COMMAND;
+        this.internalState = coachState.WAIT_REFEREE_COMMAND;
         this.refSite = refSite;
         this.team = team;
+        this.repo = repo;
+        repo.initCoach(internalState, team);
     }
     
     @Override
@@ -44,18 +47,18 @@ public class Coach extends Thread{
                         goOn = false;
                         break;
                     }
-                    internalState = State.ASSEMBLE_TEAM;
+                    internalState = coachState.ASSEMBLE_TEAM;
                     break;
                 case ASSEMBLE_TEAM:
                     bench.callContestants(team); //nao bloqueante
                     bench.playersReady(team); // bloqueia espera que os jogadores estejam todos no campo
                     refSite.informReferee(); //transiçao
-                    internalState = State.WATCH_TRIAL;
+                    internalState = coachState.WATCH_TRIAL;
                     break;
                 case WATCH_TRIAL:
                     playground.waitForTrial(); //bloqueante - espera pelo arbitro
                     bench.reviewNotes(team); //bloqueante - espera pelos jogadors
-                    internalState = State.WAIT_REFEREE_COMMAND;
+                    internalState = coachState.WAIT_REFEREE_COMMAND;
                     break;
             }
         }

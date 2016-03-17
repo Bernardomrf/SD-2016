@@ -45,28 +45,28 @@ public class GameOfTheRope extends Thread {
         
         repo.printHeader();
         
-        Referee ref =  new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench);
+        Referee ref =  new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, repo);
         ref.setName("Ref");
-        ref.start();
+        //ref.start();
         
         Coach [] coach =  new Coach [nCoaches];
         for(int i = 0; i<nCoaches; i++){
-            if(i<1) coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground,(IRefSiteCoach) refSite ,"A");
-            else coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "B");
+            if(i<1) coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground,(IRefSiteCoach) refSite ,"A", repo);
+            else coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "B", repo);
             coach[i].setName("Coach"+i);
             coach[i].start();
         }
         
         Player [] player = new Player[nPlayers];
         for(int i = 0; i<nPlayers; i++){
-            if(i<5) player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "A", i);
-            else player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "B", i-5);
+            if(i<5) player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "A", i, repo);
+            else player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "B", i-5, repo);
             player[i].setName("Player"+i);
             player[i].start();
         }
         
         
-        
+        ref.start();
         
         for(int i = 0; i<nCoaches; i++){
             try {

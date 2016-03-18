@@ -9,6 +9,8 @@ import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,6 +28,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     private int [] playersToPlayB;
     private int playersReadyA;
     private int playersReadyB;
+    private int coachesWaiting;
 
     
     public Bench(){
@@ -39,6 +42,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         playersToPlayB = new int[3];
         playersReadyA = 0;
         playersReadyB = 0;
+        coachesWaiting = 0;
     }
     
 
@@ -89,6 +93,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
 
     @Override
     public synchronized void waitForRefCommand() {
+        coachesWaiting++;
+        notifyAll();
         while(wakeCoaches == 0){
             try {
                 wait();
@@ -99,6 +105,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
             }
         }
         wakeCoaches--;
+        coachesWaiting--;
     }
     
     @Override
@@ -160,6 +167,11 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     @Override
     public synchronized void setMatchFinish() {
         matchFinish = true;
+        while(coachesWaiting != 2){
+            try {
+                wait();
+            } catch (InterruptedException ex) {}
+        }
         notifyAll();
     }
 
@@ -180,6 +192,9 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
             while (playersReadyA != 3) {            
                 try {
                     wait();
+                    if (matchFinish){
+                        return;
+                    }
                 } catch (InterruptedException ex) {}
             }
             playersReadyA = 0;
@@ -188,6 +203,9 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
             while (playersReadyB != 3) {            
                 try {
                     wait();
+                    if (matchFinish){
+                        return;
+                    }
                 } catch (InterruptedException ex) {}
             }
             playersReadyB = 0;

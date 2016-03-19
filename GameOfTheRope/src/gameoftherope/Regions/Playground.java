@@ -51,6 +51,11 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         else if(team.equals("B")){
             rope -= strenght;
         }
+        // Uncomment to create sleep during pulling the rope
+        /*try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+        }*/
     }
 
     @Override

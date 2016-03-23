@@ -34,7 +34,9 @@ public class GeneralRepository {
     private int games;
     private int gamesA;
     private int gamesB;
-
+    private int inPositionA;
+    private int inPositionB;
+    
     private final File log;
     private String filename;
     private static PrintWriter pw;
@@ -53,6 +55,8 @@ public class GeneralRepository {
         games = 0;
         gamesA = 0;
         gamesB = 0;
+        inPositionA = 0;
+        inPositionB = 0;
         
         
         Date today = Calendar.getInstance().getTime();
@@ -75,17 +79,19 @@ public class GeneralRepository {
         printLine();
     }
     
-    public synchronized void changePlayerState(playerState state, int id, String team){
+    public synchronized void changePlayerState(playerState state, int id, String team, int strength){
         if (team.equals("A")){
             if (state == playersStatesA[id]) {
                 return;
             }
+            playersStrengthA[id] = strength;
             playersStatesA[id] = state;
         }
         else if (team.equals("B")){
             if (state == playersStatesB[id]) {
                 return;
             }
+            playersStrengthB[id] = strength;
             playersStatesB[id] = state;
         }
         
@@ -153,9 +159,63 @@ public class GeneralRepository {
             pw.print(playersStrengthB[i]);
             pw.print(" ");
         }
-        pw.println("- - - . - - - -- --");
-                    
+        for(int i = 0; i<playersStatesA.length;i++){
+            
+            if(playersStatesA[i].equals(playerState.STAND_IN_POSITION) || playersStatesA[i].equals(playerState.DO_YOUR_BEST)){
+                inPositionA++;
+                pw.print((i+1) + " ");
+            }
+        }
+        if(inPositionA != 3){
+            for (int i = inPositionA; i<3;i++){
+                pw.print("- ");
+            }
+        }
+        pw.print(". ");
+
+        for(int i = 0; i<playersStatesB.length;i++){
+            
+            if(playersStatesB[i].equals(playerState.STAND_IN_POSITION) || playersStatesB[i].equals(playerState.DO_YOUR_BEST)){
+                inPositionB++;
+                pw.print((i+1) + " ");
+            }
+        }
+        if(inPositionB != 3){
+            for (int i = inPositionB; i<3;i++){
+                pw.print("- ");
+            }
+        }
+        inPositionA = 0;
+        inPositionB = 0;
+        pw.print(" " + trialN);
+        pw.println();
         pw.flush();
 
     }
+    
+    public synchronized void setPlayersPositions(int[] pos, String team){
+        if (team.equals("A")){
+            System.arraycopy(pos, 0, trialPosA, 0, trialPosA.length);  
+        }
+        else if (team.equals("B")){
+            System.arraycopy(pos, 0, trialPosB, 0, trialPosB.length);
+        }
+    }
+    private boolean contains(int [] array, int value){
+        for(int i = 0; i < array.length; i++){
+            if (array[i] == value)
+                return true;
+        }
+        return false;
+    }
+    
+    public synchronized void newGame(int nGame){
+        pw.println("Game "+ nGame);
+        pw.flush();
+        printHeader();
+    }
+    public synchronized void newTrial(int nTrial){
+        trialN = nTrial;
+    }
+    
 }

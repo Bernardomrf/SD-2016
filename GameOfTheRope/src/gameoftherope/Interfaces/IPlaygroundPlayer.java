@@ -10,7 +10,7 @@ package gameoftherope.Interfaces;
  * @author brunosilva
  */
 public interface IPlaygroundPlayer {
-    public void standInPosition(); // Esperar pelo startTrial que espera pelo coach
+    public int standInPosition(); // Esperar pelo startTrial que espera pelo coach
     
     public void pullTheRope(int strenght, String team); // altera uma variavel partilhada incrementando/decrementando dependendo da equipa
     

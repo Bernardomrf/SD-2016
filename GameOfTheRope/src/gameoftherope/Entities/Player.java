@@ -28,6 +28,8 @@ public class Player extends Thread{
     private int strength;
     private final int id;
     private boolean iWillPlay;
+    private int nTrials;
+    private int nPlayerTrials;
     
         
     public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo){
@@ -39,6 +41,7 @@ public class Player extends Thread{
         this.id = id;
         this.iWillPlay = false;
         this.repo = repo;
+        this.nPlayerTrials = 0;
         repo.initPlayer(internalState, strength, id, team);
     }
     
@@ -54,26 +57,40 @@ public class Player extends Thread{
                         goOn = false;
                         break;
                     }
+                    
                     if (!iWillPlay){
-                        if(strength < 5){
+                        /*if(strength < 5){
                             strength++;
-                        }
+                        }*/
                         break;
                     }
-                    bench.followCoachAdvice(team); // sai do banco(variaveis!!!!)
+                    bench.followCoachAdvice(team);
+                    // sai do banco(variaveis!!!!)
                     internalState= playerState.STAND_IN_POSITION;
+                    repo.changePlayerState(internalState, id, team, strength);
                     break;
                 case STAND_IN_POSITION:
-                    playground.standInPosition(); // bloqueante - espera pelo arbitro
+                    nTrials = playground.standInPosition();
+                    if(nPlayerTrials<nTrials){
+                        strength+=nTrials-nPlayerTrials-1;
+                        if(strength>5){
+                            strength = 5;
+                        }
+                        nPlayerTrials = nTrials;
+                    }
+                    // bloqueante - espera pelo arbitro
                     internalState= playerState.DO_YOUR_BEST;
+                    repo.changePlayerState(internalState, id, team, strength);
                     break;
                 case DO_YOUR_BEST:
                     playground.pullTheRope(strength, team); // puxa a corda(variaveis!!!!)
+                    repo.changePlayerState(internalState, id, team, strength);
                     playground.iamDone(); //o sexto jogador a chamar faz notify ao arbitro
                     if(strength > 0){
                         strength--;
                     }
                     internalState= playerState.SEAT_AT_THE_BENCH;
+                    repo.changePlayerState(internalState, id, team, strength);
                     break;
             }
         }

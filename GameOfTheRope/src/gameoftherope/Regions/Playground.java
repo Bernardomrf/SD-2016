@@ -27,6 +27,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private int coachesWaiting;
     private boolean knockOutA;
     private boolean knockOutB;
+    private int nTrials;
     
     public Playground(){
         this.rope = 0;
@@ -41,6 +42,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         this.coachesWaiting = 2;
         this.knockOutA = false;
         this.knockOutB = false;
+        this.nTrials=0;
     }
 
     @Override
@@ -76,8 +78,10 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         aTrialWins = 0;
         bTrialWins = 0;
         coachesWaiting = 0;
+        playersReady = 0;
         knockOutA = false;
         knockOutB = false;
+        
     }
 
     @Override
@@ -89,6 +93,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             }
         }*/
         startTrial = true;
+        nTrials++;
         notifyAll();
     }
 
@@ -133,15 +138,16 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     @Override
-    public synchronized void standInPosition() {
-        //playersReady++;
-        //notifyAll();
-        while(!startTrial){
+    public synchronized int standInPosition() {
+        playersReady++;
+        notifyAll();
+        while(!startTrial || playersReady!=6){
             try {
                 wait();
             } catch (InterruptedException ex) {
             }
         }
+        return nTrials;
     }
 
     @Override

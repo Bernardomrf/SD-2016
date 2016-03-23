@@ -27,6 +27,7 @@ public class Referee extends Thread{
     private boolean goOn = true;
     private refState internalState;
     private int trialsDone;
+    private int nTrialsOfGame;
     private int gamesDone;
     private final int nTrials = 6;
     private final int nGames = 100;
@@ -42,6 +43,7 @@ public class Referee extends Thread{
         this.gamesDone = 0;
         this.knockOut = "X";
         this.repo = repo;
+        this.nTrialsOfGame = 0;
         repo.initRef(internalState);
     }
     
@@ -54,17 +56,23 @@ public class Referee extends Thread{
                     System.out.println(internalState);
                     refSite.announceNewGame();
                     internalState= refState.START_OF_A_GAME;
+                    repo.newGame(gamesDone);
+                    repo.changeRefState(internalState);
                     break;
                 case START_OF_A_GAME:
+                    nTrialsOfGame = 0;
                     
                     playground.callTrial();
                     bench.signalCoaches();
                     internalState= refState.TEAMS_READY;
+                    repo.newTrial(trialsDone+1);
+                    repo.changeRefState(internalState);
                     break;
                 case TEAMS_READY:
                     refSite.waitForCoach();
                     playground.startTrial();
                     internalState= refState.WAIT_FOR_TRIAL_CONCLUSION;
+                    repo.changeRefState(internalState);
                     break;
                 case WAIT_FOR_TRIAL_CONCLUSION:
                     playground.waitForTrialConclusion();
@@ -76,9 +84,11 @@ public class Referee extends Thread{
                     if (trialsDone == nTrials || !knockOut.equals("X")){
                         System.out.println("Knockout " + knockOut);
                         internalState= refState.END_OF_A_GAME;
+                        repo.changeRefState(internalState);
                     }
                     else{
                         internalState= refState.START_OF_A_GAME;
+                        repo.changeRefState(internalState);
                     }
                     break;
                 case END_OF_A_GAME:
@@ -89,9 +99,13 @@ public class Referee extends Thread{
                     gamesDone ++;
                     if (gamesDone == nGames){
                         internalState= refState.END_OF_THE_MATCH;
+                        repo.changeRefState(internalState);
                     }
                     else{
                         internalState= refState.START_OF_A_GAME;
+                        repo.newGame(gamesDone);
+                        repo.newTrial(trialsDone);
+                        repo.changeRefState(internalState);
                     }
                     break;
                 case END_OF_THE_MATCH:

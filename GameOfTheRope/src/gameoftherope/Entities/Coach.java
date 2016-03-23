@@ -48,17 +48,21 @@ public class Coach extends Thread{
                         break;
                     }
                     internalState = coachState.ASSEMBLE_TEAM;
+                    repo.changeCoachState(internalState, team);
                     break;
                 case ASSEMBLE_TEAM:
-                    bench.callContestants(team); //nao bloqueante
+                    
+                    repo.setPlayersPositions(bench.callContestants(team), team);
                     bench.playersReady(team); // bloqueia espera que os jogadores estejam todos no campo
                     refSite.informReferee(); //transiçao
                     internalState = coachState.WATCH_TRIAL;
+                    repo.changeCoachState(internalState, team);
                     break;
                 case WATCH_TRIAL:
                     playground.waitForTrial(); //bloqueante - espera pelo arbitro
                     bench.reviewNotes(team); //bloqueante - espera pelos jogadors
                     internalState = coachState.WAIT_REFEREE_COMMAND;
+                    repo.changeCoachState(internalState, team);
                     break;
             }
         }

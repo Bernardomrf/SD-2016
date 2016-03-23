@@ -67,17 +67,21 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     @Override
-    public synchronized void callContestants(String team) {
+    public synchronized int [] callContestants(String team) {
         if (team.equals("A")){
             callPlayersA = 3;
             playersToPlayA = generateRandom(5);
+            notifyAll();
+            return playersToPlayA;
 
         }
         else if (team.equals("B")){
             callPlayersB = 3;
             playersToPlayB = generateRandom(5);
+            notifyAll();
+            return playersToPlayB;
         }
-        notifyAll();
+        return null;
     }
 
     @Override

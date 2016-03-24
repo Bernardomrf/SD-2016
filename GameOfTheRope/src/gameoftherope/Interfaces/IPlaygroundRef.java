@@ -23,6 +23,9 @@ public interface IPlaygroundRef {
                                         // Se nao for o ultmo trial acorda treinador do watchTrial e voltar a chamar callTrial    
     
     public String checkKnockout();
+    public int getRope();
+    
+    public int[] getWins();
 }
 
 

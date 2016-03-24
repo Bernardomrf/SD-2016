@@ -30,8 +30,10 @@ public class Referee extends Thread{
     private int nTrialsOfGame;
     private int gamesDone;
     private final int nTrials = 6;
-    private final int nGames = 100;
+    private final int nGames = 3;
     private String knockOut;
+    private int rope;
+    private int[] wins;
     
     
     public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, GeneralRepository repo){
@@ -44,6 +46,8 @@ public class Referee extends Thread{
         this.knockOut = "X";
         this.repo = repo;
         this.nTrialsOfGame = 0;
+        this.rope = 0;
+        this.wins = new int[2];
         repo.initRef(internalState);
     }
     
@@ -79,14 +83,19 @@ public class Referee extends Thread{
                     System.out.println("Novo Trial");
                     playground.assertTrialDecision();
                     trialsDone ++;
+                    wins = playground.getWins();
                     knockOut = playground.checkKnockout();
                     //System.err.println("trial Done");
                     if (trialsDone == nTrials || !knockOut.equals("X")){
                         System.out.println("Knockout " + knockOut);
                         internalState= refState.END_OF_A_GAME;
+                        rope = playground.getRope();
+                        repo.setRope(rope);
                         repo.changeRefState(internalState);
                     }
                     else{
+                        rope = playground.getRope();
+                        repo.setRope(rope);
                         internalState= refState.START_OF_A_GAME;
                         repo.changeRefState(internalState);
                     }
@@ -102,7 +111,10 @@ public class Referee extends Thread{
                         repo.changeRefState(internalState);
                     }
                     else{
+                        rope = playground.getRope();
+                        repo.setRope(rope);
                         internalState= refState.START_OF_A_GAME;
+                        repo.setWins(wins, knockOut);
                         repo.newGame(gamesDone);
                         repo.newTrial(trialsDone);
                         repo.changeRefState(internalState);

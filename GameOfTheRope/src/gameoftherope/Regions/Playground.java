@@ -28,6 +28,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private boolean knockOutA;
     private boolean knockOutB;
     private int nTrials;
+    private int nTrialsOfGame;
+    private int allWins[];
     
     public Playground(){
         this.rope = 0;
@@ -43,6 +45,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         this.knockOutA = false;
         this.knockOutB = false;
         this.nTrials=0;
+        this.nTrialsOfGame=0;
+        this.allWins = new int[2];
     }
 
     @Override
@@ -53,30 +57,26 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         else if(team.equals("B")){
             rope -= strenght;
         }
-        // Uncomment to create sleep during pulling the rope
-        /*try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-        }*/
+        try {
+              Thread.sleep(100);
+        } catch (InterruptedException ex) {}
+        
     }
 
     @Override
     public synchronized void callTrial() {
-        /*try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-        }*/
+        
         while(coachesWaiting != 2){
             try {
                 wait();
             } catch (InterruptedException ex) {}
         }
-        rope = 0;
+        //rope = 0;
         playersDone = 0;
         trialFinished = false;
         startTrial = false;
-        aTrialWins = 0;
-        bTrialWins = 0;
+        //aTrialWins = 0;
+        //bTrialWins = 0;
         coachesWaiting = 0;
         playersReady = 0;
         knockOutA = false;
@@ -106,12 +106,12 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             aTrialWins++;
         }
         else if (rope < 0){
-            if(rope <= 4){
+            if(rope <= -4){
                 knockOutB = true;
             }
             bTrialWins++;
         }
-        
+        nTrialsOfGame++;
         trialFinished = true;
         notifyAll();
     }
@@ -164,11 +164,40 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     @Override
     public synchronized String checkKnockout() {
         if (knockOutA){
+            nTrialsOfGame=0;
+            aTrialWins = 0;
+            bTrialWins = 0;
+            rope = 0;
             return "A";
         }
         else if (knockOutB){
+            nTrialsOfGame=0;
+            aTrialWins = 0;
+            bTrialWins = 0;
+            rope=0;
             return "B";
         }
-        return "X";
+        if(nTrialsOfGame == 6){
+            rope=0;
+            nTrialsOfGame=0;
+            aTrialWins = 0;
+            bTrialWins = 0;
         }
+        //nTrialsOfGame=0;
+        return "X";
+    }
+    
+    @Override
+    public synchronized int getRope(){
+        return rope;
+    }
+
+    @Override
+    public int[] getWins() {
+        allWins[0] = aTrialWins;
+        allWins[1] = bTrialWins;
+        return allWins;
+    }
+    
+    
 }

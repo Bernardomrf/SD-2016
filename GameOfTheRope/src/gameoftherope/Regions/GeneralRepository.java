@@ -32,10 +32,11 @@ public class GeneralRepository {
     private int trialN;
     private int ropePos;
     private int games;
-    private int gamesA;
-    private int gamesB;
+    private int trialsA;
+    private int trialsB;
     private int inPositionA;
     private int inPositionB;
+    private String knockout;
     
     private final File log;
     private String filename;
@@ -53,10 +54,11 @@ public class GeneralRepository {
         trialN = 0;
         ropePos = 0;
         games = 0;
-        gamesA = 0;
-        gamesB = 0;
+        trialsA = 0;
+        trialsB = 0;
         inPositionA = 0;
         inPositionB = 0;
+        knockout = "newGame";
         
         
         Date today = Calendar.getInstance().getTime();
@@ -188,6 +190,7 @@ public class GeneralRepository {
         inPositionA = 0;
         inPositionB = 0;
         pw.print(" " + trialN);
+        pw.print(" " + ropePos);
         pw.println();
         pw.flush();
 
@@ -210,12 +213,41 @@ public class GeneralRepository {
     }
     
     public synchronized void newGame(int nGame){
-        pw.println("Game "+ nGame);
+        if(knockout.equals("newGame")){
+            pw.println("Game "+ (nGame+1));
+            pw.flush();
+            printHeader();
+            return;
+        }
+        if(!knockout.equals("X")){
+            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ (trialsA+trialsB) +" trials.");
+        }
+        if(knockout.equals("X")){
+            if(trialsA == trialsB){
+                pw.println("Game "+(nGame)+" was a draw.");
+            }
+            else if(trialsA>trialsB){
+                pw.println("Game "+(nGame)+" was won by team A by points.");
+            }
+            else if(trialsA<trialsB){
+                pw.println("Game "+(nGame)+" was won by team B by points.");
+            }
+        }
+        pw.println("Game "+ (nGame+1));
         pw.flush();
         printHeader();
     }
     public synchronized void newTrial(int nTrial){
         trialN = nTrial;
+    }
+    
+    public synchronized void setRope(int rope){
+        ropePos = rope;
+    }
+    public synchronized void setWins(int[] wins, String knockout){
+        trialsA = wins[0];
+        trialsB = wins[1];
+        this.knockout = knockout;
     }
     
 }

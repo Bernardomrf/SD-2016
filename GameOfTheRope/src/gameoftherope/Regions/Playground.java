@@ -30,6 +30,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private int nTrials;
     private int nTrialsOfGame;
     private int allWins[];
+    private int allGameWins[];
     
     public Playground(){
         this.rope = 0;
@@ -47,6 +48,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         this.nTrials=0;
         this.nTrialsOfGame=0;
         this.allWins = new int[2];
+        this.allGameWins = new int[2];
+        this.allGameWins[0] = 0;
+        this.allGameWins[1] = 0;
     }
 
     @Override
@@ -168,6 +172,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             aTrialWins = 0;
             bTrialWins = 0;
             rope = 0;
+            allGameWins[0]++;
             return "A";
         }
         else if (knockOutB){
@@ -175,9 +180,16 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             aTrialWins = 0;
             bTrialWins = 0;
             rope=0;
+            allGameWins[1]++;
             return "B";
         }
         if(nTrialsOfGame == 6){
+            if(aTrialWins>bTrialWins){
+                allGameWins[0]++;
+            }
+            else if(aTrialWins<bTrialWins){
+                allGameWins[1]++;
+            }
             rope=0;
             nTrialsOfGame=0;
             aTrialWins = 0;
@@ -198,6 +210,12 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         allWins[1] = bTrialWins;
         return allWins;
     }
+
+    @Override
+    public int[] getGameWins() {
+        return allGameWins;
+    }
+    
     
     
 }

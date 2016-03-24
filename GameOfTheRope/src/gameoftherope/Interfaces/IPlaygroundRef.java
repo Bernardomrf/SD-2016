@@ -26,6 +26,7 @@ public interface IPlaygroundRef {
     public int getRope();
     
     public int[] getWins();
+    public int[] getGameWins();
 }
 
 

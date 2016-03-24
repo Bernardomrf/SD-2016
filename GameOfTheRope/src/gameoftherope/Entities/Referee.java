@@ -34,6 +34,7 @@ public class Referee extends Thread{
     private String knockOut;
     private int rope;
     private int[] wins;
+    private int[] gameWins;
     
     
     public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, GeneralRepository repo){
@@ -48,6 +49,7 @@ public class Referee extends Thread{
         this.nTrialsOfGame = 0;
         this.rope = 0;
         this.wins = new int[2];
+        this.gameWins = new int[2];
         repo.initRef(internalState);
     }
     
@@ -108,6 +110,7 @@ public class Referee extends Thread{
                     gamesDone ++;
                     if (gamesDone == nGames){
                         internalState= refState.END_OF_THE_MATCH;
+                        
                         repo.changeRefState(internalState);
                     }
                     else{
@@ -123,6 +126,8 @@ public class Referee extends Thread{
                 case END_OF_THE_MATCH:
                     refSite.declareMatchWinner();
                     bench.setMatchFinish();
+                    gameWins = playground.getGameWins();
+                    repo.setGameWins(gameWins, gamesDone);
                     goOn = false;
                     break;    
                     

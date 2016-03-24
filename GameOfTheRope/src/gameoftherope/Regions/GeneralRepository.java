@@ -31,12 +31,14 @@ public class GeneralRepository {
     private int [] trialPosB;
     private int trialN;
     private int ropePos;
-    private int games;
+    private int gamesA;
+    private int gamesB;
     private int trialsA;
     private int trialsB;
     private int inPositionA;
     private int inPositionB;
     private String knockout;
+    
     
     private final File log;
     private String filename;
@@ -53,7 +55,8 @@ public class GeneralRepository {
         trialPosB = new int[3];
         trialN = 0;
         ropePos = 0;
-        games = 0;
+        gamesA = 0;
+        gamesB = 0;
         trialsA = 0;
         trialsB = 0;
         inPositionA = 0;
@@ -237,6 +240,7 @@ public class GeneralRepository {
         pw.flush();
         printHeader();
     }
+    
     public synchronized void newTrial(int nTrial){
         trialN = nTrial;
     }
@@ -249,5 +253,38 @@ public class GeneralRepository {
         trialsB = wins[1];
         this.knockout = knockout;
     }
+    public synchronized void setGameWins(int[] gameWins, int nGame){
+        gamesA = gameWins[0];
+        gamesB = gameWins[1];
+        finishMatch(nGame);
+    }
     
+    public synchronized void finishMatch(int nGame){
+       
+        if(!knockout.equals("X")){
+            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ (trialsA+trialsB) +" trials.");
+        }
+        if(knockout.equals("X")){
+            if(trialsA == trialsB){
+                pw.println("Game "+(nGame)+" was a draw.");
+            }
+            else if(trialsA>trialsB){
+                pw.println("Game "+(nGame)+" was won by team A by points.");
+            }
+            else if(trialsA<trialsB){
+                pw.println("Game "+(nGame)+" was won by team B by points.");
+            }
+        }
+        if(gamesA == gamesB){
+            pw.println("Match was a draw.");
+        }
+        else if(gamesA > gamesB){
+            pw.println("Match was won by team A ("+gamesA+"-"+gamesB+").");
+        }
+        else if(gamesA < gamesB){
+            pw.println("Match was won by team B ("+gamesA+"-"+gamesB+").");
+        }
+        pw.flush();
+        
+    }
 }

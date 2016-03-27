@@ -127,6 +127,7 @@ public class Referee extends Thread{
                     refSite.declareMatchWinner();
                     bench.setMatchFinish();
                     gameWins = playground.getGameWins();
+                    repo.setWins(wins, knockOut);
                     repo.setGameWins(gameWins, gamesDone);
                     goOn = false;
                     break;    

@@ -26,10 +26,10 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
 
     @Override
     public synchronized void announceNewGame() {
-        /*try {
+        try {
             Thread.sleep((int)(Math.random() * 4000 + 1000));
         } catch (InterruptedException ex) {
-        }*/
+        }
     }
 
     @Override

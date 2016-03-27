@@ -74,7 +74,7 @@ public class GameOfTheRope extends Thread {
             } catch (InterruptedException ex) {
                 //Escrever para o log
             }
-            System.out.println("Coach Morreu");
+            //System.out.println("Coach Morreu");
         }
         
         
@@ -85,14 +85,14 @@ public class GameOfTheRope extends Thread {
             } catch (InterruptedException ex) {
                 //Escrever para o log
             }
-            System.out.println("Player Morreu");
+            //System.out.println("Player Morreu");
         }
         try {
             ref.join();
         } catch (InterruptedException ex) {
             //Escrever para o log
         }
-        System.out.println("Ref Morreu");
+        //System.out.println("Ref Morreu");
         
     }
 

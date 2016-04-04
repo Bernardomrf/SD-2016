@@ -17,8 +17,6 @@ import gameoftherope.coachState;
  * @author bernardoferreira
  */
 public class Coach extends Thread{
-    
-    
     private final IBenchCoach bench;
     private final IPlaygroundCoach playground;
     private final IRefSiteCoach refSite;

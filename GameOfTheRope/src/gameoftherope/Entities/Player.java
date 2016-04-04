@@ -33,6 +33,7 @@ public class Player extends Thread{
     
         
     public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo){
+        
         this.team = team;
         this.bench = bench;
         this.playground = playground;

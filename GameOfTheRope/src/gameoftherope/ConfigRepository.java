@@ -5,6 +5,9 @@
  */
 package gameoftherope;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
@@ -31,6 +34,53 @@ public class ConfigRepository {
     private final int nCoaches = 2;
     private final int nPlayers = 10;
     
+    // HashMaps
+    Map<String, Integer> playerConfig;
+    Map<String, Integer> refConfig;
+    Map<String, Integer> benchConfig;
+    Map<String, Integer> playgroundConfig;
+    Map<String, Integer> mainConfig;
     
+    public ConfigRepository(){
+        playerConfig = new HashMap<>();
+        refConfig = new HashMap<>();
+        benchConfig = new HashMap<>();
+        playgroundConfig = new HashMap<>();
+        mainConfig = new HashMap<>();
+        
+        playerConfig.put("maxStrength", maxStrength);
+        
+        refConfig.put("nTrials", nTrials);
+        refConfig.put("nGames", nGames);
+                
+        benchConfig.put("nTeamPlayers", nTeamPlayers);
+        benchConfig.put("nTrialPlayers", nTrialPlayers);
+        
+        playgroundConfig.put("totalTrialPlayers", totalTrialPlayers);
+        playgroundConfig.put("knockOutForce", knockOutForce);
+        playgroundConfig.put("nTrialsOfGameDefault", nTrialsOfGameDefault);
+        
+        mainConfig.put("nCoaches", nCoaches);
+        mainConfig.put("nPlayers", nPlayers);
+    }
     
+    public Map<String, Integer> getPlayerConfigs(){
+        return playerConfig;
+    }
+    
+    public Map<String, Integer> getRefConfigs(){
+        return refConfig;
+    }
+        
+    public Map<String, Integer> getBenchConfigs(){
+        return benchConfig;
+    }
+    
+    public Map<String, Integer> getPlaygroundConfigs(){
+        return playgroundConfig;
+    }
+    
+    public Map<String, Integer> getMainConfigs(){
+        return mainConfig;
+    }
 }

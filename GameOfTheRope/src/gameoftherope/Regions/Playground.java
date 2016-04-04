@@ -25,6 +25,12 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private boolean wakeRef;
     private int playersReady;
     private int coachesWaiting;
+    private boolean knockOutA;
+    private boolean knockOutB;
+    private int nTrials;
+    private int nTrialsOfGame;
+    private int allWins[];
+    private int allGameWins[];
     
     public Playground(){
         this.rope = 0;
@@ -37,6 +43,14 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         this.wakeRef = false;
         this.playersReady = 0;
         this.coachesWaiting = 2;
+        this.knockOutA = false;
+        this.knockOutB = false;
+        this.nTrials=0;
+        this.nTrialsOfGame=0;
+        this.allWins = new int[2];
+        this.allGameWins = new int[2];
+        this.allGameWins[0] = 0;
+        this.allGameWins[1] = 0;
     }
 
     @Override
@@ -47,31 +61,31 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         else if(team.equals("B")){
             rope -= strenght;
         }
+        try {
+              Thread.sleep(100);
+        } catch (InterruptedException ex) {}
+        
     }
-    
+
     @Override
-    public synchronized void waitInitialState(){
+    public synchronized void callTrial() {
+        
         while(coachesWaiting != 2){
             try {
                 wait();
             } catch (InterruptedException ex) {}
         }
-    }
-
-    @Override
-    public synchronized void callTrial() {
-        /*try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-        }*/
-        
-        rope = 0;
+        //rope = 0;
         playersDone = 0;
         trialFinished = false;
         startTrial = false;
-        aTrialWins = 0;
-        bTrialWins = 0;
+        //aTrialWins = 0;
+        //bTrialWins = 0;
         coachesWaiting = 0;
+        playersReady = 0;
+        knockOutA = false;
+        knockOutB = false;
+        
     }
 
     @Override
@@ -83,18 +97,25 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             }
         }*/
         startTrial = true;
+        nTrials++;
         notifyAll();
     }
 
     @Override
     public synchronized void assertTrialDecision() {
         if (rope > 0){
+            if(rope >= 4){
+                knockOutA = true;
+            }
             aTrialWins++;
         }
         else if (rope < 0){
+            if(rope <= -4){
+                knockOutB = true;
+            }
             bTrialWins++;
         }
-        
+        nTrialsOfGame++;
         trialFinished = true;
         notifyAll();
     }
@@ -116,18 +137,21 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             } catch (InterruptedException ex) {
             }
         }
+        coachesWaiting++;
+        notifyAll();
     }
 
     @Override
-    public synchronized void standInPosition() {
-        //playersReady++;
-        //notifyAll();
-        while(!startTrial){
+    public synchronized int standInPosition() {
+        playersReady++;
+        notifyAll();
+        while(!startTrial || playersReady!=6){
             try {
                 wait();
             } catch (InterruptedException ex) {
             }
         }
+        return nTrials;
     }
 
     @Override
@@ -142,8 +166,56 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     @Override
-    public synchronized void informReferee() {
-        coachesWaiting++;
-        notifyAll();
+    public synchronized String checkKnockout() {
+        if (knockOutA){
+            nTrialsOfGame=0;
+            aTrialWins = 0;
+            bTrialWins = 0;
+            rope = 0;
+            allGameWins[0]++;
+            return "A";
+        }
+        else if (knockOutB){
+            nTrialsOfGame=0;
+            aTrialWins = 0;
+            bTrialWins = 0;
+            rope=0;
+            allGameWins[1]++;
+            return "B";
+        }
+        if(nTrialsOfGame == 6){
+            if(aTrialWins>bTrialWins){
+                allGameWins[0]++;
+            }
+            else if(aTrialWins<bTrialWins){
+                allGameWins[1]++;
+            }
+            rope=0;
+            nTrialsOfGame=0;
+            aTrialWins = 0;
+            bTrialWins = 0;
+        }
+        //nTrialsOfGame=0;
+        return "X";
     }
+    
+    @Override
+    public synchronized int getRope(){
+        return rope;
+    }
+
+    @Override
+    public int[] getWins() {
+        allWins[0] = aTrialWins;
+        allWins[1] = bTrialWins;
+        return allWins;
+    }
+
+    @Override
+    public int[] getGameWins() {
+        return allGameWins;
+    }
+    
+    
+    
 }

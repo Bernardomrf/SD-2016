@@ -8,7 +8,8 @@ package gameoftherope.Entities;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
-import java.util.Random;
+import gameoftherope.Regions.GeneralRepository;
+import gameoftherope.coachState;
 
 /**
  *
@@ -17,24 +18,23 @@ import java.util.Random;
  */
 public class Coach extends Thread{
     
-    private enum State { 
-        WAIT_REFEREE_COMMAND, ASSEMBLE_TEAM, WATCH_TRIAL
-    }
+    
     private final IBenchCoach bench;
     private final IPlaygroundCoach playground;
     private final IRefSiteCoach refSite;
+    private final GeneralRepository repo;
     private boolean goOn = true;
-    private State internalState;
+    private coachState internalState;
     private final String team;
-    private int [] elements;
     
-    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team){
+    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, GeneralRepository repo){
         this.bench = bench;
         this.playground = playground;
-        this.internalState = State.WAIT_REFEREE_COMMAND;
+        this.internalState = coachState.WAIT_REFEREE_COMMAND;
         this.refSite = refSite;
         this.team = team;
-        this.elements = new int[3];
+        this.repo = repo;
+        repo.initCoach(internalState, team);
     }
     
     @Override
@@ -47,36 +47,22 @@ public class Coach extends Thread{
                         goOn = false;
                         break;
                     }
-                    internalState = State.ASSEMBLE_TEAM;
+                    internalState = coachState.ASSEMBLE_TEAM;
+                    repo.changeCoachState(internalState, team);
                     break;
                 case ASSEMBLE_TEAM:
-                    //elements = (new Random().ints(3,0,5).toArray());
-                    int i = 0;
-                    int tmp;
-                    boolean rep = false;
-                    while(i != 3){
-                        tmp = new Random().nextInt(5);
-                        for (int j = 0; j < elements.length; j++) {
-                            if(elements[j] == tmp) {
-                                rep = true;
-                                break;
-                            }
-                        }
-                        if (!rep){
-                            elements[i] = tmp;
-                            i++;
-                        }
-                        rep = false;
-                    }
-                    bench.callContestants(team, elements); //nao bloqueante
+                    
+                    repo.setPlayersPositions(bench.callContestants(team), team);
+                    bench.playersReady(team); // bloqueia espera que os jogadores estejam todos no campo
                     refSite.informReferee(); //transiçao
-                    internalState = State.WATCH_TRIAL;
+                    internalState = coachState.WATCH_TRIAL;
+                    repo.changeCoachState(internalState, team);
                     break;
                 case WATCH_TRIAL:
                     playground.waitForTrial(); //bloqueante - espera pelo arbitro
                     bench.reviewNotes(team); //bloqueante - espera pelos jogadors
-                    playground.informReferee(); // Avisa arbitro
-                    internalState = State.WAIT_REFEREE_COMMAND;
+                    internalState = coachState.WAIT_REFEREE_COMMAND;
+                    repo.changeCoachState(internalState, team);
                     break;
             }
         }

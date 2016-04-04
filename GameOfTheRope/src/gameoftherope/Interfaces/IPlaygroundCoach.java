@@ -12,7 +12,4 @@ package gameoftherope.Interfaces;
 public interface IPlaygroundCoach {
     
     public void waitForTrial(); // Esperar que o trial acabe 
-
-    public void informReferee();
-    
 }

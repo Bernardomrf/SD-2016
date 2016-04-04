@@ -8,6 +8,9 @@ package gameoftherope.Regions;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,22 +22,27 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     private int nBenchPlayersB;
     private int wakeCoaches;
     private boolean matchFinish;
-    private boolean callPlayersA;
-    private boolean callPlayersB;
-    private int ncallPlayersA;
-    private int ncallPlayersB;
-    private int [] teamAPlayers;
-    private int [] teamBPlayers;
+    private int callPlayersA;
+    private int callPlayersB;
+    private int [] playersToPlayA;
+    private int [] playersToPlayB;
+    private int playersReadyA;
+    private int playersReadyB;
+    private int coachesWaiting;
+
     
     public Bench(){
         nBenchPlayersA = 0;
         nBenchPlayersB = 0;
         wakeCoaches = 0;
         matchFinish = false;
-        callPlayersA = false;
-        callPlayersB = false;
-        ncallPlayersA = 0;
-        ncallPlayersB = 0;
+        callPlayersA = 0;
+        callPlayersB = 0;
+        playersToPlayA = new int[3];
+        playersToPlayB = new int[3];
+        playersReadyA = 0;
+        playersReadyB = 0;
+        coachesWaiting = 0;
     }
     
 
@@ -59,26 +67,38 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     @Override
-    public synchronized void callContestants(String team, int elements[]) {
+    public synchronized int [] callContestants(String team) {
         if (team.equals("A")){
-            callPlayersA = true;
-            ncallPlayersA = 3;
-            teamAPlayers = elements;
+            callPlayersA = 3;
+            playersToPlayA = generateRandom(5);
+            notifyAll();
+            return playersToPlayA;
+
         }
         else if (team.equals("B")){
-            callPlayersB = true;
-            ncallPlayersB = 3;
-            teamBPlayers = elements;
+            callPlayersB = 3;
+            playersToPlayB = generateRandom(5);
+            notifyAll();
+            return playersToPlayB;
+        }
+        return null;
+    }
+
+    @Override
+    public synchronized void followCoachAdvice(String team) {
+        if (team.equals("A")){
+            playersReadyA++;
+        }
+        else if (team.equals("B")){
+            playersReadyB++;
         }
         notifyAll();
     }
 
     @Override
-    public synchronized void followCoachAdvice() {
-    }
-
-    @Override
     public synchronized void waitForRefCommand() {
+        coachesWaiting++;
+        notifyAll();
         while(wakeCoaches == 0){
             try {
                 wait();
@@ -89,6 +109,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
             }
         }
         wakeCoaches--;
+        coachesWaiting--;
     }
     
     @Override
@@ -100,49 +121,46 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     
 
     @Override
-    public synchronized void seatAtTheBench(String team, int id) {
+    public synchronized boolean seatAtTheBench(String team, int id) {
         if (team.equals("A")){
-            while(!callPlayersA){
+            while(callPlayersA == 0){
                 try {
                     wait();
                     if (matchFinish){
-                        return;
+                        return false;
                     }
-                    if (ncallPlayersA != 0){
-                        for (int i = 0; i < teamAPlayers.length; i++) {
-                            if (teamAPlayers[i] == id) {
-                                ncallPlayersA--;
-                                nBenchPlayersA--;
-                                return;
-                            }
-                        }
-                    }
-                    callPlayersA = false;                    
                 } catch (InterruptedException ex) {}
+                if(!contains(playersToPlayA, id)){
+                    if (callPlayersA != 0){
+                        nBenchPlayersA--;
+                        return false;
+                    }
+                }
             }
+            callPlayersA--;
             nBenchPlayersA--;
+            return true;
         }
         else if (team.equals("B")){
-            while(!callPlayersB){
+            while(callPlayersB == 0){
                 try {
                     wait();
                     if (matchFinish){
-                        return;
+                        return false;
                     }
-                    if (ncallPlayersB != 0){
-                        for (int i = 0; i < teamBPlayers.length; i++) {
-                            if (teamBPlayers[i] == id) {
-                                ncallPlayersB--;
-                                nBenchPlayersB--;
-                                return;
-                            }
-                        }
-                    }
-                    callPlayersB = false;                    
                 } catch (InterruptedException ex) {}
+                if(!contains(playersToPlayB, id)){
+                    if (callPlayersB != 0){
+                        nBenchPlayersB--;
+                        return false;
+                    }
+                }
             }
+            callPlayersB--;
             nBenchPlayersB--;
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -153,6 +171,11 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     @Override
     public synchronized void setMatchFinish() {
         matchFinish = true;
+        while(coachesWaiting != 2){
+            try {
+                wait();
+            } catch (InterruptedException ex) {}
+        }
         notifyAll();
     }
 
@@ -166,6 +189,52 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         }
         notifyAll();
     }
+
+    @Override
+    public synchronized void playersReady(String team) {
+        if (team.equals("A")){
+            while (playersReadyA != 3) {            
+                try {
+                    wait();
+                    if (matchFinish){
+                        return;
+                    }
+                } catch (InterruptedException ex) {}
+            }
+            playersReadyA = 0;
+        }
+        else if (team.equals("B")){
+            while (playersReadyB != 3) {            
+                try {
+                    wait();
+                    if (matchFinish){
+                        return;
+                    }
+                } catch (InterruptedException ex) {}
+            }
+            playersReadyB = 0;
+        }
+    }
     
+    private boolean contains(int [] array, int value){
+        for(int i = 0; i < array.length; i++){
+            if (array[i] == value)
+                return true;
+        }
+        return false;
+    }
     
+    private int [] generateRandom(int maxValue){
+        int i = 0;
+        int tmp;
+        int [] array = new int[3];
+        while(i != 3){
+            tmp = new Random().nextInt(maxValue);
+            if (!contains(array, tmp)){
+                array[i] = tmp;
+                i++;
+            }
+        }
+        return array;
+    }
 }

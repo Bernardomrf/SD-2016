@@ -7,32 +7,42 @@ package gameoftherope.Entities;
 
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
+import gameoftherope.Regions.GeneralRepository;
+import gameoftherope.playerState;
 
 /**
  *
  * @author brunosilva
  */
 public class Player extends Thread{
-    private enum State { 
-        SEAT_AT_THE_BENCH, STAND_IN_POSITION, DO_YOUR_BEST
-    }
+
+    
     private static final int maxStrength = 4;
     
     private final IBenchPlayer bench;
     private final IPlaygroundPlayer playground;
+    private final GeneralRepository repo;
     private boolean goOn = true;
-    private State internalState;
+    private playerState internalState;
     private final String team;
-    private final int strength;
+    private int strength;
     private final int id;
+    private boolean iWillPlay;
+    private int nTrials;
+    private int nPlayerTrials;
+    
         
-    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id){
+    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo){
         this.team = team;
         this.bench = bench;
         this.playground = playground;
-        this.internalState = State.SEAT_AT_THE_BENCH;
+        this.internalState = playerState.SEAT_AT_THE_BENCH;
         this.strength = (int) (Math.random() * maxStrength + 1);
         this.id = id;
+        this.iWillPlay = false;
+        this.repo = repo;
+        this.nPlayerTrials = 0;
+        repo.initPlayer(internalState, strength, id, team);
     }
     
     @Override
@@ -40,23 +50,47 @@ public class Player extends Thread{
         while(goOn){
             switch(internalState){
                 case SEAT_AT_THE_BENCH:
+                    
                     bench.seatDown(team);
-                    bench.seatAtTheBench(team, id); // bloqueante - espera pelo coach
+                    iWillPlay = bench.seatAtTheBench(team, id); // bloqueante - espera pelo coach
                     if(bench.hasMatchFinished()){
                         goOn = false;
                         break;
                     }
-                    internalState= State.STAND_IN_POSITION;
+                    
+                    if (!iWillPlay){
+                        /*if(strength < 5){
+                            strength++;
+                        }*/
+                        break;
+                    }
+                    bench.followCoachAdvice(team);
+                    // sai do banco(variaveis!!!!)
+                    internalState= playerState.STAND_IN_POSITION;
+                    repo.changePlayerState(internalState, id, team, strength);
                     break;
                 case STAND_IN_POSITION:
-                    playground.standInPosition(); // bloqueante - espera pelo arbitro
-                    internalState= State.DO_YOUR_BEST;
+                    nTrials = playground.standInPosition();
+                    if(nPlayerTrials<nTrials){
+                        strength+=nTrials-nPlayerTrials-1;
+                        if(strength>5){
+                            strength = 5;
+                        }
+                        nPlayerTrials = nTrials;
+                    }
+                    // bloqueante - espera pelo arbitro
+                    internalState= playerState.DO_YOUR_BEST;
+                    repo.changePlayerState(internalState, id, team, strength);
                     break;
                 case DO_YOUR_BEST:
                     playground.pullTheRope(strength, team); // puxa a corda(variaveis!!!!)
+                    repo.changePlayerState(internalState, id, team, strength);
                     playground.iamDone(); //o sexto jogador a chamar faz notify ao arbitro
-                    
-                    internalState= State.SEAT_AT_THE_BENCH;
+                    if(strength > 0){
+                        strength--;
+                    }
+                    internalState= playerState.SEAT_AT_THE_BENCH;
+                    repo.changePlayerState(internalState, id, team, strength);
                     break;
             }
         }

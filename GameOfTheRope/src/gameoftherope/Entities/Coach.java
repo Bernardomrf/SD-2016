@@ -39,6 +39,7 @@ public class Coach extends Thread{
     
     @Override
     public void run(){
+        
         while(goOn){
             switch(internalState){
                 case WAIT_REFEREE_COMMAND:

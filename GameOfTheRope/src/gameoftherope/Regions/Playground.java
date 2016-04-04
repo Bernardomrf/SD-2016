@@ -15,9 +15,13 @@ import gameoftherope.Interfaces.IPlaygroundRef;
  */
 public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef{
 
+    private final int knockOutForce = 4;
+    private final int nTrialsOfGameDefault = 6;
+    private final int totalTrialPlayers = 6;
+    private final int nCoaches = 2;
+    
     private int rope;
     private int playersDone;
-    private final int totalTrialPlayers;
     private boolean startTrial;
     private int aTrialWins;
     private int bTrialWins;
@@ -35,7 +39,6 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     public Playground(){
         this.rope = 0;
         this.playersDone = 0;
-        this.totalTrialPlayers = 6;
         this.startTrial = false;
         this.aTrialWins = 0;
         this.bTrialWins = 0;
@@ -69,33 +72,22 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
 
     @Override
     public synchronized void callTrial() {
-        
-        while(coachesWaiting != 2){
+        while(coachesWaiting != nCoaches){
             try {
                 wait();
             } catch (InterruptedException ex) {}
         }
-        //rope = 0;
         playersDone = 0;
         trialFinished = false;
         startTrial = false;
-        //aTrialWins = 0;
-        //bTrialWins = 0;
         coachesWaiting = 0;
         playersReady = 0;
         knockOutA = false;
-        knockOutB = false;
-        
+        knockOutB = false;   
     }
 
     @Override
     public synchronized void startTrial() {
-        /*while(playersReady != 6){
-            try {
-                wait();
-            } catch (InterruptedException ex) {
-            }
-        }*/
         startTrial = true;
         nTrials++;
         notifyAll();
@@ -104,13 +96,13 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     @Override
     public synchronized void assertTrialDecision() {
         if (rope > 0){
-            if(rope >= 4){
+            if(rope >= knockOutForce){
                 knockOutA = true;
             }
             aTrialWins++;
         }
         else if (rope < 0){
-            if(rope <= -4){
+            if(rope <= (-knockOutForce)){
                 knockOutB = true;
             }
             bTrialWins++;
@@ -145,7 +137,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     public synchronized int standInPosition() {
         playersReady++;
         notifyAll();
-        while(!startTrial || playersReady!=6){
+        while(!startTrial || playersReady!=totalTrialPlayers){
             try {
                 wait();
             } catch (InterruptedException ex) {
@@ -183,7 +175,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             allGameWins[1]++;
             return "B";
         }
-        if(nTrialsOfGame == 6){
+        if(nTrialsOfGame == nTrialsOfGameDefault){
             if(aTrialWins>bTrialWins){
                 allGameWins[0]++;
             }
@@ -195,7 +187,6 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             aTrialWins = 0;
             bTrialWins = 0;
         }
-        //nTrialsOfGame=0;
         return "X";
     }
     

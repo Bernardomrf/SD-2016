@@ -9,14 +9,16 @@ import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author brunosilva
  */
 public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
+    
+    private final int nCoaches = 2;
+    private final int nTeamPlayers = 5;
+    private final int nTrialPlayers = 3;
     
     private int nBenchPlayersA;
     private int nBenchPlayersB;
@@ -38,8 +40,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         matchFinish = false;
         callPlayersA = 0;
         callPlayersB = 0;
-        playersToPlayA = new int[3];
-        playersToPlayB = new int[3];
+        playersToPlayA = new int[nTrialPlayers];
+        playersToPlayB = new int[nTrialPlayers];
         playersReadyA = 0;
         playersReadyB = 0;
         coachesWaiting = 0;
@@ -49,7 +51,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     @Override
     public synchronized void reviewNotes(String team) {
         if (team.equals("A")){
-            while (nBenchPlayersA != 5){
+            while (nBenchPlayersA != nTeamPlayers){
                 try {
                     wait();
                 } catch (InterruptedException ex) {
@@ -57,7 +59,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
             }
         }
         else if (team.equals("B")){
-            while (nBenchPlayersB != 5){
+            while (nBenchPlayersB != nTeamPlayers){
                 try {
                     wait();
                 } catch (InterruptedException ex) {
@@ -69,15 +71,15 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     @Override
     public synchronized int [] callContestants(String team) {
         if (team.equals("A")){
-            callPlayersA = 3;
-            playersToPlayA = generateRandom(5);
+            callPlayersA = nTrialPlayers;
+            playersToPlayA = generateRandom(nTeamPlayers);
             notifyAll();
             return playersToPlayA;
 
         }
         else if (team.equals("B")){
-            callPlayersB = 3;
-            playersToPlayB = generateRandom(5);
+            callPlayersB = nTrialPlayers;
+            playersToPlayB = generateRandom(nTeamPlayers);
             notifyAll();
             return playersToPlayB;
         }
@@ -114,7 +116,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     
     @Override
     public synchronized void signalCoaches(){
-        wakeCoaches = 2;
+        wakeCoaches = nCoaches;
         notifyAll();
     }
     
@@ -171,7 +173,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     @Override
     public synchronized void setMatchFinish() {
         matchFinish = true;
-        while(coachesWaiting != 2){
+        while(coachesWaiting != nCoaches){
             try {
                 wait();
             } catch (InterruptedException ex) {}
@@ -193,7 +195,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     @Override
     public synchronized void playersReady(String team) {
         if (team.equals("A")){
-            while (playersReadyA != 3) {            
+            while (playersReadyA != nTrialPlayers) {            
                 try {
                     wait();
                     if (matchFinish){
@@ -204,7 +206,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
             playersReadyA = 0;
         }
         else if (team.equals("B")){
-            while (playersReadyB != 3) {            
+            while (playersReadyB != nTrialPlayers) {            
                 try {
                     wait();
                     if (matchFinish){
@@ -227,8 +229,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     private int [] generateRandom(int maxValue){
         int i = 0;
         int tmp;
-        int [] array = new int[3];
-        while(i != 3){
+        int [] array = new int[nTrialPlayers];
+        while(i != nTrialPlayers){
             tmp = new Random().nextInt(maxValue);
             if (!contains(array, tmp)){
                 array[i] = tmp;

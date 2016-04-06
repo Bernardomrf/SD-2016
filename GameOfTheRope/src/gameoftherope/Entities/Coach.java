@@ -66,8 +66,4 @@ public class Coach extends Thread{
             }
         }
     }
-
-
-
-
 }    

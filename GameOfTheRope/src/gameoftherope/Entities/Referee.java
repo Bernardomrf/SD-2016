@@ -5,11 +5,13 @@
  */
 package gameoftherope.Entities;
 
+import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.refState;
+import java.util.Map;
 
 
 /**
@@ -27,10 +29,9 @@ public class Referee extends Thread{
     private boolean goOn = true;
     private refState internalState;
     private int trialsDone;
-    private int nTrialsOfGame;
     private int gamesDone;
-    private final int nTrials = 6;
-    private final int nGames = 3;
+    private int nTrials;
+    private int nGames;
     private String knockOut;
     private int rope;
     private int[] wins;
@@ -38,6 +39,7 @@ public class Referee extends Thread{
     
     
     public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, GeneralRepository repo){
+        config();
         this.refSite = refSite;
         this.playground = playground;
         this.bench = bench;
@@ -46,7 +48,6 @@ public class Referee extends Thread{
         this.gamesDone = 0;
         this.knockOut = "X";
         this.repo = repo;
-        this.nTrialsOfGame = 0;
         this.rope = 0;
         this.wins = new int[2];
         this.gameWins = new int[2];
@@ -65,9 +66,7 @@ public class Referee extends Thread{
                     repo.newGame(gamesDone);
                     repo.changeRefState(internalState);
                     break;
-                case START_OF_A_GAME:
-                    nTrialsOfGame = 0;
-                    
+                case START_OF_A_GAME:                    
                     playground.callTrial();
                     bench.signalCoaches();
                     internalState= refState.TEAMS_READY;
@@ -134,5 +133,12 @@ public class Referee extends Thread{
                     
             }
         }
+    }
+    
+    private void config(){
+        Map<String, Integer> settings = ConfigRepository.getRefConfigs();
+        nGames = settings.get("nGames");
+        nTrials = settings.get("nTrials");
+ 
     }
 }

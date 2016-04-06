@@ -5,9 +5,11 @@
  */
 package gameoftherope.Regions;
 
+import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
+import java.util.Map;
 
 /**
  *
@@ -15,10 +17,11 @@ import gameoftherope.Interfaces.IPlaygroundRef;
  */
 public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef{
 
-    private final int knockOutForce = 4;
-    private final int nTrialsOfGameDefault = 6;
-    private final int totalTrialPlayers = 6;
-    private final int nCoaches = 2;
+    private int knockOutForce;
+    private int nTrialsOfGameDefault;
+    private int totalTrialPlayers;
+    private int nCoaches;
+    private int pullTheRopeSleep;
     
     private int rope;
     private int playersDone;
@@ -37,6 +40,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private int allGameWins[];
     
     public Playground(){
+        this.config();
         this.rope = 0;
         this.playersDone = 0;
         this.startTrial = false;
@@ -65,7 +69,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             rope -= strenght;
         }
         try {
-              Thread.sleep(100);
+              Thread.sleep(pullTheRopeSleep);
         } catch (InterruptedException ex) {}
         
     }
@@ -196,17 +200,24 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     @Override
-    public int[] getWins() {
+    public synchronized int[] getWins() {
         allWins[0] = aTrialWins;
         allWins[1] = bTrialWins;
         return allWins;
     }
 
     @Override
-    public int[] getGameWins() {
+    public synchronized int[] getGameWins() {
         return allGameWins;
     }
     
-    
+    private void config(){
+        Map<String, Integer> settings = ConfigRepository.getPlaygroundConfigs();
+        knockOutForce = settings.get("knockOutForce");
+        nTrialsOfGameDefault = settings.get("nTrialsOfGameDefault");
+        totalTrialPlayers = settings.get("totalTrialPlayers");
+        nCoaches = settings.get("nCoaches");  
+        pullTheRopeSleep = settings.get("pullTheRopeSleep"); 
+    }
     
 }

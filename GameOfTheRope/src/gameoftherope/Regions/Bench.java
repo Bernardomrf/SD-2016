@@ -5,9 +5,11 @@
  */
 package gameoftherope.Regions;
 
+import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -16,9 +18,9 @@ import java.util.Random;
  */
 public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     
-    private final int nCoaches = 2;
-    private final int nTeamPlayers = 5;
-    private final int nTrialPlayers = 3;
+    private int nCoaches;
+    private int nTeamPlayers;
+    private int nTrialPlayers;
     
     private int nBenchPlayersA;
     private int nBenchPlayersB;
@@ -34,6 +36,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
 
     
     public Bench(){
+        config();
         nBenchPlayersA = 0;
         nBenchPlayersB = 0;
         wakeCoaches = 0;
@@ -238,5 +241,12 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
             }
         }
         return array;
+    }
+    
+    private void config(){
+        Map<String, Integer> settings = ConfigRepository.getBenchConfigs();
+        nCoaches = settings.get("nCoaches");
+        nTeamPlayers = settings.get("nTeamPlayers");
+        nTrialPlayers = settings.get("nTrialPlayers");
     }
 }

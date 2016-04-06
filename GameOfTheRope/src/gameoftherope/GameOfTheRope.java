@@ -21,6 +21,7 @@ import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.Regions.Playground;
 import gameoftherope.Regions.RefSite;
 import java.io.FileNotFoundException;
+import java.util.Map;
 
 /**
  *
@@ -30,11 +31,16 @@ public class GameOfTheRope extends Thread {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {
-
-        int nCoaches = 2;
-        int nPlayers = 10;
+        
+        int nCoaches;
+        int nPlayers;
+        
+        Map<String, Integer> settings = ConfigRepository.getMainConfigs();
+        nCoaches = settings.get("nCoaches");
+        nPlayers = settings.get("nPlayers");
 
         Bench bench = new Bench();
         Playground playground = new Playground();

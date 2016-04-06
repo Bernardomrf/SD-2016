@@ -15,72 +15,71 @@ import java.util.Map;
 public class ConfigRepository {
     
     // Player Configs
-    private final int maxStrength = 4;
+    private final static int maxStrength = 4;
     
     // Ref Configs
-    private final int nTrials = 6;
-    private final int nGames = 3;
+    private final static int nTrials = 6;
+    private final static int nGames = 3;
    
     // Bench Configs
-    private final int nTeamPlayers = 5;
-    private final int nTrialPlayers = 3;
+    private final static int nTeamPlayers = 5;
+    private final static int nTrialPlayers = 3;
     
     // Playground Configs
-    private final int totalTrialPlayers = nTrialPlayers * 2;
-    private final int knockOutForce = 4;
-    private final int nTrialsOfGameDefault = 6;
+    private final static int totalTrialPlayers = nTrialPlayers * 2;
+    private final static int knockOutForce = 4;
+    private final static int pullTheRopeSleep = 100;
+    
+    // RefSite Configs
     
     // Main Configs
-    private final int nCoaches = 2;
-    private final int nPlayers = 10;
+    private final static int nCoaches = 2;
+    private final static int nPlayers = nTeamPlayers*2;
     
     // HashMaps
-    Map<String, Integer> playerConfig;
-    Map<String, Integer> refConfig;
-    Map<String, Integer> benchConfig;
-    Map<String, Integer> playgroundConfig;
-    Map<String, Integer> mainConfig;
-    
-    public ConfigRepository(){
-        playerConfig = new HashMap<>();
-        refConfig = new HashMap<>();
-        benchConfig = new HashMap<>();
-        playgroundConfig = new HashMap<>();
-        mainConfig = new HashMap<>();
-        
+    static Map<String, Integer> playerConfig = new HashMap<>();
+    static Map<String, Integer> refConfig = new HashMap<>();
+    static Map<String, Integer> benchConfig = new HashMap<>();
+    static Map<String, Integer> playgroundConfig = new HashMap<>();
+    static Map<String, Integer> refSiteConfig = new HashMap<>();
+    static Map<String, Integer> mainConfig = new HashMap<>();
+
+    // Getters
+    public static Map<String, Integer> getPlayerConfigs(){
         playerConfig.put("maxStrength", maxStrength);
-        
-        refConfig.put("nTrials", nTrials);
-        refConfig.put("nGames", nGames);
-                
-        benchConfig.put("nTeamPlayers", nTeamPlayers);
-        benchConfig.put("nTrialPlayers", nTrialPlayers);
-        
-        playgroundConfig.put("totalTrialPlayers", totalTrialPlayers);
-        playgroundConfig.put("knockOutForce", knockOutForce);
-        playgroundConfig.put("nTrialsOfGameDefault", nTrialsOfGameDefault);
-        
-        mainConfig.put("nCoaches", nCoaches);
-        mainConfig.put("nPlayers", nPlayers);
-    }
-    
-    public Map<String, Integer> getPlayerConfigs(){
         return playerConfig;
     }
     
-    public Map<String, Integer> getRefConfigs(){
+    public static Map<String, Integer> getRefConfigs(){
+        refConfig.put("nTrials", nTrials);
+        refConfig.put("nGames", nGames);
         return refConfig;
     }
         
-    public Map<String, Integer> getBenchConfigs(){
+    public static Map<String, Integer> getBenchConfigs(){
+        benchConfig.put("nTeamPlayers", nTeamPlayers);
+        benchConfig.put("nTrialPlayers", nTrialPlayers);
+        benchConfig.put("nCoaches", nCoaches);
         return benchConfig;
     }
     
-    public Map<String, Integer> getPlaygroundConfigs(){
+    public static Map<String, Integer> getPlaygroundConfigs(){
+        playgroundConfig.put("totalTrialPlayers", totalTrialPlayers);
+        playgroundConfig.put("knockOutForce", knockOutForce);
+        playgroundConfig.put("nTrialsOfGameDefault", nTrials);
+        playgroundConfig.put("pullTheRopeSleep", pullTheRopeSleep);
+        playgroundConfig.put("nCoaches", nCoaches);
         return playgroundConfig;
     }
     
-    public Map<String, Integer> getMainConfigs(){
+    public static Map<String, Integer> getRefSiteConfigs(){
+        refSiteConfig.put("nCoaches", nCoaches);
+        return refSiteConfig;
+    }
+    
+    public static Map<String, Integer> getMainConfigs(){
+        mainConfig.put("nCoaches", nCoaches);
+        mainConfig.put("nPlayers", nPlayers);
         return mainConfig;
     }
 }

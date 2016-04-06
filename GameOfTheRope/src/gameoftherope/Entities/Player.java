@@ -5,19 +5,19 @@
  */
 package gameoftherope.Entities;
 
+import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.playerState;
+import java.util.Map;
 
 /**
  *
  * @author brunosilva
  */
 public class Player extends Thread{
-
-    
-    private static final int maxStrength = 4;
+    private int maxStrength;
     
     private final IBenchPlayer bench;
     private final IPlaygroundPlayer playground;
@@ -33,7 +33,7 @@ public class Player extends Thread{
     
         
     public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo){
-        
+        config();
         this.team = team;
         this.bench = bench;
         this.playground = playground;
@@ -95,5 +95,10 @@ public class Player extends Thread{
                     break;
             }
         }
+    }
+    
+    private void config(){
+        Map<String, Integer> settings = ConfigRepository.getPlayerConfigs();
+        maxStrength = settings.get("maxStrength");
     }
 }

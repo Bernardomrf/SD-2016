@@ -11,5 +11,8 @@ package gameoftherope.Interfaces;
  */
 public interface IRefSiteCoach {
     
+    /**
+     *
+     */
     public void informReferee();
 }

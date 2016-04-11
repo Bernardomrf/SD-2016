@@ -25,6 +25,14 @@ public class Coach extends Thread{
     private coachState internalState;
     private final String team;
     
+    /**
+     *
+     * @param bench
+     * @param playground
+     * @param refSite
+     * @param team
+     * @param repo
+     */
     public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, GeneralRepository repo){
         this.bench = bench;
         this.playground = playground;

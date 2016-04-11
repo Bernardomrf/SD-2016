@@ -11,32 +11,60 @@ package gameoftherope;
  */
 public enum refState {
     
+    /**
+     *
+     */
     START_OF_THE_MATCH{
         @Override
         public String toString(){
             return "SOM";
         }
-    }, START_OF_A_GAME{
+    },
+
+    /**
+     *
+     */
+    START_OF_A_GAME{
         @Override
         public String toString(){
             return "SOF";
         }
-    }, TEAMS_READY{
+    },
+
+    /**
+     *
+     */
+    TEAMS_READY{
         @Override
         public String toString(){
             return "TRY";
         }
-    }, WAIT_FOR_TRIAL_CONCLUSION{
+    },
+
+    /**
+     *
+     */
+    WAIT_FOR_TRIAL_CONCLUSION{
         @Override
         public String toString(){
             return "WTC";
         }
-    }, END_OF_A_GAME{
+    },
+
+    /**
+     *
+     */
+    END_OF_A_GAME{
         @Override
         public String toString(){
             return "EOG";
         }
-    }, END_OF_THE_MATCH{
+    },
+
+    /**
+     *
+     */
+    END_OF_THE_MATCH{
         @Override
         public String toString(){
             return "EOM";

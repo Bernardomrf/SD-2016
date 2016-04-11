@@ -53,17 +53,30 @@ public class ConfigRepository {
     static Map<String, Integer> mainConfig = new HashMap<>();
 
     // Getters
+
+    /**
+     *
+     * @return
+     */
     public static Map<String, Integer> getPlayerConfigs(){
         playerConfig.put("maxStrength", maxStrength);
         return playerConfig;
     }
     
+    /**
+     *
+     * @return
+     */
     public static Map<String, Integer> getRefConfigs(){
         refConfig.put("nTrials", nTrials);
         refConfig.put("nGames", nGames);
         return refConfig;
     }
         
+    /**
+     *
+     * @return
+     */
     public static Map<String, Integer> getBenchConfigs(){
         benchConfig.put("nTeamPlayers", nTeamPlayers);
         benchConfig.put("nTrialPlayers", nTrialPlayers);
@@ -73,6 +86,10 @@ public class ConfigRepository {
         return benchConfig;
     }
     
+    /**
+     *
+     * @return
+     */
     public static Map<String, Integer> getPlaygroundConfigs(){
         playgroundConfig.put("totalTrialPlayers", totalTrialPlayers);
         playgroundConfig.put("knockOutForce", knockOutForce);
@@ -84,6 +101,10 @@ public class ConfigRepository {
         return playgroundConfig;
     }
     
+    /**
+     *
+     * @return
+     */
     public static Map<String, Integer> getRefSiteConfigs(){
         refSiteConfig.put("nCoaches", nCoaches);
         //refSiteConfig.put("refSiteHostName", refSiteHostName);
@@ -91,6 +112,10 @@ public class ConfigRepository {
         return refSiteConfig;
     }
     
+    /**
+     *
+     * @return
+     */
     public static Map<String, Integer> getMainConfigs(){
         mainConfig.put("nCoaches", nCoaches);
         mainConfig.put("nPlayers", nPlayers);

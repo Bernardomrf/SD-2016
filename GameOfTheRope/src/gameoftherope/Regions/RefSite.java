@@ -22,6 +22,9 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     private int bWins;
     private int coachesReady;
     
+    /**
+     *
+     */
     public RefSite(){
         config();
         this.aWins = 0;
@@ -29,6 +32,9 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
         coachesReady = 0;
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void announceNewGame() {
         try {
@@ -37,14 +43,24 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
         }
     }
 
+    /**
+     *
+     * @param knockOut
+     */
     @Override
     public synchronized void declareGameWinner(String knockOut) {
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void declareMatchWinner() {
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void waitForCoach() {
         while(coachesReady != nCoaches){
@@ -56,6 +72,9 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
         coachesReady = 0;
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void informReferee() {
         coachesReady++;

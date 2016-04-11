@@ -37,7 +37,13 @@ public class Referee extends Thread{
     private int[] wins;
     private int[] gameWins;
     
-    
+    /**
+     *
+     * @param refSite
+     * @param playground
+     * @param bench
+     * @param repo
+     */
     public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, GeneralRepository repo){
         config();
         this.refSite = refSite;

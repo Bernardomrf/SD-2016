@@ -10,17 +10,31 @@ package gameoftherope;
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
 public enum coachState {
+
+    /**
+     *
+     */
     WAIT_REFEREE_COMMAND{
         @Override
         public String toString(){
             return "WFRC";
         }
-    }, ASSEMBLE_TEAM{
+    },
+
+    /**
+     *
+     */
+    ASSEMBLE_TEAM{
         @Override
         public String toString(){
             return "ASTM";
         }
-    }, WATCH_TRIAL{
+    },
+
+    /**
+     *
+     */
+    WATCH_TRIAL{
         @Override
         public String toString(){
             return "WCTL";

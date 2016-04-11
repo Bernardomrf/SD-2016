@@ -10,12 +10,31 @@ package gameoftherope.Interfaces;
  * @author brunosilva
  */
 public interface IBenchPlayer {
+
+    /**
+     *
+     * @param team
+     * @param id
+     * @return
+     */
     public boolean seatAtTheBench(String team, int id); // Fica bloqueado no banco
     
+    /**
+     *
+     * @param team
+     */
     public void seatDown(String team);
     
+    /**
+     *
+     * @param team
+     */
     public void followCoachAdvice(String team); // passa para o playgound; Jogadores no banco decrementa, jogadores para jogar aumenta
                                     // Variavel independente para cada equipa
     
+    /**
+     *
+     * @return
+     */
     public boolean hasMatchFinished();
 }

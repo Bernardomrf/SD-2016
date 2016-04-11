@@ -39,6 +39,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private int allWins[];
     private int allGameWins[];
     
+    /**
+     *
+     */
     public Playground(){
         this.config();
         this.rope = 0;
@@ -60,6 +63,11 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         this.allGameWins[1] = 0;
     }
 
+    /**
+     *
+     * @param strenght
+     * @param team
+     */
     @Override
     public synchronized void pullTheRope(int strenght, String team) {
         if(team.equals("A")){
@@ -74,6 +82,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void callTrial() {
         while(coachesWaiting != nCoaches){
@@ -90,6 +101,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         knockOutB = false;   
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void startTrial() {
         startTrial = true;
@@ -97,6 +111,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         notifyAll();
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void assertTrialDecision() {
         if (rope > 0){
@@ -116,6 +133,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         notifyAll();
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void iamDone() {
         playersDone++;
@@ -125,6 +145,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         }
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void waitForTrial() {
         while(!trialFinished){
@@ -137,6 +160,10 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         notifyAll();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public synchronized int standInPosition() {
         playersReady++;
@@ -150,6 +177,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         return nTrials;
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void waitForTrialConclusion() {
         while (!wakeRef){
@@ -161,6 +191,10 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         wakeRef = false;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public synchronized String checkKnockout() {
         if (knockOutA){
@@ -194,11 +228,19 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         return "X";
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public synchronized int getRope(){
         return rope;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public synchronized int[] getWins() {
         allWins[0] = aTrialWins;
@@ -206,6 +248,10 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         return allWins;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public synchronized int[] getGameWins() {
         return allGameWins;

@@ -25,6 +25,9 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
     ObjectInputStream in = null;                 
     ObjectOutputStream out = null;
     
+    /**
+     *
+     */
     public refSiteProxy(){
         Map<String, Integer> refSiteConfigs = ConfigRepository.getRefSiteConfigs();
         int port = refSiteConfigs.get("refSitePort");
@@ -44,14 +47,21 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
         }
     }
     
+    /**
+     *
+     */
     @Override
     public void informReferee() {
         try {
             out.writeObject("informReferee");
         } catch (IOException ex) {
         }
+        
     }
 
+    /**
+     *
+     */
     @Override
     public void waitForCoach() {
         try {
@@ -60,6 +70,9 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void announceNewGame() {
         try {
@@ -68,6 +81,10 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
         }
     }
 
+    /**
+     *
+     * @param knockOut
+     */
     @Override
     public void declareGameWinner(String knockOut) {
         try {
@@ -76,6 +93,9 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void declareMatchWinner() {
         try {

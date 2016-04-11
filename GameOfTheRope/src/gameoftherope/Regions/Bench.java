@@ -13,8 +13,10 @@ import java.util.Map;
 import java.util.Random;
 
 /**
+ * Class to implement the bench monitor.
  *
- * @author brunosilva
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrf@ua.pt]
  */
 public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     
@@ -34,7 +36,9 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     private int playersReadyB;
     private int coachesWaiting;
 
-    
+    /**
+     * Constructor for Bench class
+     */
     public Bench(){
         config();
         nBenchPlayersA = 0;
@@ -50,7 +54,13 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         coachesWaiting = 0;
     }
     
-
+    /**  
+     * Method blocks and waits for all players to be seated at the bench.
+     * It's called by coaches only.
+     * 
+     * @param team String - A String representing what team the coach belongs to. 
+     *                      Valid options are only "A" or "B".
+     */
     @Override
     public synchronized void reviewNotes(String team) {
         if (team.equals("A")){
@@ -71,6 +81,15 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         }
     }
 
+    /**
+     * This method generates an array of random player numbers to be called to play.
+     * Method does not block, and notifies players.
+     * Method called by coaches only.
+     * 
+     * @param team String - A String representing what team the coach belongs to. 
+     *                      Valid options are only "A" or "B".
+     * @return int[] - An array containing the players that will play.
+     */
     @Override
     public synchronized int [] callContestants(String team) {
         if (team.equals("A")){
@@ -89,6 +108,14 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         return null;
     }
 
+    /**
+     * This method makes players ready to play.
+     * Method does not block, and notifies coaches.
+     * Method called by players only.
+     * 
+     * @param team String - A String representing what team the coach belongs to. 
+     *                      Valid options are only "A" or "B".
+     */
     @Override
     public synchronized void followCoachAdvice(String team) {
         if (team.equals("A")){
@@ -100,6 +127,10 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         notifyAll();
     }
 
+    /**
+     * Method blocks and waits for the referee to come to the bench.
+     * It's called by coaches only. 
+     */
     @Override
     public synchronized void waitForRefCommand() {
         coachesWaiting++;
@@ -117,14 +148,27 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         coachesWaiting--;
     }
     
+    /** 
+     * Method does not block and notifies the coaches.
+     * It's called by the referee only.
+     */
     @Override
     public synchronized void signalCoaches(){
         wakeCoaches = nCoaches;
         notifyAll();
     }
     
-    
-
+    /**
+     * This method makes players seat at the bench and wait for the referee.
+     * Method blocks until coaches wake players to play.
+     * Also it checks if player is in the list of players to play.
+     * Method called by players only.
+     * 
+     * @param team String - A String representing what team the coach belongs to. 
+     *                      Valid options are only "A" or "B".
+     * @param id int - ID of the player that is going to seat at the bench.
+     * @return boolean - Returns true if the player after being woken up is going to play or false if not.
+     */
     @Override
     public synchronized boolean seatAtTheBench(String team, int id) {
         if (team.equals("A")){
@@ -168,11 +212,22 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         return false;
     }
 
+    /**
+     * Method to check if the match has finished.
+     * It can be called by players or coaches.
+     * 
+     * @return boolean - true if the match has finished, false if not.
+     */
     @Override
     public synchronized boolean hasMatchFinished() {
         return matchFinish;
     }
 
+    /**
+     * Method to set the match has finished.
+     * It blocks and waits for coaches to be waiting.
+     * Method can be called by the referee only.
+     */
     @Override
     public synchronized void setMatchFinish() {
         matchFinish = true;
@@ -184,6 +239,14 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         notifyAll();
     }
 
+    /**
+     * Method increments the number of players that are seated.
+     * Does not block and notifies coaches.
+     * Method to be called by players only.
+     * 
+     * @param team String - A String representing what team the coach belongs to. 
+     *                      Valid options are only "A" or "B".
+     */
     @Override
     public synchronized void seatDown(String team) {
         if (team.equals("A")){
@@ -195,6 +258,13 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         notifyAll();
     }
 
+    /**
+     * Method blocks and waits for all players that are playing to be on the playground ready.
+     * It's called by coaches only.
+     *
+     * @param team String - A String representing what team the coach belongs to. 
+     *                      Valid options are only "A" or "B".
+     */
     @Override
     public synchronized void playersReady(String team) {
         if (team.equals("A")){

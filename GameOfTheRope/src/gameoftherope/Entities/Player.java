@@ -31,7 +31,14 @@ public class Player extends Thread{
     private int nTrials;
     private int nPlayerTrials;
     
-        
+    /**
+     *
+     * @param playground
+     * @param bench
+     * @param team
+     * @param id
+     * @param repo
+     */
     public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo){
         config();
         this.team = team;

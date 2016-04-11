@@ -44,6 +44,10 @@ public class GeneralRepository {
     private String filename;
     private static PrintWriter pw;
     
+    /**
+     *
+     * @throws FileNotFoundException
+     */
     public GeneralRepository() throws FileNotFoundException{
         playersStrengthA = new int[5];
         playersStrengthB = new int[5];
@@ -74,16 +78,30 @@ public class GeneralRepository {
         pw.println();
     }
     
+    /**
+     *
+     */
     public synchronized void printHeader(){
             pw.println("Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5       Trial");
             pw.println("Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS");
     }
     
+    /**
+     *
+     * @param state
+     */
     public synchronized void changeRefState(refState state){
         refereeState = state;
         printLine();
     }
     
+    /**
+     *
+     * @param state
+     * @param id
+     * @param team
+     * @param strength
+     */
     public synchronized void changePlayerState(playerState state, int id, String team, int strength){
         if (team.equals("A")){
             if (state == playersStatesA[id]) {
@@ -103,6 +121,11 @@ public class GeneralRepository {
         printLine();
     }
     
+    /**
+     *
+     * @param state
+     * @param team
+     */
     public synchronized void changeCoachState(coachState state, String team){
         if (team.equals("A")){
             if (state == coachesStates[0]) {
@@ -120,6 +143,13 @@ public class GeneralRepository {
         printLine();
     }
     
+    /**
+     *
+     * @param state
+     * @param strength
+     * @param id
+     * @param team
+     */
     public synchronized void initPlayer(playerState state, int strength, int id, String team){
         if (team.equals("A")){
             playersStatesA[id] = state;
@@ -131,6 +161,11 @@ public class GeneralRepository {
         }
     }
     
+    /**
+     *
+     * @param state
+     * @param team
+     */
     public synchronized void initCoach(coachState state, String team){
         if (team.equals("A")){
             coachesStates[0] = state;
@@ -140,10 +175,17 @@ public class GeneralRepository {
         }        
     }
     
+    /**
+     *
+     * @param state
+     */
     public synchronized void initRef(refState state){
         refereeState = state;
     }
     
+    /**
+     *
+     */
     public void printLine(){
         pw.print(refereeState);
         pw.print("  ");
@@ -199,6 +241,11 @@ public class GeneralRepository {
 
     }
     
+    /**
+     *
+     * @param pos
+     * @param team
+     */
     public synchronized void setPlayersPositions(int[] pos, String team){
         if (team.equals("A")){
             System.arraycopy(pos, 0, trialPosA, 0, trialPosA.length);  
@@ -215,6 +262,10 @@ public class GeneralRepository {
         return false;
     }
     
+    /**
+     *
+     * @param nGame
+     */
     public synchronized void newGame(int nGame){
         if(knockout.equals("newGame")){
             pw.println("Game "+ (nGame+1));
@@ -241,24 +292,48 @@ public class GeneralRepository {
         printHeader();
     }
     
+    /**
+     *
+     * @param nTrial
+     */
     public synchronized void newTrial(int nTrial){
         trialN = nTrial;
     }
     
+    /**
+     *
+     * @param rope
+     */
     public synchronized void setRope(int rope){
         ropePos = rope;
     }
+
+    /**
+     *
+     * @param wins
+     * @param knockout
+     */
     public synchronized void setWins(int[] wins, String knockout){
         trialsA = wins[0];
         trialsB = wins[1];
         this.knockout = knockout;
     }
+
+    /**
+     *
+     * @param gameWins
+     * @param nGame
+     */
     public synchronized void setGameWins(int[] gameWins, int nGame){
         gamesA = gameWins[0];
         gamesB = gameWins[1];
         finishMatch(nGame);
     }
     
+    /**
+     *
+     * @param nGame
+     */
     public synchronized void finishMatch(int nGame){
        
         if(!knockout.equals("X")){

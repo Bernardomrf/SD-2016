@@ -17,6 +17,10 @@ import java.util.Map;
  */
 public class generalServer {
     
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Map<String, Integer> mainConfigs = ConfigRepository.getMainConfigs();
         

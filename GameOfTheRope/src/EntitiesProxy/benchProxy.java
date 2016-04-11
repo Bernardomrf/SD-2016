@@ -5,9 +5,12 @@
  */
 package EntitiesProxy;
 
+import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
+import java.net.Socket;
+import java.util.Map;
 
 /**
  *
@@ -16,7 +19,10 @@ import gameoftherope.Interfaces.IBenchRef;
 public class benchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     
     public benchProxy(){
+        Map<String, Integer> benchConfigs = ConfigRepository.getBenchConfigs();
         
+        
+        Socket benchSocket = Socket(hostName, port)
     }
     
     @Override

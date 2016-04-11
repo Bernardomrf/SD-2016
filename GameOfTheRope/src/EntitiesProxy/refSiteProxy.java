@@ -5,8 +5,14 @@
  */
 package EntitiesProxy;
 
+import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.Map;
 
 /**
  *
@@ -14,33 +20,68 @@ import gameoftherope.Interfaces.IRefSiteRef;
  */
 public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
     
+    Socket refSiteSocket = null;
+    
+    ObjectInputStream in = null;                 
+    ObjectOutputStream out = null;
+    
     public refSiteProxy(){
+        Map<String, Integer> refSiteConfigs = ConfigRepository.getRefSiteConfigs();
+        int port = refSiteConfigs.get("refSitePort");
         
+        try {
+            refSiteSocket = new Socket("localhost", port);
+        } catch (IOException ex) {
+        }
+                                          
+        try {
+            in = new ObjectInputStream (refSiteSocket.getInputStream());
+        } catch (IOException ex) {
+        }
+        try {
+            out = new ObjectOutputStream (refSiteSocket.getOutputStream());
+        } catch (IOException ex) {
+        }
     }
     
     @Override
     public void informReferee() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            out.writeObject("informReferee");
+        } catch (IOException ex) {
+        }
     }
 
     @Override
     public void waitForCoach() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            out.writeObject("informReferee");
+        } catch (IOException ex) {
+        }
     }
 
     @Override
     public void announceNewGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            out.writeObject("informReferee");
+        } catch (IOException ex) {
+        }
     }
 
     @Override
     public void declareGameWinner(String knockOut) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            out.writeObject("informReferee-"+knockOut);
+        } catch (IOException ex) {
+        }
     }
 
     @Override
     public void declareMatchWinner() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            out.writeObject("informReferee");
+        } catch (IOException ex) {
+        }
     }
     
 }

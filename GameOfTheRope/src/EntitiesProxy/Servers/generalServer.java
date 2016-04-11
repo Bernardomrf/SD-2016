@@ -5,7 +5,11 @@
  */
 package EntitiesProxy.Servers;
 
+import gameoftherope.ConfigRepository;
+import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Map;
 
 /**
  *
@@ -14,9 +18,28 @@ import java.net.ServerSocket;
 public class generalServer {
     
     public static void main(String[] args) {
+        Map<String, Integer> mainConfigs = ConfigRepository.getMainConfigs();
+        
+        boolean goOn = true;
+        
         ServerSocket listeningSocket = null;           // socket de escuta
-        int portNumb = 4000;                           // número do port em que o serviço é estabelecido
+        int portNumb = mainConfigs.get("generalServerPort");                           // número do port em que o serviço é estabelecido
         GameOfTheRopeProtocol prot = new GameOfTheRopeProtocol();
+        
+        try {
+            listeningSocket = new ServerSocket(portNumb);
+        } catch (IOException ex) {}
+        
+        while(goOn){
+            Socket commSocket = null;
+            
+            try {
+                commSocket = listeningSocket.accept();
+            } catch (Exception e) {
+            }
+            
+            
+        }
     }
     
 }

@@ -14,6 +14,7 @@ import java.util.Map;
  */
 public class ConfigRepository {
     
+    
     // Player Configs
     private final static int maxStrength = 4;
     
@@ -24,17 +25,24 @@ public class ConfigRepository {
     // Bench Configs
     private final static int nTeamPlayers = 5;
     private final static int nTrialPlayers = 3;
+    private final static String benchHostName = "localhost";
+    private final static int benchPort = 22131;
     
     // Playground Configs
     private final static int totalTrialPlayers = nTrialPlayers * 2;
     private final static int knockOutForce = 4;
     private final static int pullTheRopeSleep = 100;
+    private final static String playgroundHostName = "localhost";
+    private final static int playgroundPort = 22132;
     
     // RefSite Configs
+    private final static String refSiteHostName = "localhost";
+    private final static int refSitePort = 22133;
     
     // Main Configs
     private final static int nCoaches = 2;
     private final static int nPlayers = nTeamPlayers*2;
+    private final static int generalServerPort = 22130;
     
     // HashMaps
     static Map<String, Integer> playerConfig = new HashMap<>();
@@ -60,6 +68,8 @@ public class ConfigRepository {
         benchConfig.put("nTeamPlayers", nTeamPlayers);
         benchConfig.put("nTrialPlayers", nTrialPlayers);
         benchConfig.put("nCoaches", nCoaches);
+        //benchConfig.put("benchHostName", benchHostName);
+        benchConfig.put("benchPort", benchPort);
         return benchConfig;
     }
     
@@ -69,17 +79,22 @@ public class ConfigRepository {
         playgroundConfig.put("nTrialsOfGameDefault", nTrials);
         playgroundConfig.put("pullTheRopeSleep", pullTheRopeSleep);
         playgroundConfig.put("nCoaches", nCoaches);
+        //playgroundConfig.put("playgroundHostName", playgroundHostName);
+        playgroundConfig.put("playgroundPort", playgroundPort);
         return playgroundConfig;
     }
     
     public static Map<String, Integer> getRefSiteConfigs(){
         refSiteConfig.put("nCoaches", nCoaches);
+        //refSiteConfig.put("refSiteHostName", refSiteHostName);
+        refSiteConfig.put("refSitePort", refSitePort);
         return refSiteConfig;
     }
     
     public static Map<String, Integer> getMainConfigs(){
         mainConfig.put("nCoaches", nCoaches);
         mainConfig.put("nPlayers", nPlayers);
+        mainConfig.put("generalServerPort", generalServerPort);
         return mainConfig;
     }
 }

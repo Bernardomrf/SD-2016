@@ -12,8 +12,10 @@ import gameoftherope.Interfaces.IPlaygroundRef;
 import java.util.Map;
 
 /**
+ * Class to implement the playground monitor.
  *
- * @author brunosilva
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrf@ua.pt]
  */
 public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef{
 
@@ -40,7 +42,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private int allGameWins[];
     
     /**
-     *
+     * Constructor for Playground class
      */
     public Playground(){
         this.config();
@@ -64,9 +66,12 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
+     * Method used to pull the rope, changes are made to the rope before sleep is performed.
+     * Method can only be called by players.
      *
-     * @param strenght
-     * @param team
+     * @param strenght int - Strength of the player that is pulling the rope.
+     * @param team String - A String representing what team the coach belongs to. 
+     *                      Valid options are only "A" or "B".
      */
     @Override
     public synchronized void pullTheRope(int strenght, String team) {
@@ -83,6 +88,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
+     * Method used to reset current trial and call a new one.
+     * It is called by the referee only.
+     * Blocks until coaches are ready for the start of the new trial.
      *
      */
     @Override
@@ -102,6 +110,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
+     * Method used to start a new trial.
+     * It's called by the referee only.
+     * Notifies all entities that trail has begun.
      *
      */
     @Override
@@ -112,7 +123,11 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     *
+     * Method used to evaluate who won the trail.
+     * It's able to distinguish between normal win and knockout win.
+     * Method is called by the referee only.
+     * Notifies players and coaches.
+     * 
      */
     @Override
     public synchronized void assertTrialDecision() {

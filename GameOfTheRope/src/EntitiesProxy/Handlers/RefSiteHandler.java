@@ -5,24 +5,54 @@
  */
 package EntitiesProxy.Handlers;
 
-import gameoftherope.Regions.RefSite;
+import gameoftherope.Protocols.RefSiteProtocol;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class RefSiteHandler extends Thread{
-    private RefSite refSite;
+public class RefSiteHandler extends Thread {
+
     private Socket socket;
-    
-    public RefSiteHandler(RefSite site, Socket commSocket){
-        refSite = site;
+    private RefSiteProtocol protocol;
+    private ObjectInputStream in = null;
+    private ObjectOutputStream out = null;
+
+    public RefSiteHandler(Socket commSocket, RefSiteProtocol rsp) {
         socket = commSocket;
+        protocol = rsp;
+
+        try {
+            out = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+        }
+        try {
+            in = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+        }
     }
-    
+
     @Override
-    public void run(){
-        
+    public void run() {
+        boolean end = false;
+        String inputLine = null; 
+        String outputLine = null;
+
+        while (!end) {
+            try {
+                inputLine = (String) in.readObject();
+            } catch (IOException ex) {
+            } catch (ClassNotFoundException ex) {
+            }
+            outputLine = protocol.processInput(inputLine);
+            try {
+                out.writeObject(outputLine);
+            } catch (IOException ex) {
+            }
+        }
     }
 }

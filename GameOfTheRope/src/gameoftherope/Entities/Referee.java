@@ -130,7 +130,7 @@ public class Referee extends Thread{
                     break;
                 case END_OF_THE_MATCH:
                     refSite.declareMatchWinner();
-                    bench.setMatchFinish();
+                    bench.setMatchFinish(); // Fazer setMatchFinish no playground e no refSite
                     gameWins = playground.getGameWins();
                     repo.setWins(wins, knockOut);
                     repo.setGameWins(gameWins, gamesDone);

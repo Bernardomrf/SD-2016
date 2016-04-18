@@ -5,21 +5,19 @@
  */
 package gameoftherope;
 
+import EntitiesProxy.RefSiteProxy;
 import gameoftherope.Entities.Coach;
 import gameoftherope.Entities.Player;
 import gameoftherope.Entities.Referee;
+import gameoftherope.EntitiesStarters.RefereeStarter;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
-import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteCoach;
-import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.Regions.Bench;
 import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.Regions.Playground;
-import gameoftherope.Regions.RefSite;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
@@ -44,12 +42,15 @@ public class GameOfTheRope extends Thread {
 
         Bench bench = new Bench();
         Playground playground = new Playground();
-        RefSite refSite = new RefSite();
+        //RefSite refSite = new RefSite();
+        RefSiteProxy refSite = new RefSiteProxy();
         GeneralRepository repo = new GeneralRepository();
 
         repo.printHeader();
 
-        Referee ref = new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, repo);
+        //Referee ref = new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, repo);
+        RefereeStarter rs = new RefereeStarter();
+        Referee ref = rs.start(repo, bench, playground, refSite);
         ref.setName("Ref");
 
         Coach[] coach = new Coach[nCoaches];

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameoftherope;
+package gameoftherope.Protocols;
 
 /**
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class GameOfTheRopeProtocol {
-    // Definir que handler usar dependendo do serviço que se connectar
+public class RefSiteProtocol {
+    
 }

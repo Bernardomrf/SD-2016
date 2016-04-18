@@ -11,8 +11,10 @@ import gameoftherope.Interfaces.IRefSiteRef;
 import java.util.Map;
 
 /**
+ * Class to implement the bench monitor.
  *
- * @author brunosilva
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrf@ua.pt]
  */
 public class RefSite implements IRefSiteRef, IRefSiteCoach{
     
@@ -23,7 +25,7 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     private int coachesReady;
     
     /**
-     *
+     * Constructor for RefSite class
      */
     public RefSite(){
         config();
@@ -33,7 +35,9 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     }
 
     /**
-     *
+     * Method to announce new game.
+     * It waits for a random number of seconds before the start of the match.
+     * Method can be called by the referee only.
      */
     @Override
     public synchronized void announceNewGame() {
@@ -44,22 +48,27 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     }
 
     /**
-     *
-     * @param knockOut
+     * Method to declare the game winner.
+     * Transition state
+     * Method can be called by the referee only.
      */
     @Override
-    public synchronized void declareGameWinner(String knockOut) {
+    public synchronized void declareGameWinner() {
     }
 
     /**
-     *
+     * Method to declare the match winner.
+     * Transition state
+     * Method can be called by the referee only.
      */
     @Override
     public synchronized void declareMatchWinner() {
     }
 
     /**
-     *
+     * Method to wait for coach signal.
+     * It blocks and waits for both coaches signal.
+     * Method can be called by the referee only.
      */
     @Override
     public synchronized void waitForCoach() {
@@ -72,8 +81,9 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
         coachesReady = 0;
     }
 
-    /**
-     *
+    /** 
+     * Method does not block and notifies the coaches.
+     * It's called by the referee only.
      */
     @Override
     public synchronized void informReferee() {

@@ -110,7 +110,7 @@ public class Referee extends Thread{
                 case END_OF_A_GAME:
                     trialsDone = 0;
     
-                    refSite.declareGameWinner(knockOut);
+                    refSite.declareGameWinner();
                     //System.out.println(gamesDone);
                     gamesDone ++;
                     if (gamesDone == nGames){

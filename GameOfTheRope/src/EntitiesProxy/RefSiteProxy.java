@@ -18,7 +18,7 @@ import java.util.Map;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
+public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     
     Socket refSiteSocket = null;
     
@@ -28,7 +28,7 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
     /**
      *
      */
-    public refSiteProxy(){
+    public RefSiteProxy(){
         Map<String, Integer> refSiteConfigs = ConfigRepository.getRefSiteConfigs();
         int port = refSiteConfigs.get("refSitePort");
         
@@ -56,6 +56,10 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
             out.writeObject("informReferee");
         } catch (IOException ex) {
         }
+        try {
+            in.read();
+        } catch (IOException ex) {
+        }
         
     }
 
@@ -65,7 +69,11 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
     @Override
     public void waitForCoach() {
         try {
-            out.writeObject("informReferee");
+            out.writeObject("waitForCoach");
+        } catch (IOException ex) {
+        }
+        try {
+            in.read();
         } catch (IOException ex) {
         }
     }
@@ -76,19 +84,26 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
     @Override
     public void announceNewGame() {
         try {
-            out.writeObject("informReferee");
+            out.writeObject("announceNewGame");
+        } catch (IOException ex) {
+        }
+        try {
+            in.read();
         } catch (IOException ex) {
         }
     }
 
     /**
      *
-     * @param knockOut
      */
     @Override
-    public void declareGameWinner(String knockOut) {
+    public void declareGameWinner() {
         try {
-            out.writeObject("informReferee-"+knockOut);
+            out.writeObject("declareGameWinner");
+        } catch (IOException ex) {
+        }
+        try {
+            in.read();
         } catch (IOException ex) {
         }
     }
@@ -99,9 +114,12 @@ public class refSiteProxy implements IRefSiteCoach, IRefSiteRef{
     @Override
     public void declareMatchWinner() {
         try {
-            out.writeObject("informReferee");
+            out.writeObject("declareMatchWinner");
         } catch (IOException ex) {
         }
-    }
-    
+        try {
+            in.read();
+        } catch (IOException ex) {
+        }
+    }    
 }

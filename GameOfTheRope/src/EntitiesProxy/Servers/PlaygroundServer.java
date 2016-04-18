@@ -9,6 +9,6 @@ package EntitiesProxy.Servers;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class playgroundHandler {
+public class PlaygroundServer {
     
 }

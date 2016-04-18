@@ -9,6 +9,6 @@ package EntitiesProxy.Servers;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class GameOfTheRopeProtocol {
-    // Definir que handler usar dependendo do serviço que se connectar
+public class BenchServer {
+    
 }

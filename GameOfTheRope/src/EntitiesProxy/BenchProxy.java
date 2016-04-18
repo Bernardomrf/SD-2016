@@ -18,12 +18,12 @@ import java.util.Map;
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrf@ua.pt]
  */
-public class benchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
+public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     
     /**
      *
      */
-    public benchProxy(){
+    public BenchProxy(){
         Map<String, Integer> benchConfigs = ConfigRepository.getBenchConfigs();
         int port = benchConfigs.get("benchPort");
         String hostName = "localhost";

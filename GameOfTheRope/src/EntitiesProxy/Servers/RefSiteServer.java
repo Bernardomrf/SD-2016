@@ -5,29 +5,28 @@
  */
 package EntitiesProxy.Servers;
 
-import gameoftherope.ConfigRepository;
+import EntitiesProxy.Handlers.RefSiteHandler;
+import gameoftherope.GameOfTheRopeProtocol;
+import gameoftherope.Regions.RefSite;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Map;
 
 /**
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class generalServer {
-    
-    /**
-     *
-     * @param args
-     */
+public class RefSiteServer {
     public static void main(String[] args) {
-        Map<String, Integer> mainConfigs = ConfigRepository.getMainConfigs();
+        //Map<String, Integer> mainConfigs = ConfigRepository.getRefSiteConfigs();
+        
+        RefSite refSite = new RefSite();
         
         boolean goOn = true;
         
         ServerSocket listeningSocket = null;           // socket de escuta
-        int portNumb = mainConfigs.get("generalServerPort");                           // número do port em que o serviço é estabelecido
+        //int portNumb = mainConfigs.get("refSitePort");                           // número do port em que o serviço é estabelecido
+        int portNumb = 22133;
         GameOfTheRopeProtocol prot = new GameOfTheRopeProtocol();
         
         try {
@@ -36,14 +35,15 @@ public class generalServer {
         
         while(goOn){
             Socket commSocket = null;
+            RefSiteHandler handler = null;
             
             try {
                 commSocket = listeningSocket.accept();
             } catch (Exception e) {
             }
             
-            
+            handler = new RefSiteHandler(refSite, commSocket);
+            handler.start();
         }
     }
-    
 }

@@ -13,12 +13,12 @@ import gameoftherope.Interfaces.IPlaygroundRef;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class playgroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef{
+public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef{
 
     /**
      *
      */
-    public playgroundProxy(){
+    public PlaygroundProxy(){
         
     }
     

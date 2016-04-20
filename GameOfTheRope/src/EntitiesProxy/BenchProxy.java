@@ -10,8 +10,6 @@ import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Map;
 
@@ -22,11 +20,6 @@ import java.util.Map;
  */
 public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     
-    Socket benchSocket = null;
-    
-    ObjectInputStream in = null;                 
-    ObjectOutputStream out = null;
-    
     /**
      *
      */
@@ -35,17 +28,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
         int port = benchConfigs.get("benchPort");
         String hostName = "localhost";
         
+        Socket benchSocket;
         try {
             benchSocket = new Socket(hostName, port);
-        } catch (IOException ex) {
-        }
-                                          
-        try {
-            in = new ObjectInputStream (benchSocket.getInputStream());
-        } catch (IOException ex) {
-        }
-        try {
-            out = new ObjectOutputStream (benchSocket.getOutputStream());
         } catch (IOException ex) {
         }
     }
@@ -56,14 +41,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void reviewNotes(String team) {
-        try {
-            out.writeObject("informReferee");
-        } catch (IOException ex) {
-        }
-        try {
-            in.read();
-        } catch (IOException ex) {
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

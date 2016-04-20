@@ -78,7 +78,17 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public int[] callContestants(String team) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "callContestants";
+        outObject += "-" + team;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (int[]) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return (int[]) inObject;
     }
 
     /**
@@ -86,7 +96,15 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void waitForRefCommand() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "waitForRefCommand";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -95,7 +113,16 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public boolean hasMatchFinished() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "hasMatchFinished";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (boolean) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return (boolean) inObject;
     }
 
     /**
@@ -104,7 +131,16 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void playersReady(String team) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "playersReady";
+        outObject += "-" + team;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -115,7 +151,17 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public boolean seatAtTheBench(String team, int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "seatAtTheBench";
+        outObject += "-" + team + ";" + id;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (boolean) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return (boolean) inObject;
     }
 
     /**
@@ -124,7 +170,16 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void seatDown(String team) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "seatDown";
+        outObject += "-" + team;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -133,7 +188,16 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void followCoachAdvice(String team) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "followCoachAdvice";
+        outObject += "-" + team;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -141,7 +205,15 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void signalCoaches() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "signalCoaches";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -149,6 +221,14 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void setMatchFinish() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "setMatchFinish";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }    
 }

@@ -5,6 +5,8 @@
  */
 package gameoftherope.EntitiesStarters;
 
+import EntitiesProxy.BenchProxy;
+import EntitiesProxy.PlaygroundProxy;
 import EntitiesProxy.RefSiteProxy;
 import gameoftherope.Entities.Referee;
 import gameoftherope.Interfaces.IBenchRef;
@@ -13,17 +15,18 @@ import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.Regions.Bench;
 import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.Regions.Playground;
+import java.io.FileNotFoundException;
 
 /**
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
 public class RefereeStarter {
-    /*public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException {
         
         GeneralRepository repo = new GeneralRepository();
-        Bench bench = new Bench();
-        Playground playground = new Playground();
+        BenchProxy bench = new BenchProxy();
+        PlaygroundProxy playground = new PlaygroundProxy();
         
         RefSiteProxy refSite = new RefSiteProxy();
         
@@ -34,10 +37,5 @@ public class RefereeStarter {
             ref.join();
         } catch (InterruptedException ex) {
         }
-    }*/
-    
-    public Referee start(GeneralRepository repo, Bench bench, Playground playground, RefSiteProxy refSite){
-        Referee ref = new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, repo);
-        return ref;
     }
 }

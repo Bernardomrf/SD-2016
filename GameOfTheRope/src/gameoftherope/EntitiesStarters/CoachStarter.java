@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameoftherope;
+package gameoftherope.EntitiesStarters;
 
 import EntitiesProxy.BenchProxy;
 import EntitiesProxy.PlaygroundProxy;
 import EntitiesProxy.RefSiteProxy;
+import gameoftherope.ConfigRepository;
 import gameoftherope.Entities.Coach;
-import gameoftherope.Entities.Player;
 import gameoftherope.Entities.Referee;
-import gameoftherope.EntitiesStarters.RefereeStarter;
 import gameoftherope.Interfaces.IBenchCoach;
-import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundCoach;
-import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
@@ -28,37 +25,21 @@ import java.util.Map;
 
 /**
  *
- * @author Bernardo
+ * @author bernardo
  */
-public class GameOfTheRope extends Thread {
-
-    /**
-     * @param args the command line arguments
-     * @throws java.io.FileNotFoundException
-     */
+public class CoachStarter {
     public static void main(String[] args) throws FileNotFoundException {
         
+        GeneralRepository repo = new GeneralRepository();
+        BenchProxy bench = new BenchProxy();
+        PlaygroundProxy playground = new PlaygroundProxy();
+        RefSiteProxy refSite = new RefSiteProxy();
+        
         int nCoaches;
-        int nPlayers;
         
         Map<String, Integer> settings = ConfigRepository.getMainConfigs();
         nCoaches = settings.get("nCoaches");
-        nPlayers = settings.get("nPlayers");
-
-        //Bench bench = new Bench();
-        //Playground playground = new Playground();
-        //RefSite refSite = new RefSite();
-        BenchProxy bench = new BenchProxy();
-        PlaygroundProxy playground = new PlaygroundProxy();;
-        RefSiteProxy refSite = new RefSiteProxy();
-        GeneralRepository repo = new GeneralRepository();
-
-        repo.printHeader();
-
-        Referee ref = new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, repo);
-
-        ref.setName("Ref");
-
+        
         Coach[] coach = new Coach[nCoaches];
         for (int i = 0; i < nCoaches; i++) {
             playground = new PlaygroundProxy();
@@ -72,40 +53,11 @@ public class GameOfTheRope extends Thread {
             coach[i].setName("Coach" + i);
             coach[i].start();
         }
-
-        Player[] player = new Player[nPlayers];
-        for (int i = 0; i < nPlayers; i++) {
-            playground = new PlaygroundProxy();
-            bench = new BenchProxy();
-            if (i < 5) {
-                player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "A", i, repo);
-            } else {
-                player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "B", i - 5, repo);
-            }
-            player[i].setName("Player" + i);
-            player[i].start();
-        }
-
-        ref.start();
-
         for (int i = 0; i < nCoaches; i++) {
             try {
                 coach[i].join();
             } catch (InterruptedException ex) {
             }
-        }
-
-        for (int i = 0; i < nPlayers; i++) {
-
-            try {
-                player[i].join();
-            } catch (InterruptedException ex) {
-            }
-        }
-
-        try {
-            ref.join();
-        } catch (InterruptedException ex) {
         }
     }
 }

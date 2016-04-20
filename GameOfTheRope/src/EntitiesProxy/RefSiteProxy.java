@@ -25,15 +25,19 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     ObjectInputStream in = null;                 
     ObjectOutputStream out = null;
     
+    String outString = null;
+    String inString = null;
+    
     /**
      *
      */
     public RefSiteProxy(){
         Map<String, Integer> refSiteConfigs = ConfigRepository.getRefSiteConfigs();
         int port = refSiteConfigs.get("refSitePort");
+        String hostName = "localhost";
         
         try {
-            refSiteSocket = new Socket("localhost", port);
+            refSiteSocket = new Socket(hostName, port);
         } catch (IOException ex) {
         }
                                           
@@ -52,13 +56,14 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
      */
     @Override
     public void informReferee() {
+        outString = "informReferee";
         try {
-            out.writeObject("informReferee");
+            out.writeObject(outString);
         } catch (IOException ex) {
         }
         try {
-            in.read();
-        } catch (IOException ex) {
+            inString = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
         }
         
     }
@@ -68,13 +73,14 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
      */
     @Override
     public void waitForCoach() {
+        outString = "waitForCoach";
         try {
-            out.writeObject("waitForCoach");
+            out.writeObject(outString);
         } catch (IOException ex) {
         }
         try {
-            in.read();
-        } catch (IOException ex) {
+            inString = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
         }
     }
 
@@ -83,13 +89,14 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
      */
     @Override
     public void announceNewGame() {
+        outString = "announceNewGame";
         try {
-            out.writeObject("announceNewGame");
+            out.writeObject(outString);
         } catch (IOException ex) {
         }
         try {
-            in.read();
-        } catch (IOException ex) {
+            inString = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
         }
     }
 
@@ -98,13 +105,14 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
      */
     @Override
     public void declareGameWinner() {
+        outString = "declareGameWinner";
         try {
-            out.writeObject("declareGameWinner");
+            out.writeObject(outString);
         } catch (IOException ex) {
         }
         try {
-            in.read();
-        } catch (IOException ex) {
+            inString = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
         }
     }
 
@@ -113,13 +121,14 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
      */
     @Override
     public void declareMatchWinner() {
+        outString = "declareMatchWinner";
         try {
-            out.writeObject("declareMatchWinner");
+            out.writeObject(outString);
         } catch (IOException ex) {
         }
         try {
-            in.read();
-        } catch (IOException ex) {
+            inString = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
         }
     }    
 }

@@ -39,16 +39,15 @@ public class RefSiteHandler extends Thread {
     @Override
     public void run() {
         boolean end = false;
-        String inputLine = null; 
-        String outputLine = null;
+        Object inputLine = null; 
+        Object outputLine = null;
 
         while (!end) {
             try {
                 inputLine = (String) in.readObject();
-            } catch (IOException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
             }
-            outputLine = protocol.processInput(inputLine);
+            outputLine = protocol.processInput((String)inputLine);
             try {
                 out.writeObject(outputLine);
             } catch (IOException ex) {

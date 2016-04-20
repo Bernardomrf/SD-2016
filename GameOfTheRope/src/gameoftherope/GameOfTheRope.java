@@ -5,6 +5,7 @@
  */
 package gameoftherope;
 
+import EntitiesProxy.PlaygroundProxy;
 import EntitiesProxy.RefSiteProxy;
 import gameoftherope.Entities.Coach;
 import gameoftherope.Entities.Player;
@@ -41,8 +42,9 @@ public class GameOfTheRope extends Thread {
         nPlayers = settings.get("nPlayers");
 
         Bench bench = new Bench();
-        Playground playground = new Playground();
+        //Playground playground = new Playground();
         //RefSite refSite = new RefSite();
+        PlaygroundProxy playground = new PlaygroundProxy();;
         RefSiteProxy refSite = new RefSiteProxy();
         GeneralRepository repo = new GeneralRepository();
 
@@ -55,6 +57,7 @@ public class GameOfTheRope extends Thread {
 
         Coach[] coach = new Coach[nCoaches];
         for (int i = 0; i < nCoaches; i++) {
+            playground = new PlaygroundProxy();
             refSite = new RefSiteProxy();
             if (i < 1) {
                 coach[i] = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "A", repo);
@@ -67,6 +70,7 @@ public class GameOfTheRope extends Thread {
 
         Player[] player = new Player[nPlayers];
         for (int i = 0; i < nPlayers; i++) {
+            playground = new PlaygroundProxy();
             if (i < 5) {
                 player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "A", i, repo);
             } else {

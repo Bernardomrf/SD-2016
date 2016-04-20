@@ -5,6 +5,7 @@
  */
 package gameoftherope.EntitiesStarters;
 
+import EntitiesProxy.PlaygroundProxy;
 import EntitiesProxy.RefSiteProxy;
 import gameoftherope.Entities.Referee;
 import gameoftherope.Interfaces.IBenchRef;
@@ -36,8 +37,9 @@ public class RefereeStarter {
         }
     }*/
     
-    public Referee start(GeneralRepository repo, Bench bench, Playground playground, RefSiteProxy refSite){
+    public Referee start(GeneralRepository repo, Bench bench, PlaygroundProxy playground, RefSiteProxy refSite){
         Referee ref = new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, repo);
         return ref;
     }
+    
 }

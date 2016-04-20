@@ -5,9 +5,15 @@
  */
 package EntitiesProxy;
 
+import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.Map;
 
 /**
  *
@@ -15,11 +21,35 @@ import gameoftherope.Interfaces.IPlaygroundRef;
  */
 public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef{
 
+    Socket playgroundSocket = null;
+    
+    ObjectInputStream in = null;                 
+    ObjectOutputStream out = null;
+    
+    Object outObject = null;
+    Object inObject = null;
+    
     /**
      *
      */
     public PlaygroundProxy(){
+        Map<String, Integer> playgroundConfigs = ConfigRepository.getPlaygroundConfigs();
+        int port = playgroundConfigs.get("playgroundPort");
+        String hostName = "localhost";
         
+        try {
+            playgroundSocket = new Socket(hostName, port);
+        } catch (IOException ex) {
+        }
+                                          
+        try {
+            in = new ObjectInputStream (playgroundSocket.getInputStream());
+        } catch (IOException ex) {
+        }
+        try {
+            out = new ObjectOutputStream (playgroundSocket.getOutputStream());
+        } catch (IOException ex) {
+        }
     }
     
     /**
@@ -27,7 +57,15 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void waitForTrial() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "waitForTrial";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }    
     }
 
     /**
@@ -36,7 +74,16 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public int standInPosition() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "standInPosition";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (int) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }  
+        return (int) inObject;
     }
 
     /**
@@ -46,7 +93,16 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void pullTheRope(int strenght, String team) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "pullTheRope";
+        outObject += "-" + strenght + ";" + team;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -54,7 +110,15 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void iamDone() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "iamDone";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }   
     }
 
     /**
@@ -62,7 +126,15 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void callTrial() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "callTrial";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -70,7 +142,15 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void startTrial() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "startTrial";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -78,7 +158,15 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void waitForTrialConclusion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "waitForTrialConclusion";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -86,7 +174,15 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void assertTrialDecision() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "assertTrialDecision";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -95,7 +191,16 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public String checkKnockout() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "checkKnockout";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }  
+        return (String) inObject;
     }
 
     /**
@@ -104,7 +209,16 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public int getRope() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "getRope";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (int) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }  
+        return (int) inObject;
     }
 
     /**
@@ -113,7 +227,16 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public int[] getWins() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "getWins";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (int[]) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }  
+        return (int[]) inObject;
     }
 
     /**
@@ -122,7 +245,16 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public int[] getGameWins() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        outObject = "getGameWins";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (int[]) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }  
+        return (int[]) inObject;
     }
     
 }

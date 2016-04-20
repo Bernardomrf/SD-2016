@@ -55,6 +55,7 @@ public class GameOfTheRope extends Thread {
 
         Coach[] coach = new Coach[nCoaches];
         for (int i = 0; i < nCoaches; i++) {
+            refSite = new RefSiteProxy();
             if (i < 1) {
                 coach[i] = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "A", repo);
             } else {

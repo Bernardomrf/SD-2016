@@ -27,6 +27,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     ObjectInputStream in = null;                 
     ObjectOutputStream out = null;
     
+    Object outObject = null;
+    Object inObject = null;
+    
     /**
      *
      */
@@ -56,13 +59,15 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void reviewNotes(String team) {
+        outObject = "reviewNotes";
+        outObject += "-" + team;
         try {
-            out.writeObject("informReferee");
+            out.writeObject(outObject);
         } catch (IOException ex) {
         }
         try {
-            in.read();
-        } catch (IOException ex) {
+            inObject = (String) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
         }
     }
 

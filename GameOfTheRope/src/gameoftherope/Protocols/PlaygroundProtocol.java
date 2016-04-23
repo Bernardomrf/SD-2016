@@ -19,6 +19,7 @@ public class PlaygroundProtocol {
     }
     
     public Object processInput(String input) throws UnsupportedOperationException{
+        System.out.println(input);
         String[] methodCall = input.split("-");
         String method = methodCall[0];
         switch (method) {
@@ -59,6 +60,7 @@ public class PlaygroundProtocol {
                 return playground.getWins();
             case "getGameWins":
                 return playground.getGameWins();
+            
             default:
                 throw new UnsupportedOperationException();
         }

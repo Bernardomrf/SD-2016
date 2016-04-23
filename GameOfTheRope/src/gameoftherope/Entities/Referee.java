@@ -9,8 +9,8 @@ import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.refState;
+import gameoftherope.EntityStateEnum.refState;
+import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import java.util.Map;
 
 
@@ -24,7 +24,7 @@ public class Referee extends Thread{
     private final IRefSiteRef refSite;
     private final IPlaygroundRef playground;
     private final IBenchRef bench;
-    private final GeneralRepository repo;
+    private final IGeneralRepositoryRef repo;
 
     private boolean goOn = true;
     private refState internalState;
@@ -44,7 +44,7 @@ public class Referee extends Thread{
      * @param bench
      * @param repo
      */
-    public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, GeneralRepository repo){
+    public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, IGeneralRepositoryRef repo){
         config();
         this.refSite = refSite;
         this.playground = playground;
@@ -57,6 +57,7 @@ public class Referee extends Thread{
         this.rope = 0;
         this.wins = new int[2];
         this.gameWins = new int[2];
+        repo.printHeader();
         repo.initRef(internalState);
     }
     

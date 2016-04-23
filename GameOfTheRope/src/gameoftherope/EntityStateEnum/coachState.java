@@ -19,6 +19,9 @@ public enum coachState {
         public String toString(){
             return "WFRC";
         }
+        public String toStringState(){
+            return "WAIT_REFEREE_COMMAND";
+        }
     },
 
     /**
@@ -29,6 +32,9 @@ public enum coachState {
         public String toString(){
             return "ASTM";
         }
+        public String toStringState(){
+            return "ASSEMBLE_TEAM";
+        }
     },
 
     /**
@@ -38,6 +44,9 @@ public enum coachState {
         @Override
         public String toString(){
             return "WCTL";
+        }
+        public String toStringState(){
+            return "WATCH_TRIAL";
         }
     }
 

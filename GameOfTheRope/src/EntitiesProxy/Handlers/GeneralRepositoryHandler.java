@@ -5,7 +5,7 @@
  */
 package EntitiesProxy.Handlers;
 
-import gameoftherope.Protocols.PlaygroundProtocol;
+import gameoftherope.Protocols.GeneralRepositoryProtocol;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,18 +13,17 @@ import java.net.Socket;
 
 /**
  *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * @author bernardo
  */
-public class PlaygroundHandler extends Thread {
-
+public class GeneralRepositoryHandler extends Thread{
     private Socket socket;
-    private PlaygroundProtocol protocol;
+    private GeneralRepositoryProtocol protocol;
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
 
-    public PlaygroundHandler(Socket commSocket, PlaygroundProtocol rsp) {
+    public GeneralRepositoryHandler(Socket commSocket, GeneralRepositoryProtocol bp) {
         socket = commSocket;
-        protocol = rsp;
+        protocol = bp;
 
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
@@ -41,7 +40,7 @@ public class PlaygroundHandler extends Thread {
         boolean end = false;
         Object inputLine = null; 
         Object outputLine = null;
-        
+
         while (!end) {
             try {
                 inputLine = (String) in.readObject();
@@ -54,5 +53,4 @@ public class PlaygroundHandler extends Thread {
             }
         }
     }
-    
 }

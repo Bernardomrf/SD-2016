@@ -5,11 +5,13 @@
  */
 package gameoftherope.Entities;
 
+import EntitiesProxy.GeneralRepositoryProxy;
 import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.playerState;
+import gameoftherope.EntityStateEnum.playerState;
+import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import java.util.Map;
 
 /**
@@ -21,7 +23,7 @@ public class Player extends Thread{
     
     private final IBenchPlayer bench;
     private final IPlaygroundPlayer playground;
-    private final GeneralRepository repo;
+    private final IGeneralRepositoryPlayer repo;
     private boolean goOn = true;
     private playerState internalState;
     private final String team;
@@ -39,7 +41,7 @@ public class Player extends Thread{
      * @param id
      * @param repo
      */
-    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo){
+    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, IGeneralRepositoryPlayer repo){
         config();
         this.team = team;
         this.bench = bench;

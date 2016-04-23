@@ -6,23 +6,23 @@
 package gameoftherope;
 
 import EntitiesProxy.BenchProxy;
+import EntitiesProxy.GeneralRepositoryProxy;
 import EntitiesProxy.PlaygroundProxy;
 import EntitiesProxy.RefSiteProxy;
 import gameoftherope.Entities.Coach;
 import gameoftherope.Entities.Player;
 import gameoftherope.Entities.Referee;
-import gameoftherope.EntitiesStarters.RefereeStarter;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
+import gameoftherope.Interfaces.IGeneralRepositoryCoach;
+import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
+import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.Bench;
-import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.Regions.Playground;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
@@ -49,13 +49,12 @@ public class GameOfTheRope extends Thread {
         //Playground playground = new Playground();
         //RefSite refSite = new RefSite();
         BenchProxy bench = new BenchProxy();
-        PlaygroundProxy playground = new PlaygroundProxy();;
+        PlaygroundProxy playground = new PlaygroundProxy();
         RefSiteProxy refSite = new RefSiteProxy();
-        GeneralRepository repo = new GeneralRepository();
+        GeneralRepositoryProxy repo = new GeneralRepositoryProxy();
 
-        repo.printHeader();
-
-        Referee ref = new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, repo);
+        
+        Referee ref = new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, (IGeneralRepositoryRef) repo);
 
         ref.setName("Ref");
 
@@ -64,10 +63,11 @@ public class GameOfTheRope extends Thread {
             playground = new PlaygroundProxy();
             refSite = new RefSiteProxy();
             bench = new BenchProxy();
+            repo = new GeneralRepositoryProxy();
             if (i < 1) {
-                coach[i] = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "A", repo);
+                coach[i] = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "A", (IGeneralRepositoryCoach) repo);
             } else {
-                coach[i] = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "B", repo);
+                coach[i] = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "B", (IGeneralRepositoryCoach) repo);
             }
             coach[i].setName("Coach" + i);
             coach[i].start();
@@ -77,10 +77,11 @@ public class GameOfTheRope extends Thread {
         for (int i = 0; i < nPlayers; i++) {
             playground = new PlaygroundProxy();
             bench = new BenchProxy();
+            repo = new GeneralRepositoryProxy();
             if (i < 5) {
-                player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "A", i, repo);
+                player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "A", i, (IGeneralRepositoryPlayer) repo);
             } else {
-                player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "B", i - 5, repo);
+                player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "B", i - 5, (IGeneralRepositoryPlayer) repo);
             }
             player[i].setName("Player" + i);
             player[i].start();

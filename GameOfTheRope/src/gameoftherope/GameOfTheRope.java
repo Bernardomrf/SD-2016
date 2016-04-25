@@ -23,6 +23,7 @@ import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
+import gameoftherope.Regions.ConfigRepository;
 import java.io.FileNotFoundException;
 import java.util.Map;
 

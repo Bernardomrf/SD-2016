@@ -47,6 +47,7 @@ public class GeneralRepositoryHandler extends Thread{
             } catch (IOException | ClassNotFoundException ex) {
             }
             outputLine = protocol.processInput((String)inputLine);
+            inputLine = null;
             try {
                 out.writeObject(outputLine);
             } catch (IOException ex) {

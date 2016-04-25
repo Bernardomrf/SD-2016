@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameoftherope;
+package gameoftherope.Regions;
 
 import java.util.HashMap;
 import java.util.Map;

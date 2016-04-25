@@ -5,10 +5,10 @@
  */
 package EntitiesProxy;
 
-import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
+import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -34,7 +34,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     public PlaygroundProxy(){
         Map<String, Integer> playgroundConfigs = ConfigRepository.getPlaygroundConfigs();
-        int port = playgroundConfigs.get("playgroundPort");
+        int port = 22132;
         String hostName = "localhost";
         
         try {

@@ -5,9 +5,9 @@
  */
 package EntitiesProxy;
 
-import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
+import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -33,7 +33,7 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
      */
     public RefSiteProxy(){
         Map<String, Integer> refSiteConfigs = ConfigRepository.getRefSiteConfigs();
-        int port = refSiteConfigs.get("refSitePort");
+        int port = 22133;
         String hostName = "localhost";
         
         try {

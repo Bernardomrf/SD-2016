@@ -5,13 +5,11 @@
  */
 package gameoftherope.Entities;
 
-import EntitiesProxy.GeneralRepositoryProxy;
-import gameoftherope.ConfigRepository;
-import gameoftherope.Interfaces.IBenchPlayer;
-import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.EntityStateEnum.playerState;
+import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
+import gameoftherope.Interfaces.IPlaygroundPlayer;
+import gameoftherope.Regions.ConfigRepository;
 import java.util.Map;
 
 /**

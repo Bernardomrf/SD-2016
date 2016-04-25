@@ -48,6 +48,7 @@ public class RefSiteHandler extends Thread {
             } catch (IOException | ClassNotFoundException ex) {
             }
             outputLine = protocol.processInput((String)inputLine);
+            inputLine = null;
             try {
                 out.writeObject(outputLine);
             } catch (IOException ex) {

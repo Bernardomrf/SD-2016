@@ -5,7 +5,6 @@
  */
 package gameoftherope.Regions;
 
-import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;

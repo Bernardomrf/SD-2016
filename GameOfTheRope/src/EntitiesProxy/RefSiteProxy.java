@@ -5,9 +5,9 @@
  */
 package EntitiesProxy;
 
-import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
+import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

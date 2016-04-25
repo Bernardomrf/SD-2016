@@ -7,18 +7,11 @@ package gameoftherope.EntitiesStarters;
 
 import EntitiesProxy.BenchProxy;
 import EntitiesProxy.PlaygroundProxy;
-import EntitiesProxy.RefSiteProxy;
-import gameoftherope.ConfigRepository;
 import gameoftherope.Entities.Player;
-import gameoftherope.Entities.Referee;
 import gameoftherope.Interfaces.IBenchPlayer;
-import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Interfaces.IPlaygroundRef;
-import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.Bench;
+import gameoftherope.Regions.ConfigRepository;
 import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.Regions.Playground;
 import java.io.FileNotFoundException;
 import java.util.Map;
 

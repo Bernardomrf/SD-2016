@@ -5,7 +5,6 @@
  */
 package gameoftherope.Regions;
 
-import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
 import java.util.Map;

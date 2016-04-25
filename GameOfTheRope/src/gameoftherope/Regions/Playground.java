@@ -5,7 +5,6 @@
  */
 package gameoftherope.Regions;
 
-import gameoftherope.ConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;

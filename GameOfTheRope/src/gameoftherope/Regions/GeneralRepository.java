@@ -5,9 +5,9 @@
  */
 package gameoftherope.Regions;
 
-import gameoftherope.coachState;
-import gameoftherope.playerState;
-import gameoftherope.refState;
+import gameoftherope.EntityStateEnum.coachState;
+import gameoftherope.EntityStateEnum.playerState;
+import gameoftherope.EntityStateEnum.refState;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

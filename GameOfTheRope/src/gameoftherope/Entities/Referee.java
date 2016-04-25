@@ -6,11 +6,11 @@
 package gameoftherope.Entities;
 
 import gameoftherope.ConfigRepository;
+import gameoftherope.EntityStateEnum.refState;
 import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.refState;
 import java.util.Map;
 
 

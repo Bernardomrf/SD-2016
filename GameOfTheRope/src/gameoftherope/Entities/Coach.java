@@ -5,11 +5,11 @@
  */
 package gameoftherope.Entities;
 
+import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.coachState;
 
 /**
  *

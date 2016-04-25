@@ -6,10 +6,10 @@
 package gameoftherope.Entities;
 
 import gameoftherope.ConfigRepository;
+import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.playerState;
 import java.util.Map;
 
 /**

@@ -6,14 +6,13 @@
 package gameoftherope.EntitiesStarters;
 
 import EntitiesProxy.BenchProxy;
+import EntitiesProxy.ConfigProxy;
 import EntitiesProxy.PlaygroundProxy;
 import gameoftherope.Entities.Player;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Regions.ConfigRepository;
 import gameoftherope.Regions.GeneralRepository;
 import java.io.FileNotFoundException;
-import java.util.Map;
 
 /**
  *
@@ -22,31 +21,24 @@ import java.util.Map;
 public class PlayerStarter {
     public static void main(String[] args) throws FileNotFoundException {
         
+        if(args.length != 2){
+            System.err.println("Invalid Arguments");
+            System.exit(1);
+        }
+        int i = Integer.parseInt(args[0]);
+        String team = args[1];
+        
         GeneralRepository repo = new GeneralRepository();
         BenchProxy bench = new BenchProxy();
         PlaygroundProxy playground = new PlaygroundProxy();
+        ConfigProxy conf = new ConfigProxy();
         
-        int nPlayers;
-        Map<String, Integer> settings = ConfigRepository.getMainConfigs();
-        nPlayers = settings.get("nPlayers");
-        
-        Player[] player = new Player[nPlayers];
-        for (int i = 0; i < nPlayers; i++) {
-            playground = new PlaygroundProxy();
-            if (i < 5) {
-                player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "A", i, repo);
-            } else {
-                player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "B", i - 5, repo);
-            }
-            player[i].setName("Player" + i);
-            player[i].start();
-        }
-        for (int i = 0; i < nPlayers; i++) {
+        Player player = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, team, i, repo, conf);
+        player.start();
 
-            try {
-                player[i].join();
-            } catch (InterruptedException ex) {
-            }
+        try {
+            player.join();
+        } catch (InterruptedException ex) {
         }
     }
 }

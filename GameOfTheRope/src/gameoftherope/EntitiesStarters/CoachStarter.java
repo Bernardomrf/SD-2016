@@ -6,16 +6,15 @@
 package gameoftherope.EntitiesStarters;
 
 import EntitiesProxy.BenchProxy;
+import EntitiesProxy.ConfigProxy;
 import EntitiesProxy.PlaygroundProxy;
 import EntitiesProxy.RefSiteProxy;
 import gameoftherope.Entities.Coach;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
-import gameoftherope.Regions.ConfigRepository;
 import gameoftherope.Regions.GeneralRepository;
 import java.io.FileNotFoundException;
-import java.util.Map;
 
 /**
  *
@@ -24,34 +23,26 @@ import java.util.Map;
 public class CoachStarter {
     public static void main(String[] args) throws FileNotFoundException {
         
+        if(args.length != 1){
+            System.err.println("Invalid Arguments");
+            System.exit(1);
+        }
+        String team = args[0];
+        
         GeneralRepository repo = new GeneralRepository();
         BenchProxy bench = new BenchProxy();
         PlaygroundProxy playground = new PlaygroundProxy();
         RefSiteProxy refSite = new RefSiteProxy();
-        
-        int nCoaches;
-        
-        Map<String, Integer> settings = ConfigRepository.getMainConfigs();
-        nCoaches = settings.get("nCoaches");
-        
-        Coach[] coach = new Coach[nCoaches];
-        for (int i = 0; i < nCoaches; i++) {
-            playground = new PlaygroundProxy();
-            refSite = new RefSiteProxy();
-            bench = new BenchProxy();
-            if (i < 1) {
-                coach[i] = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "A", repo);
-            } else {
-                coach[i] = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "B", repo);
-            }
-            coach[i].setName("Coach" + i);
-            coach[i].start();
+        ConfigProxy conf = new ConfigProxy();
+       
+        Coach coach = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, team, repo, conf);
+
+        coach.start();
+
+        try {
+            coach.join();
+        } catch (InterruptedException ex) {
         }
-        for (int i = 0; i < nCoaches; i++) {
-            try {
-                coach[i].join();
-            } catch (InterruptedException ex) {
-            }
-        }
+
     }
 }

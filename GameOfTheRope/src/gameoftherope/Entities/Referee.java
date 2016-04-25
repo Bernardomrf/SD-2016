@@ -5,13 +5,13 @@
  */
 package gameoftherope.Entities;
 
-import gameoftherope.ConfigRepository;
 import gameoftherope.EntityStateEnum.refState;
 import gameoftherope.Interfaces.IBenchRef;
+import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
+import gameoftherope.Regions.Configs.RefConfig;
 import gameoftherope.Regions.GeneralRepository;
-import java.util.Map;
 
 
 /**
@@ -25,6 +25,7 @@ public class Referee extends Thread{
     private final IPlaygroundRef playground;
     private final IBenchRef bench;
     private final GeneralRepository repo;
+    private final IConfigRepository conf;
 
     private boolean goOn = true;
     private refState internalState;
@@ -43,12 +44,15 @@ public class Referee extends Thread{
      * @param playground
      * @param bench
      * @param repo
+     * @param conf
      */
-    public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, GeneralRepository repo){
-        config();
+    public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, GeneralRepository repo, IConfigRepository conf){
+        this.conf = conf;
         this.refSite = refSite;
         this.playground = playground;
         this.bench = bench;
+        config();
+        
         this.internalState = refState.START_OF_THE_MATCH;
         this.trialsDone = 0;
         this.gamesDone = 0;
@@ -142,9 +146,9 @@ public class Referee extends Thread{
     }
     
     private void config(){
-        Map<String, Integer> settings = ConfigRepository.getRefConfigs();
-        nGames = settings.get("nGames");
-        nTrials = settings.get("nTrials");
+        RefConfig settings = conf.getRefConfig();
+        nGames = settings.getNGames();
+        nTrials = settings.getNTrials();
  
     }
 }

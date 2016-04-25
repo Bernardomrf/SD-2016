@@ -7,12 +7,11 @@ package EntitiesProxy;
 
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.ConfigRepository;
+import gameoftherope.Regions.Configs.RefSiteConfig;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Map;
 
 /**
  *
@@ -32,9 +31,11 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
      *
      */
     public RefSiteProxy(){
-        Map<String, Integer> refSiteConfigs = ConfigRepository.getRefSiteConfigs();
-        int port = refSiteConfigs.get("refSitePort");
-        String hostName = "localhost";
+        ConfigProxy conf = new ConfigProxy();
+        RefSiteConfig settings = conf.getRefSiteConfig();
+        
+        String hostName = settings.getRefSiteHostName();
+        int port = settings.getRefSitePort();
         
         try {
             refSiteSocket = new Socket(hostName, port);

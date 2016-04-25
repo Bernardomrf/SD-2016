@@ -5,11 +5,13 @@
  */
 package gameoftherope.Regions.Configs;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class RefConfig {
+public class RefConfig implements Serializable {
     private int nTrials = 6;
     private int nGames = 3;
 

@@ -5,9 +5,10 @@
  */
 package gameoftherope.Regions;
 
+import EntitiesProxy.ConfigProxy;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
-import java.util.Map;
+import gameoftherope.Regions.Configs.RefSiteConfig;
 
 /**
  * Class to implement the bench monitor.
@@ -18,9 +19,6 @@ import java.util.Map;
 public class RefSite implements IRefSiteRef, IRefSiteCoach{
     
     private int nCoaches;
-    
-    private int aWins;
-    private int bWins;
     private int coachesReady;
     
     /**
@@ -28,8 +26,6 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
      */
     public RefSite(){
         config();
-        this.aWins = 0;
-        this.bWins = 0;
         coachesReady = 0;
     }
 
@@ -91,7 +87,8 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     }
     
     private void config(){
-        Map<String, Integer> settings = ConfigRepository.getRefSiteConfigs();
-        nCoaches = settings.get("nCoaches");  
+        ConfigProxy conf = new ConfigProxy();
+        RefSiteConfig settings = conf.getRefSiteConfig();
+        nCoaches = settings.getnCoaches();
     }
 }

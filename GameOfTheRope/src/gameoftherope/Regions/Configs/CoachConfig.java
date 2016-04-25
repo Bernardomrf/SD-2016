@@ -5,10 +5,12 @@
  */
 package gameoftherope.Regions.Configs;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class CoachConfig {
+public class CoachConfig implements Serializable {
     
 }

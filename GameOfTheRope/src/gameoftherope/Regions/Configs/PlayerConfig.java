@@ -5,11 +5,13 @@
  */
 package gameoftherope.Regions.Configs;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class PlayerConfig {
+public class PlayerConfig implements Serializable {
     private int maxStrength = 4;
 
     public int getMaxStrength() {

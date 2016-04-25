@@ -8,12 +8,11 @@ package EntitiesProxy;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
-import gameoftherope.Regions.ConfigRepository;
+import gameoftherope.Regions.Configs.BenchConfig;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Map;
 
 /**
  *
@@ -34,9 +33,11 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      *
      */
     public BenchProxy(){
-        Map<String, Integer> benchConfigs = ConfigRepository.getBenchConfigs();
-        int port = benchConfigs.get("benchPort");
-        String hostName = "localhost";
+        ConfigProxy conf = new ConfigProxy();
+        BenchConfig settings = conf.getBenchConfig();
+        
+        String hostName = settings.getBenchHostName();
+        int port = settings.getBenchPort();
         
         try {
             benchSocket = new Socket(hostName, port);

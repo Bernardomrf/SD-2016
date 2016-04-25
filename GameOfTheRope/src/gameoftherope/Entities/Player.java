@@ -5,12 +5,12 @@
  */
 package gameoftherope.Entities;
 
-import gameoftherope.ConfigRepository;
 import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.Interfaces.IBenchPlayer;
+import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
+import gameoftherope.Regions.Configs.PlayerConfig;
 import gameoftherope.Regions.GeneralRepository;
-import java.util.Map;
 
 /**
  *
@@ -22,6 +22,7 @@ public class Player extends Thread{
     private final IBenchPlayer bench;
     private final IPlaygroundPlayer playground;
     private final GeneralRepository repo;
+    private final IConfigRepository conf;
     private boolean goOn = true;
     private playerState internalState;
     private final String team;
@@ -39,11 +40,13 @@ public class Player extends Thread{
      * @param id
      * @param repo
      */
-    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo){
-        config();
+    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo, IConfigRepository conf){
+        this.conf = conf;
         this.team = team;
         this.bench = bench;
         this.playground = playground;
+        config();
+        
         this.internalState = playerState.SEAT_AT_THE_BENCH;
         this.strength = (int) (Math.random() * maxStrength + 1);
         this.id = id;
@@ -105,7 +108,7 @@ public class Player extends Thread{
     }
     
     private void config(){
-        Map<String, Integer> settings = ConfigRepository.getPlayerConfigs();
-        maxStrength = settings.get("maxStrength");
+        PlayerConfig settings = conf.getPlayerConfig();
+        maxStrength = settings.getMaxStrength();
     }
 }

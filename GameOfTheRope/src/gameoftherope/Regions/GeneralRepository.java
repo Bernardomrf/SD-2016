@@ -5,9 +5,11 @@
  */
 package gameoftherope.Regions;
 
+import EntitiesProxy.ConfigProxy;
 import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.EntityStateEnum.refState;
+import gameoftherope.Regions.Configs.GeneralRepositoryConfig;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -21,14 +23,18 @@ import java.util.Date;
  */
 public class GeneralRepository {
     
-    private int [] playersStrengthA;
-    private int [] playersStrengthB;
-    private playerState [] playersStatesA;
-    private playerState [] playersStatesB;
-    private coachState [] coachesStates;
+    private int nTeamPlayers;
+    private int nTrialPlayers;
+    private int nCoaches;
+    
+    private final int [] playersStrengthA;
+    private final int [] playersStrengthB;
+    private final playerState [] playersStatesA;
+    private final playerState [] playersStatesB;
+    private final coachState [] coachesStates;
     private refState refereeState;
-    private int [] trialPosA;
-    private int [] trialPosB;
+    private final int [] trialPosA;
+    private final int [] trialPosB;
     private int trialN;
     private int ropePos;
     private int gamesA;
@@ -41,7 +47,7 @@ public class GeneralRepository {
     
     
     private final File log;
-    private String filename;
+    private final String filename;
     private static PrintWriter pw;
     
     /**
@@ -49,14 +55,15 @@ public class GeneralRepository {
      * @throws FileNotFoundException
      */
     public GeneralRepository() throws FileNotFoundException{
-        playersStrengthA = new int[5];
-        playersStrengthB = new int[5];
-        playersStatesA = new playerState[5];
-        playersStatesB = new playerState[5];
-        coachesStates = new coachState[2];
+        config();
+        playersStrengthA = new int[nTeamPlayers];
+        playersStrengthB = new int[nTeamPlayers];
+        playersStatesA = new playerState[nTeamPlayers];
+        playersStatesB = new playerState[nTeamPlayers];
+        coachesStates = new coachState[nCoaches];
         refereeState = null;
-        trialPosA = new int[3];
-        trialPosB = new int[3];
+        trialPosA = new int[nTrialPlayers];
+        trialPosB = new int[nTrialPlayers];
         trialN = 0;
         ropePos = 0;
         gamesA = 0;
@@ -361,5 +368,14 @@ public class GeneralRepository {
         }
         pw.flush();
         
+    }
+
+    private void config() {
+        ConfigProxy conf = new ConfigProxy();
+        GeneralRepositoryConfig settings = conf.getGeneralRepositoryConfig();
+        
+        nCoaches = settings.getnCoaches();
+        nTeamPlayers = settings.getnTeamPlayers();
+        nTrialPlayers = settings.getNtrialPlayers();
     }
 }

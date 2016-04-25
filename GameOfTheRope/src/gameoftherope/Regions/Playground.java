@@ -5,10 +5,11 @@
  */
 package gameoftherope.Regions;
 
+import EntitiesProxy.ConfigProxy;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
-import java.util.Map;
+import gameoftherope.Regions.Configs.PlaygroundConfig;
 
 /**
  * Class to implement the playground monitor.
@@ -37,8 +38,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private boolean knockOutB;
     private int nTrials;
     private int nTrialsOfGame;
-    private int allWins[];
-    private int allGameWins[];
+    private final int allWins[];
+    private final int allGameWins[];
     
     /**
      * Constructor for Playground class
@@ -272,12 +273,14 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
     
     private void config(){
-        Map<String, Integer> settings = ConfigRepository.getPlaygroundConfigs();
-        knockOutForce = settings.get("knockOutForce");
-        nTrialsOfGameDefault = settings.get("nTrialsOfGameDefault");
-        totalTrialPlayers = settings.get("totalTrialPlayers");
-        nCoaches = settings.get("nCoaches");  
-        pullTheRopeSleep = settings.get("pullTheRopeSleep"); 
+        ConfigProxy conf = new ConfigProxy();
+        PlaygroundConfig settings = conf.getPlaygroundConfig();
+        
+        knockOutForce = settings.getKnockOutForce();
+        nTrialsOfGameDefault = settings.getnTrials();
+        totalTrialPlayers = settings.getTotalTrialPlayers();
+        nCoaches = settings.getNcoaches();
+        pullTheRopeSleep = settings.getPullTheRopeSleep();
     }
     
 }

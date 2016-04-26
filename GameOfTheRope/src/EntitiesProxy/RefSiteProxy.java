@@ -31,11 +31,13 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
      *
      */
     public RefSiteProxy(){
+
         ConfigProxy conf = new ConfigProxy();
         RefSiteConfig settings = conf.getRefSiteConfig();
         
         String hostName = settings.getRefSiteHostName();
         int port = settings.getRefSitePort();
+
         
         try {
             refSiteSocket = new Socket(hostName, port);

@@ -9,6 +9,7 @@ import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Regions.Configs.PlaygroundConfig;
+import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -37,7 +38,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
         
         String hostName = settings.getPlaygroundHostName();
         int port = settings.getPlaygroundPort();
-        
+
         try {
             playgroundSocket = new Socket(hostName, port);
         } catch (IOException ex) {
@@ -58,7 +59,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void waitForTrial() {
-        outObject = "waitForTrial";
+        outObject = "waitForTrial- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -75,7 +76,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public int standInPosition() {
-        outObject = "standInPosition";
+        outObject = "standInPosition- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -111,7 +112,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void iamDone() {
-        outObject = "iamDone";
+        outObject = "iamDone- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -127,7 +128,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void callTrial() {
-        outObject = "callTrial";
+        outObject = "callTrial- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -143,7 +144,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void startTrial() {
-        outObject = "startTrial";
+        outObject = "startTrial- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -159,7 +160,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void waitForTrialConclusion() {
-        outObject = "waitForTrialConclusion";
+        outObject = "waitForTrialConclusion- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -175,7 +176,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public void assertTrialDecision() {
-        outObject = "assertTrialDecision";
+        outObject = "assertTrialDecision- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -192,7 +193,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public String checkKnockout() {
-        outObject = "checkKnockout";
+        outObject = "checkKnockout- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -210,7 +211,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public int getRope() {
-        outObject = "getRope";
+        outObject = "getRope- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -228,7 +229,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public int[] getWins() {
-        outObject = "getWins";
+        outObject = "getWins- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -246,7 +247,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      */
     @Override
     public int[] getGameWins() {
-        outObject = "getGameWins";
+        outObject = "getGameWins- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {

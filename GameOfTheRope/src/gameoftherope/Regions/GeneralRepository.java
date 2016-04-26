@@ -10,6 +10,12 @@ import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.EntityStateEnum.refState;
 import gameoftherope.Regions.Configs.GeneralRepositoryConfig;
+import gameoftherope.EntityStateEnum.coachState;
+import gameoftherope.EntityStateEnum.playerState;
+import gameoftherope.EntityStateEnum.refState;
+import gameoftherope.Interfaces.IGeneralRepositoryCoach;
+import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
+import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -21,7 +27,8 @@ import java.util.Date;
  *
  * @author brunosilva
  */
-public class GeneralRepository {
+public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepositoryPlayer, IGeneralRepositoryRef {
+    
     
     private int nTeamPlayers;
     private int nTrialPlayers;
@@ -88,6 +95,7 @@ public class GeneralRepository {
     /**
      *
      */
+    @Override
     public synchronized void printHeader(){
             pw.println("Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5       Trial");
             pw.println("Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS");
@@ -97,6 +105,7 @@ public class GeneralRepository {
      *
      * @param state
      */
+    @Override
     public synchronized void changeRefState(refState state){
         refereeState = state;
         printLine();
@@ -109,6 +118,7 @@ public class GeneralRepository {
      * @param team
      * @param strength
      */
+    @Override
     public synchronized void changePlayerState(playerState state, int id, String team, int strength){
         if (team.equals("A")){
             if (state == playersStatesA[id]) {
@@ -133,6 +143,7 @@ public class GeneralRepository {
      * @param state
      * @param team
      */
+    @Override
     public synchronized void changeCoachState(coachState state, String team){
         if (team.equals("A")){
             if (state == coachesStates[0]) {
@@ -157,6 +168,7 @@ public class GeneralRepository {
      * @param id
      * @param team
      */
+    @Override
     public synchronized void initPlayer(playerState state, int strength, int id, String team){
         if (team.equals("A")){
             playersStatesA[id] = state;
@@ -173,6 +185,7 @@ public class GeneralRepository {
      * @param state
      * @param team
      */
+    @Override
     public synchronized void initCoach(coachState state, String team){
         if (team.equals("A")){
             coachesStates[0] = state;
@@ -186,6 +199,7 @@ public class GeneralRepository {
      *
      * @param state
      */
+    @Override
     public synchronized void initRef(refState state){
         refereeState = state;
     }
@@ -253,6 +267,7 @@ public class GeneralRepository {
      * @param pos
      * @param team
      */
+    @Override
     public synchronized void setPlayersPositions(int[] pos, String team){
         if (team.equals("A")){
             System.arraycopy(pos, 0, trialPosA, 0, trialPosA.length);  
@@ -273,6 +288,7 @@ public class GeneralRepository {
      *
      * @param nGame
      */
+    @Override
     public synchronized void newGame(int nGame){
         if(knockout.equals("newGame")){
             pw.println("Game "+ (nGame+1));
@@ -303,6 +319,7 @@ public class GeneralRepository {
      *
      * @param nTrial
      */
+    @Override
     public synchronized void newTrial(int nTrial){
         trialN = nTrial;
     }
@@ -311,6 +328,7 @@ public class GeneralRepository {
      *
      * @param rope
      */
+    @Override
     public synchronized void setRope(int rope){
         ropePos = rope;
     }
@@ -320,6 +338,7 @@ public class GeneralRepository {
      * @param wins
      * @param knockout
      */
+    @Override
     public synchronized void setWins(int[] wins, String knockout){
         trialsA = wins[0];
         trialsB = wins[1];
@@ -331,6 +350,7 @@ public class GeneralRepository {
      * @param gameWins
      * @param nGame
      */
+    @Override
     public synchronized void setGameWins(int[] gameWins, int nGame){
         gamesA = gameWins[0];
         gamesB = gameWins[1];
@@ -341,7 +361,7 @@ public class GeneralRepository {
      *
      * @param nGame
      */
-    public synchronized void finishMatch(int nGame){
+    private void finishMatch(int nGame){
        
         if(!knockout.equals("X")){
             pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ (trialsA+trialsB) +" trials.");

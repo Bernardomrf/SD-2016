@@ -19,6 +19,9 @@ public enum refState {
         public String toString(){
             return "SOM";
         }
+        public String toStringState(){
+            return "START_OF_THE_MATCH";
+        }
     },
 
     /**
@@ -28,6 +31,9 @@ public enum refState {
         @Override
         public String toString(){
             return "SOF";
+        }
+        public String toStringState(){
+            return "START_OF_A_GAME";
         }
     },
 
@@ -39,6 +45,9 @@ public enum refState {
         public String toString(){
             return "TRY";
         }
+        public String toStringState(){
+            return "TEAMS_READY";
+        }
     },
 
     /**
@@ -48,6 +57,9 @@ public enum refState {
         @Override
         public String toString(){
             return "WTC";
+        }
+        public String toStringState(){
+            return "WAIT_FOR_TRIAL_CONCLUSION";
         }
     },
 
@@ -59,6 +71,9 @@ public enum refState {
         public String toString(){
             return "EOG";
         }
+        public String toStringState(){
+            return "END_OF_A_GAME";
+        }
     },
 
     /**
@@ -68,6 +83,9 @@ public enum refState {
         @Override
         public String toString(){
             return "EOM";
+        }
+        public String toStringState(){
+            return "END_OF_THE_MATCH";
         }
     }
     

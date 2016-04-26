@@ -19,6 +19,9 @@ public enum playerState {
         public String toString(){
             return "SAB";
         }
+        public String toStringState(){
+            return "SEAT_AT_THE_BENCH";
+        }
     },
 
     /**
@@ -29,6 +32,9 @@ public enum playerState {
         public String toString(){
             return "SIP";
         }
+        public String toStringState(){
+            return "STAND_IN_POSITION";
+        }
     },
 
     /**
@@ -38,6 +44,9 @@ public enum playerState {
         @Override
         public String toString(){
             return "DYB";
+        }
+        public String toStringState(){
+            return "DO_YOUR_BEST";
         }
     }
 

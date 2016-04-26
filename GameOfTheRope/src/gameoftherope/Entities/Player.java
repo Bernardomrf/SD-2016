@@ -11,6 +11,9 @@ import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Regions.Configs.PlayerConfig;
 import gameoftherope.Regions.GeneralRepository;
+import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
+import gameoftherope.Interfaces.IPlaygroundPlayer;
+import gameoftherope.Regions.ConfigRepository;
 
 /**
  *
@@ -21,8 +24,8 @@ public class Player extends Thread{
     
     private final IBenchPlayer bench;
     private final IPlaygroundPlayer playground;
-    private final GeneralRepository repo;
     private final IConfigRepository conf;
+    private final IGeneralRepositoryPlayer repo;
     private boolean goOn = true;
     private playerState internalState;
     private final String team;
@@ -40,18 +43,17 @@ public class Player extends Thread{
      * @param id
      * @param repo
      */
-    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo, IConfigRepository conf){
-        this.conf = conf;
+    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, IGeneralRepositoryPlayer repo, IConfigRepository conf){
+		this.conf = conf;
+        config();
         this.team = team;
         this.bench = bench;
         this.playground = playground;
-        config();
-        
+        this.repo = repo;
         this.internalState = playerState.SEAT_AT_THE_BENCH;
         this.strength = (int) (Math.random() * maxStrength + 1);
         this.id = id;
         this.iWillPlay = false;
-        this.repo = repo;
         this.nPlayerTrials = 0;
         repo.initPlayer(internalState, strength, id, team);
     }

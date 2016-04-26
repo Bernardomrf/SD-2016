@@ -5,7 +5,7 @@
  */
 package EntitiesProxy.Handlers;
 
-import gameoftherope.Protocols.BenchProtocol;
+import gameoftherope.Protocols.GeneralRepositoryProtocol;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,15 +13,15 @@ import java.net.Socket;
 
 /**
  *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * @author bernardo
  */
-public class BenchHandler extends Thread{
+public class GeneralRepositoryHandler extends Thread{
     private Socket socket;
-    private BenchProtocol protocol;
+    private GeneralRepositoryProtocol protocol;
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
 
-    public BenchHandler(Socket commSocket, BenchProtocol bp) {
+    public GeneralRepositoryHandler(Socket commSocket, GeneralRepositoryProtocol bp) {
         socket = commSocket;
         protocol = bp;
 

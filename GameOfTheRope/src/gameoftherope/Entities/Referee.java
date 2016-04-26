@@ -12,6 +12,11 @@ import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.Regions.Configs.RefConfig;
 import gameoftherope.Regions.GeneralRepository;
+import gameoftherope.Interfaces.IGeneralRepositoryRef;
+import gameoftherope.Interfaces.IPlaygroundRef;
+import gameoftherope.Interfaces.IRefSiteRef;
+import gameoftherope.Regions.ConfigRepository;
+import java.util.Map;
 
 
 /**
@@ -24,8 +29,8 @@ public class Referee extends Thread{
     private final IRefSiteRef refSite;
     private final IPlaygroundRef playground;
     private final IBenchRef bench;
-    private final GeneralRepository repo;
     private final IConfigRepository conf;
+    private final IGeneralRepositoryRef repo;
 
     private boolean goOn = true;
     private refState internalState;
@@ -46,21 +51,21 @@ public class Referee extends Thread{
      * @param repo
      * @param conf
      */
-    public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, GeneralRepository repo, IConfigRepository conf){
-        this.conf = conf;
+    public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, IGeneralRepositoryRef repo, IConfigRepository conf){
+		this.conf = conf;
+        config();
         this.refSite = refSite;
         this.playground = playground;
         this.bench = bench;
-        config();
-        
+        this.repo = repo;
         this.internalState = refState.START_OF_THE_MATCH;
         this.trialsDone = 0;
         this.gamesDone = 0;
         this.knockOut = "X";
-        this.repo = repo;
         this.rope = 0;
         this.wins = new int[2];
         this.gameWins = new int[2];
+        repo.printHeader();
         repo.initRef(internalState);
     }
     

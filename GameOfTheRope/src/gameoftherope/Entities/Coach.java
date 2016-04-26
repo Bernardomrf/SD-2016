@@ -11,6 +11,8 @@ import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Regions.GeneralRepository;
+import gameoftherope.EntityStateEnum.coachState;
+import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 
 /**
  *
@@ -23,6 +25,7 @@ public class Coach extends Thread{
     private final IRefSiteCoach refSite;
     private final GeneralRepository repo;
     private final IConfigRepository conf;
+    private final IGeneralRepositoryCoach repo;
     private boolean goOn = true;
     private coachState internalState;
     private final String team;
@@ -37,7 +40,7 @@ public class Coach extends Thread{
      * @param repo
      * @param conf
      */
-    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, GeneralRepository repo, IConfigRepository conf){
+    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, IGeneralRepositoryCoach repo, IConfigRepository conf){
         this.bench = bench;
         this.playground = playground;
         this.conf = conf;

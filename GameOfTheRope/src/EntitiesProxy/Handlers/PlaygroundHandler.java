@@ -41,13 +41,14 @@ public class PlaygroundHandler extends Thread {
         boolean end = false;
         Object inputLine = null; 
         Object outputLine = null;
-
+        
         while (!end) {
             try {
                 inputLine = (String) in.readObject();
             } catch (IOException | ClassNotFoundException ex) {
             }
             outputLine = protocol.processInput((String)inputLine);
+            inputLine = null;
             try {
                 out.writeObject(outputLine);
             } catch (IOException ex) {

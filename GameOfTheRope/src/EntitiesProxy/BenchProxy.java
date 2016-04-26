@@ -9,6 +9,7 @@ import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Regions.Configs.BenchConfig;
+import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -97,7 +98,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void waitForRefCommand() {
-        outObject = "waitForRefCommand";
+        outObject = "waitForRefCommand- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -114,7 +115,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public boolean hasMatchFinished() {
-        outObject = "hasMatchFinished";
+        outObject = "hasMatchFinished- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -206,7 +207,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void signalCoaches() {
-        outObject = "signalCoaches";
+        outObject = "signalCoaches- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -222,7 +223,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
      */
     @Override
     public void setMatchFinish() {
-        outObject = "setMatchFinish";
+        outObject = "setMatchFinish- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {

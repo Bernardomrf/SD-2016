@@ -59,6 +59,7 @@ public class PlaygroundProtocol {
                 return playground.getWins();
             case "getGameWins":
                 return playground.getGameWins();
+            
             default:
                 throw new UnsupportedOperationException();
         }

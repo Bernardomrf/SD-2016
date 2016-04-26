@@ -5,10 +5,10 @@
  */
 package gameoftherope.EntitiesStarters;
 
-import EntitiesProxy.BenchProxy;
-import EntitiesProxy.ConfigProxy;
-import EntitiesProxy.PlaygroundProxy;
-import EntitiesProxy.RefSiteProxy;
+import gameoftherope.EntitiesProxy.BenchProxy;
+import gameoftherope.EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.PlaygroundProxy;
+import gameoftherope.EntitiesProxy.RefSiteProxy;
 import gameoftherope.Entities.Referee;
 import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundRef;

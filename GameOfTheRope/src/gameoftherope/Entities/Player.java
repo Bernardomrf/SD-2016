@@ -9,7 +9,7 @@ import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Regions.Configs.PlayerConfig;
+import gameoftherope.Configs.PlayerConfig;
 import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;

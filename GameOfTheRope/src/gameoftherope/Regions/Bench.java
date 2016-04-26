@@ -5,11 +5,11 @@
  */
 package gameoftherope.Regions;
 
-import EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
-import gameoftherope.Regions.Configs.BenchConfig;
+import gameoftherope.Configs.BenchConfig;
 import java.util.Random;
 
 /**

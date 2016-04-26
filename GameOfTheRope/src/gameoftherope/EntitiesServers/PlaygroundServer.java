@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EntitiesProxy.Servers;
+package gameoftherope.EntitiesServers;
 
-import EntitiesProxy.Handlers.ConfigHandler;
-import gameoftherope.Protocols.ConfigServerProtocol;
-import gameoftherope.Regions.ConfigRepository;
-import gameoftherope.Regions.Configs.ConfigRepositoryConfig;
+import gameoftherope.EntitiesHandlers.PlaygroundHandler;
+import gameoftherope.Protocols.PlaygroundProtocol;
+import gameoftherope.Regions.Playground;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,18 +16,19 @@ import java.net.Socket;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class ConfigServer {
+public class PlaygroundServer {
     public static void main(String[] args) {
+        //Map<String, Integer> mainConfigs = ConfigRepository.getRefSiteConfigs();
         System.err.println("Started Server");
-        ConfigRepository conf = new ConfigRepository();
+        Playground playground = new Playground();
         
-        ConfigServerProtocol csp = new ConfigServerProtocol(conf);
+        PlaygroundProtocol rfp = new PlaygroundProtocol(playground);
         
         boolean goOn = true;
         
-        ServerSocket listeningSocket = null;
-        ConfigRepositoryConfig c = conf.getConfigRepositoryConfig();
-        int portNumb = c.getConfigRepoPort();
+        ServerSocket listeningSocket = null;           // socket de escuta
+        //int portNumb = mainConfigs.get("refSitePort");                           // número do port em que o serviço é estabelecido
+        int portNumb = 22132;
         
         try {
             listeningSocket = new ServerSocket(portNumb);
@@ -37,16 +37,16 @@ public class ConfigServer {
         while(goOn){
             System.err.println("Waiting for connection");
             Socket commSocket = null;
-            ConfigHandler handler;
+            PlaygroundHandler handler = null;
             
             try {
                 commSocket = listeningSocket.accept();
             } catch (Exception e) {
+                
             }
-            
             System.err.println("Connection Accepted");
             
-            handler = new ConfigHandler(commSocket, csp);
+            handler = new PlaygroundHandler(commSocket, rfp);
             handler.start();
         }
     }

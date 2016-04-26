@@ -5,10 +5,10 @@
  */
 package gameoftherope.Regions;
 
-import EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.Configs.RefSiteConfig;
+import gameoftherope.Configs.RefSiteConfig;
 
 /**
  * Class to implement the bench monitor.

@@ -5,11 +5,11 @@
  */
 package gameoftherope.Regions;
 
-import EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.EntityStateEnum.refState;
-import gameoftherope.Regions.Configs.GeneralRepositoryConfig;
+import gameoftherope.Configs.GeneralRepositoryConfig;
 import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.EntityStateEnum.refState;

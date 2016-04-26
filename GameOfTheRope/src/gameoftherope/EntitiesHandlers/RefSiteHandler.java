@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EntitiesProxy.Handlers;
+package gameoftherope.EntitiesHandlers;
 
-import gameoftherope.Protocols.ConfigServerProtocol;
+import gameoftherope.Protocols.RefSiteProtocol;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,15 +15,16 @@ import java.net.Socket;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class ConfigHandler extends Thread{
+public class RefSiteHandler extends Thread {
+
     private Socket socket;
-    private ConfigServerProtocol protocol;
+    private RefSiteProtocol protocol;
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
 
-    public ConfigHandler(Socket commSocket, ConfigServerProtocol csp) {
+    public RefSiteHandler(Socket commSocket, RefSiteProtocol rsp) {
         socket = commSocket;
-        protocol = csp;
+        protocol = rsp;
 
         try {
             out = new ObjectOutputStream(socket.getOutputStream());

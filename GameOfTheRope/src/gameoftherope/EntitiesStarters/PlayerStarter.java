@@ -5,9 +5,9 @@
  */
 package gameoftherope.EntitiesStarters;
 
-import EntitiesProxy.BenchProxy;
-import EntitiesProxy.ConfigProxy;
-import EntitiesProxy.PlaygroundProxy;
+import gameoftherope.EntitiesProxy.BenchProxy;
+import gameoftherope.EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.PlaygroundProxy;
 import gameoftherope.Entities.Player;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;

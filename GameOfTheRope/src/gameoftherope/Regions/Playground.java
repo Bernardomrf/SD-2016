@@ -5,11 +5,11 @@
  */
 package gameoftherope.Regions;
 
-import EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
-import gameoftherope.Regions.Configs.PlaygroundConfig;
+import gameoftherope.Configs.PlaygroundConfig;
 
 /**
  * Class to implement the playground monitor.

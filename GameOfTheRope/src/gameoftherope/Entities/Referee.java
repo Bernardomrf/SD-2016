@@ -10,7 +10,7 @@ import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.Configs.RefConfig;
+import gameoftherope.Configs.RefConfig;
 import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import gameoftherope.Interfaces.IPlaygroundRef;

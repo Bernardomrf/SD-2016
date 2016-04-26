@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EntitiesProxy;
+package gameoftherope.EntitiesProxy;
 
-import gameoftherope.Interfaces.IPlaygroundCoach;
-import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Interfaces.IPlaygroundRef;
-import gameoftherope.Regions.Configs.PlaygroundConfig;
+import gameoftherope.Interfaces.IBenchCoach;
+import gameoftherope.Interfaces.IBenchPlayer;
+import gameoftherope.Interfaces.IBenchRef;
+import gameoftherope.Configs.BenchConfig;
 import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,11 +17,12 @@ import java.net.Socket;
 
 /**
  *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrf@ua.pt]
  */
-public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef{
-
-    Socket playgroundSocket = null;
+public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
+    
+    Socket benchSocket = null;
     
     ObjectInputStream in = null;                 
     ObjectOutputStream out = null;
@@ -32,71 +33,36 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     /**
      *
      */
-    public PlaygroundProxy(){
+    public BenchProxy(){
         ConfigProxy conf = new ConfigProxy();
-        PlaygroundConfig settings = conf.getPlaygroundConfig();
+        BenchConfig settings = conf.getBenchConfig();
         
-        String hostName = settings.getPlaygroundHostName();
-        int port = settings.getPlaygroundPort();
-
+        String hostName = settings.getBenchHostName();
+        int port = settings.getBenchPort();
+        
         try {
-            playgroundSocket = new Socket(hostName, port);
+            benchSocket = new Socket(hostName, port);
         } catch (IOException ex) {
         }
                                           
         try {
-            in = new ObjectInputStream (playgroundSocket.getInputStream());
+            in = new ObjectInputStream (benchSocket.getInputStream());
         } catch (IOException ex) {
         }
         try {
-            out = new ObjectOutputStream (playgroundSocket.getOutputStream());
+            out = new ObjectOutputStream (benchSocket.getOutputStream());
         } catch (IOException ex) {
         }
     }
     
     /**
      *
-     */
-    @Override
-    public void waitForTrial() {
-        outObject = "waitForTrial- ";
-        try {
-            out.writeObject(outObject);
-        } catch (IOException ex) {
-        }
-        try {
-            inObject = (String) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-        }    
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public int standInPosition() {
-        outObject = "standInPosition- ";
-        try {
-            out.writeObject(outObject);
-        } catch (IOException ex) {
-        }
-        try {
-            inObject = (int) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-        }  
-        return (int) inObject;
-    }
-
-    /**
-     *
-     * @param strenght
      * @param team
      */
     @Override
-    public void pullTheRope(int strenght, String team) {
-        outObject = "pullTheRope";
-        outObject += "-" + strenght + ";" + team;
+    public void reviewNotes(String team) {
+        outObject = "reviewNotes";
+        outObject += "-" + team;
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -109,127 +75,13 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
 
     /**
      *
-     */
-    @Override
-    public void iamDone() {
-        outObject = "iamDone- ";
-        try {
-            out.writeObject(outObject);
-        } catch (IOException ex) {
-        }
-        try {
-            inObject = (String) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-        }   
-    }
-
-    /**
-     *
-     */
-    @Override
-    public void callTrial() {
-        outObject = "callTrial- ";
-        try {
-            out.writeObject(outObject);
-        } catch (IOException ex) {
-        }
-        try {
-            inObject = (String) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-        }
-    }
-
-    /**
-     *
-     */
-    @Override
-    public void startTrial() {
-        outObject = "startTrial- ";
-        try {
-            out.writeObject(outObject);
-        } catch (IOException ex) {
-        }
-        try {
-            inObject = (String) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-        }
-    }
-
-    /**
-     *
-     */
-    @Override
-    public void waitForTrialConclusion() {
-        outObject = "waitForTrialConclusion- ";
-        try {
-            out.writeObject(outObject);
-        } catch (IOException ex) {
-        }
-        try {
-            inObject = (String) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-        }
-    }
-
-    /**
-     *
-     */
-    @Override
-    public void assertTrialDecision() {
-        outObject = "assertTrialDecision- ";
-        try {
-            out.writeObject(outObject);
-        } catch (IOException ex) {
-        }
-        try {
-            inObject = (String) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-        }
-    }
-
-    /**
-     *
+     * @param team
      * @return
      */
     @Override
-    public String checkKnockout() {
-        outObject = "checkKnockout- ";
-        try {
-            out.writeObject(outObject);
-        } catch (IOException ex) {
-        }
-        try {
-            inObject = (String) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-        }  
-        return (String) inObject;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public int getRope() {
-        outObject = "getRope- ";
-        try {
-            out.writeObject(outObject);
-        } catch (IOException ex) {
-        }
-        try {
-            inObject = (int) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-        }  
-        return (int) inObject;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public int[] getWins() {
-        outObject = "getWins- ";
+    public int[] callContestants(String team) {
+        outObject = "callContestants";
+        outObject += "-" + team;
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
@@ -237,8 +89,24 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
         try {
             inObject = (int[]) in.readObject();
         } catch (IOException | ClassNotFoundException ex) {
-        }  
+        }
         return (int[]) inObject;
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void waitForRefCommand() {
+        outObject = "waitForRefCommand- ";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
     }
 
     /**
@@ -246,17 +114,123 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
      * @return
      */
     @Override
-    public int[] getGameWins() {
-        outObject = "getGameWins- ";
+    public boolean hasMatchFinished() {
+        outObject = "hasMatchFinished- ";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
         }
         try {
-            inObject = (int[]) in.readObject();
+            inObject = (boolean) in.readObject();
         } catch (IOException | ClassNotFoundException ex) {
-        }  
-        return (int[]) inObject;
+        }
+        return (boolean) inObject;
     }
-    
+
+    /**
+     *
+     * @param team
+     */
+    @Override
+    public void playersReady(String team) {
+        outObject = "playersReady";
+        outObject += "-" + team;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+    }
+
+    /**
+     *
+     * @param team
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean seatAtTheBench(String team, int id) {
+        outObject = "seatAtTheBench";
+        outObject += "-" + team + ";" + id;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = (boolean) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+        return (boolean) inObject;
+    }
+
+    /**
+     *
+     * @param team
+     */
+    @Override
+    public void seatDown(String team) {
+        outObject = "seatDown";
+        outObject += "-" + team;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+    }
+
+    /**
+     *
+     * @param team
+     */
+    @Override
+    public void followCoachAdvice(String team) {
+        outObject = "followCoachAdvice";
+        outObject += "-" + team;
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void signalCoaches() {
+        outObject = "signalCoaches- ";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void setMatchFinish() {
+        outObject = "setMatchFinish- ";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+    }    
 }

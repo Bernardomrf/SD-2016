@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EntitiesProxy;
+package gameoftherope.EntitiesProxy;
 
 import gameoftherope.Interfaces.IConfigRepository;
-import gameoftherope.Regions.Configs.BenchConfig;
-import gameoftherope.Regions.Configs.ConfigRepositoryConfig;
-import gameoftherope.Regions.Configs.GeneralRepositoryConfig;
-import gameoftherope.Regions.Configs.PlayerConfig;
-import gameoftherope.Regions.Configs.PlaygroundConfig;
-import gameoftherope.Regions.Configs.RefConfig;
-import gameoftherope.Regions.Configs.RefSiteConfig;
+import gameoftherope.Configs.BenchConfig;
+import gameoftherope.Configs.ConfigRepositoryConfig;
+import gameoftherope.Configs.GeneralRepositoryConfig;
+import gameoftherope.Configs.PlayerConfig;
+import gameoftherope.Configs.PlaygroundConfig;
+import gameoftherope.Configs.RefConfig;
+import gameoftherope.Configs.RefSiteConfig;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

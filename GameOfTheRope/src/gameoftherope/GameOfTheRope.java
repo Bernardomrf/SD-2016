@@ -5,11 +5,11 @@
  */
 package gameoftherope;
 
-import EntitiesProxy.BenchProxy;
-import EntitiesProxy.ConfigProxy;
-import EntitiesProxy.GeneralRepositoryProxy;
-import EntitiesProxy.PlaygroundProxy;
-import EntitiesProxy.RefSiteProxy;
+import gameoftherope.EntitiesProxy.BenchProxy;
+import gameoftherope.EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.GeneralRepositoryProxy;
+import gameoftherope.EntitiesProxy.PlaygroundProxy;
+import gameoftherope.EntitiesProxy.RefSiteProxy;
 import gameoftherope.Entities.Coach;
 import gameoftherope.Entities.Player;
 import gameoftherope.Entities.Referee;
@@ -24,7 +24,7 @@ import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.Configs.GeneralRepositoryConfig;
+import gameoftherope.Configs.GeneralRepositoryConfig;
 import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.Regions.ConfigRepository;
 import java.io.FileNotFoundException;

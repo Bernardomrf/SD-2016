@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EntitiesProxy;
+package gameoftherope.EntitiesProxy;
 
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.Configs.RefSiteConfig;
+import gameoftherope.Configs.RefSiteConfig;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

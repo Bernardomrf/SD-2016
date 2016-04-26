@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EntitiesProxy.Servers;
+package gameoftherope.EntitiesServers;
 
-import EntitiesProxy.Handlers.GeneralRepositoryHandler;
+import gameoftherope.EntitiesHandlers.GeneralRepositoryHandler;
 import gameoftherope.Protocols.GeneralRepositoryProtocol;
 import gameoftherope.Regions.GeneralRepository;
 import java.io.FileNotFoundException;

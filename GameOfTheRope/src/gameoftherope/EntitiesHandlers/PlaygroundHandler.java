@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EntitiesProxy.Handlers;
+package gameoftherope.EntitiesHandlers;
 
-import gameoftherope.Protocols.BenchProtocol;
+import gameoftherope.Protocols.PlaygroundProtocol;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,15 +15,16 @@ import java.net.Socket;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class BenchHandler extends Thread{
+public class PlaygroundHandler extends Thread {
+
     private Socket socket;
-    private BenchProtocol protocol;
+    private PlaygroundProtocol protocol;
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
 
-    public BenchHandler(Socket commSocket, BenchProtocol bp) {
+    public PlaygroundHandler(Socket commSocket, PlaygroundProtocol rsp) {
         socket = commSocket;
-        protocol = bp;
+        protocol = rsp;
 
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
@@ -40,7 +41,7 @@ public class BenchHandler extends Thread{
         boolean end = false;
         Object inputLine = null; 
         Object outputLine = null;
-
+        
         while (!end) {
             try {
                 inputLine = (String) in.readObject();
@@ -54,4 +55,5 @@ public class BenchHandler extends Thread{
             }
         }
     }
+    
 }

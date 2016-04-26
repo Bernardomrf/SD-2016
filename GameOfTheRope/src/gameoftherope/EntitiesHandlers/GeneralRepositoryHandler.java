@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EntitiesProxy.Handlers;
+package gameoftherope.EntitiesHandlers;
 
 import gameoftherope.Protocols.GeneralRepositoryProtocol;
 import java.io.IOException;

@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package EntitiesProxy.Servers;
+package gameoftherope.EntitiesServers;
 
-import EntitiesProxy.Handlers.RefSiteHandler;
-import gameoftherope.Protocols.RefSiteProtocol;
-import gameoftherope.Regions.RefSite;
+import gameoftherope.EntitiesHandlers.ConfigHandler;
+import gameoftherope.Protocols.ConfigServerProtocol;
+import gameoftherope.Regions.ConfigRepository;
+import gameoftherope.Configs.ConfigRepositoryConfig;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,19 +17,18 @@ import java.net.Socket;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class RefSiteServer {
+public class ConfigServer {
     public static void main(String[] args) {
-        //Map<String, Integer> mainConfigs = ConfigRepository.getRefSiteConfigs();
         System.err.println("Started Server");
-        RefSite refSite = new RefSite();
+        ConfigRepository conf = new ConfigRepository();
         
-        RefSiteProtocol rfp = new RefSiteProtocol(refSite);
+        ConfigServerProtocol csp = new ConfigServerProtocol(conf);
         
         boolean goOn = true;
         
-        ServerSocket listeningSocket = null;           // socket de escuta
-        //int portNumb = mainConfigs.get("refSitePort");                           // número do port em que o serviço é estabelecido
-        int portNumb = 22133;
+        ServerSocket listeningSocket = null;
+        ConfigRepositoryConfig c = conf.getConfigRepositoryConfig();
+        int portNumb = c.getConfigRepoPort();
         
         try {
             listeningSocket = new ServerSocket(portNumb);
@@ -37,16 +37,16 @@ public class RefSiteServer {
         while(goOn){
             System.err.println("Waiting for connection");
             Socket commSocket = null;
-            RefSiteHandler handler = null;
+            ConfigHandler handler;
             
             try {
                 commSocket = listeningSocket.accept();
             } catch (Exception e) {
-                
             }
+            
             System.err.println("Connection Accepted");
             
-            handler = new RefSiteHandler(commSocket, rfp);
+            handler = new ConfigHandler(commSocket, csp);
             handler.start();
         }
     }

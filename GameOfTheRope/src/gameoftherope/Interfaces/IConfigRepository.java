@@ -19,18 +19,20 @@ import gameoftherope.Configs.RefSiteConfig;
  */
 public interface IConfigRepository {
 
-    BenchConfig getBenchConfig();
+    public BenchConfig getBenchConfig();
 
-    ConfigRepositoryConfig getConfigRepositoryConfig();
+    public ConfigRepositoryConfig getConfigRepositoryConfig();
 
-    GeneralRepositoryConfig getGeneralRepositoryConfig();
+    public GeneralRepositoryConfig getGeneralRepositoryConfig();
 
-    PlayerConfig getPlayerConfig();
+    public PlayerConfig getPlayerConfig();
 
-    PlaygroundConfig getPlaygroundConfig();
+    public PlaygroundConfig getPlaygroundConfig();
 
-    RefConfig getRefConfig();
+    public RefConfig getRefConfig();
 
-    RefSiteConfig getRefSiteConfig();
+    public RefSiteConfig getRefSiteConfig();
+    
+    public void close();
     
 }

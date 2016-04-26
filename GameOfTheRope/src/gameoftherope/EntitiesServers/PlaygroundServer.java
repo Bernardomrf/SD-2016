@@ -46,7 +46,7 @@ public class PlaygroundServer {
             }
             System.err.println("Connection Accepted");
             
-            handler = new PlaygroundHandler(commSocket, rfp);
+            handler = new PlaygroundHandler(commSocket, rfp, listeningSocket);
             handler.start();
         }
     }

@@ -11,7 +11,7 @@ package gameoftherope;
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  * @author Bernardo Ferreira <bernardomrfereira@ua.pt>
  */
-public class EndOfTransactionException {
+public class EndOfTransactionException extends Exception {
    /**
     *  Variável interna
     */

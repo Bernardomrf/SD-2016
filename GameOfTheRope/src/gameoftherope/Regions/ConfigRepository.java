@@ -5,7 +5,6 @@
  */
 package gameoftherope.Regions;
 
-import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Configs.BenchConfig;
 import gameoftherope.Configs.ConfigRepositoryConfig;
 import gameoftherope.Configs.GeneralRepositoryConfig;
@@ -13,6 +12,7 @@ import gameoftherope.Configs.PlayerConfig;
 import gameoftherope.Configs.PlaygroundConfig;
 import gameoftherope.Configs.RefConfig;
 import gameoftherope.Configs.RefSiteConfig;
+import gameoftherope.Interfaces.IConfigRepository;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -131,5 +131,10 @@ public class ConfigRepository implements IConfigRepository {
     @Override
     public ConfigRepositoryConfig getConfigRepositoryConfig(){
         return conf;
+    }
+
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

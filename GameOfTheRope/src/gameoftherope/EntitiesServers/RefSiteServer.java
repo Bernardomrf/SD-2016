@@ -46,7 +46,7 @@ public class RefSiteServer {
             }
             System.err.println("Connection Accepted");
             
-            handler = new RefSiteHandler(commSocket, rfp);
+            handler = new RefSiteHandler(commSocket, rfp, listeningSocket);
             handler.start();
         }
     }

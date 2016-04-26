@@ -5,10 +5,10 @@
  */
 package gameoftherope.Regions;
 
+import gameoftherope.Configs.RefSiteConfig;
 import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Configs.RefSiteConfig;
 
 /**
  * Class to implement the bench monitor.
@@ -90,5 +90,10 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
         ConfigProxy conf = new ConfigProxy();
         RefSiteConfig settings = conf.getRefSiteConfig();
         nCoaches = settings.getnCoaches();
+    }
+
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

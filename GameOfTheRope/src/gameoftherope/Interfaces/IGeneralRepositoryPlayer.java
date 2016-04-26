@@ -30,4 +30,6 @@ public interface IGeneralRepositoryPlayer {
      * @param team
      */
     public void initPlayer(playerState state, int strength, int id, String team);
+    
+    public void close();
 }

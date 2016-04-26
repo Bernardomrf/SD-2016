@@ -46,7 +46,7 @@ public class BenchServer {
             }
             System.err.println("Connection Accepted");
             
-            handler = new BenchHandler(commSocket, bp);
+            handler = new BenchHandler(commSocket, bp, listeningSocket);
             handler.start();
         }
     }

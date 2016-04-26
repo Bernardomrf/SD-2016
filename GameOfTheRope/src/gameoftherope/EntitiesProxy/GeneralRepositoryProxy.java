@@ -312,4 +312,12 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
         }
         return result;
     }
+    
+    public void close(){
+        outObject = "close-";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+    }
 }

@@ -5,15 +5,12 @@
  */
 package gameoftherope.Entities;
 
+import gameoftherope.Configs.PlayerConfig;
 import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IConfigRepository;
-import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Configs.PlayerConfig;
-import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Regions.ConfigRepository;
 
 /**
  *
@@ -107,6 +104,11 @@ public class Player extends Thread{
                     break;
             }
         }
+        
+        bench.close();
+        playground.close();
+        repo.close();
+        conf.close();
     }
     
     private void config(){

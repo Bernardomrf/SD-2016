@@ -5,10 +5,11 @@
  */
 package gameoftherope.Protocols;
 
+import gameoftherope.EndOfTransactionException;
 import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.EntityStateEnum.playerState;
-import gameoftherope.Regions.GeneralRepository;
 import gameoftherope.EntityStateEnum.refState;
+import gameoftherope.Regions.GeneralRepository;
 
 /**
  *
@@ -21,7 +22,11 @@ public class GeneralRepositoryProtocol {
         this.generalRepository = generalRepository;
     }
     
-    public Object processInput(String input) throws UnsupportedOperationException{
+    public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
+        if(input == null){
+            throw new EndOfTransactionException("Close");
+        }
+        
         String [] methodCall = input.split("=");
         String method = methodCall[0];
         refState rState;
@@ -121,6 +126,8 @@ public class GeneralRepositoryProtocol {
                 nGame = Integer.parseInt(args[1]);
                 generalRepository.setGameWins(wins,nGame);
                 return null;
+            case "close":
+                throw new EndOfTransactionException("Close");
             default:
                 throw new UnsupportedOperationException();
         }

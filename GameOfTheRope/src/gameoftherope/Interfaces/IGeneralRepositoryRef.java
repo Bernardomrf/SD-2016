@@ -58,4 +58,6 @@ public interface IGeneralRepositoryRef {
     
     
     public void printHeader();
+    
+    public void close();
 }

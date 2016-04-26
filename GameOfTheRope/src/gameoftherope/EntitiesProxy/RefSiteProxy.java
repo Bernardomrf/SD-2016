@@ -5,9 +5,9 @@
  */
 package gameoftherope.EntitiesProxy;
 
+import gameoftherope.Configs.RefSiteConfig;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Configs.RefSiteConfig;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -133,5 +133,13 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
             inObject = (String) in.readObject();
         } catch (IOException | ClassNotFoundException ex) {
         }
-    }    
+    }  
+    
+    public void close(){
+        outObject = "close-";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+    }
 }

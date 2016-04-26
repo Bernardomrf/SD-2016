@@ -15,4 +15,6 @@ public interface IPlaygroundCoach {
      *
      */
     public void waitForTrial(); // Esperar que o trial acabe 
+    
+    public void close();
 }

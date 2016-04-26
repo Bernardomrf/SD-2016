@@ -5,6 +5,7 @@
  */
 package gameoftherope.Protocols;
 
+import gameoftherope.EndOfTransactionException;
 import gameoftherope.Regions.Playground;
 
 /**
@@ -18,7 +19,11 @@ public class PlaygroundProtocol {
         this.playground = playground;
     }
     
-    public Object processInput(String input) throws UnsupportedOperationException{
+    public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
+        if(input == null){
+            throw new EndOfTransactionException("Close");
+        }
+        
         String[] methodCall = input.split("-");
         String method = methodCall[0];
         switch (method) {
@@ -59,7 +64,8 @@ public class PlaygroundProtocol {
                 return playground.getWins();
             case "getGameWins":
                 return playground.getGameWins();
-            
+            case "close":
+                throw new EndOfTransactionException("Close");
             default:
                 throw new UnsupportedOperationException();
         }

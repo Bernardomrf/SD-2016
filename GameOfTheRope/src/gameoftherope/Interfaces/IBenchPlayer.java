@@ -37,4 +37,6 @@ public interface IBenchPlayer {
      * @return
      */
     public boolean hasMatchFinished();
+    
+    public void close();
 }

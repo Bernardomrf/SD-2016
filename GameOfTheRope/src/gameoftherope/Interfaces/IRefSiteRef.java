@@ -35,4 +35,6 @@ public interface IRefSiteRef {
      *
      */
     public void declareMatchWinner(); // Ver o vencedor, matar tudo !!!!
+    
+    public void close();
 }

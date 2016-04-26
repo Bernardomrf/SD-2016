@@ -40,4 +40,6 @@ public interface IBenchCoach {
      * @param team
      */
     public void playersReady(String team);
+    
+    public void close();
 }

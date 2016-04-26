@@ -48,7 +48,7 @@ public class GeneralRepositoryServer {
                 }
                 System.err.println("Connection Accepted");
 
-                handler = new GeneralRepositoryHandler(commSocket, bp);
+                handler = new GeneralRepositoryHandler(commSocket, bp, listeningSocket);
                 handler.start();
             }
         

@@ -5,11 +5,11 @@
  */
 package gameoftherope.Regions;
 
+import gameoftherope.Configs.BenchConfig;
 import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
-import gameoftherope.Configs.BenchConfig;
 import java.util.Random;
 
 /**
@@ -320,5 +320,10 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         nCoaches = settings.getnCoaches();
         nTeamPlayers = settings.getnTeamPlayers();
         nTrialPlayers = settings.getnTrialPlayers();
+    }
+
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

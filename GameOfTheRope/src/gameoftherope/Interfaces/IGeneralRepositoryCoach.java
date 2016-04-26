@@ -34,4 +34,6 @@ public interface IGeneralRepositoryCoach {
      */
     public void setPlayersPositions(int[] pos, String team);
     
+    public void close();
+    
 }

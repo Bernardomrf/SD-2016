@@ -5,6 +5,7 @@
  */
 package gameoftherope.Protocols;
 
+import gameoftherope.EndOfTransactionException;
 import gameoftherope.Regions.ConfigRepository;
 
 /**
@@ -18,7 +19,11 @@ public class ConfigServerProtocol {
         this.conf = conf;
     }
     
-    public Object processInput(String input) throws UnsupportedOperationException{
+    public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
+        if(input == null){
+            throw new EndOfTransactionException("Close");
+        }
+        
         Object ret = null;
         String[] methodCall = input.split("=");
         String method = methodCall[0];
@@ -44,6 +49,8 @@ public class ConfigServerProtocol {
             case "getConfigRepositoryConfig":
                 ret = conf.getConfigRepositoryConfig();
                 break;
+            case "close":
+                throw new EndOfTransactionException("Close");
             default:
                 throw new UnsupportedOperationException();
         } 

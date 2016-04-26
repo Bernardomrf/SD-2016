@@ -5,6 +5,7 @@
  */
 package gameoftherope.Protocols;
 
+import gameoftherope.EndOfTransactionException;
 import gameoftherope.Regions.RefSite;
 /**
  *
@@ -17,8 +18,10 @@ public class RefSiteProtocol {
         this.refSite = refSite;
     }
     
-    public String processInput(String input) throws UnsupportedOperationException{
-        
+    public String processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
+        if(input == null){
+            throw new EndOfTransactionException("Close");
+        }
         switch (input) {
             case "informReferee":
                 refSite.informReferee();
@@ -35,6 +38,8 @@ public class RefSiteProtocol {
             case "declareMatchWinner":
                 refSite.declareMatchWinner();
                 break;
+            case "close":
+                throw new EndOfTransactionException("Close");
             default:
                 throw new UnsupportedOperationException();
         }

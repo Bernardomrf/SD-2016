@@ -5,10 +5,10 @@
  */
 package gameoftherope.EntitiesServers;
 
+import gameoftherope.Configs.ConfigRepositoryConfig;
 import gameoftherope.EntitiesHandlers.ConfigHandler;
 import gameoftherope.Protocols.ConfigServerProtocol;
 import gameoftherope.Regions.ConfigRepository;
-import gameoftherope.Configs.ConfigRepositoryConfig;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -46,7 +46,7 @@ public class ConfigServer {
             
             System.err.println("Connection Accepted");
             
-            handler = new ConfigHandler(commSocket, csp);
+            handler = new ConfigHandler(commSocket, csp, listeningSocket);
             handler.start();
         }
     }

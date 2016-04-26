@@ -5,11 +5,10 @@
  */
 package gameoftherope.EntitiesProxy;
 
+import gameoftherope.Configs.PlaygroundConfig;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
-import gameoftherope.Configs.PlaygroundConfig;
-import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -257,6 +256,14 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
         } catch (IOException | ClassNotFoundException ex) {
         }  
         return (int[]) inObject;
+    }
+    
+    public void close(){
+        outObject = "close-";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
     }
     
 }

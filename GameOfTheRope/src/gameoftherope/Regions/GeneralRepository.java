@@ -5,11 +5,8 @@
  */
 package gameoftherope.Regions;
 
-import gameoftherope.EntitiesProxy.ConfigProxy;
-import gameoftherope.EntityStateEnum.coachState;
-import gameoftherope.EntityStateEnum.playerState;
-import gameoftherope.EntityStateEnum.refState;
 import gameoftherope.Configs.GeneralRepositoryConfig;
+import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.EntityStateEnum.refState;
@@ -397,5 +394,10 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
         nCoaches = settings.getnCoaches();
         nTeamPlayers = settings.getnTeamPlayers();
         nTrialPlayers = settings.getNtrialPlayers();
+    }
+
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -5,10 +5,12 @@
  */
 package gameoftherope.EntitiesHandlers;
 
+import gameoftherope.EndOfTransactionException;
 import gameoftherope.Protocols.RefSiteProtocol;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -21,11 +23,13 @@ public class RefSiteHandler extends Thread {
     private RefSiteProtocol protocol;
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
+    private ServerSocket listeningSocket;
 
-    public RefSiteHandler(Socket commSocket, RefSiteProtocol rsp) {
+    public RefSiteHandler(Socket commSocket, RefSiteProtocol rsp, ServerSocket listeningSocket) {
         socket = commSocket;
         protocol = rsp;
-
+        this.listeningSocket = listeningSocket;
+        
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
@@ -47,7 +51,16 @@ public class RefSiteHandler extends Thread {
                 inputLine = (String) in.readObject();
             } catch (IOException | ClassNotFoundException ex) {
             }
-            outputLine = protocol.processInput((String)inputLine);
+            try {
+                outputLine = protocol.processInput((String)inputLine);
+            } catch (UnsupportedOperationException ex) {
+            } catch (EndOfTransactionException ex) {
+                try {
+                    listeningSocket.close();
+                } catch (IOException ex1) {
+                }
+                break;
+            }
             inputLine = null;
             try {
                 out.writeObject(outputLine);

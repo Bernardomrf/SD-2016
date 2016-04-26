@@ -5,7 +5,6 @@
  */
 package gameoftherope.EntitiesProxy;
 
-import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Configs.BenchConfig;
 import gameoftherope.Configs.ConfigRepositoryConfig;
 import gameoftherope.Configs.GeneralRepositoryConfig;
@@ -13,6 +12,7 @@ import gameoftherope.Configs.PlayerConfig;
 import gameoftherope.Configs.PlaygroundConfig;
 import gameoftherope.Configs.RefConfig;
 import gameoftherope.Configs.RefSiteConfig;
+import gameoftherope.Interfaces.IConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -147,5 +147,13 @@ public class ConfigProxy implements IConfigRepository{
         } catch (IOException | ClassNotFoundException ex) {
         }
         return (ConfigRepositoryConfig) inObject;
+    }
+    
+    public void close(){
+        outObject = "close-";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
     }
 }

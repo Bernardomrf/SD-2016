@@ -5,6 +5,7 @@
  */
 package gameoftherope.Protocols;
 
+import gameoftherope.EndOfTransactionException;
 import gameoftherope.Regions.Bench;
 
 /**
@@ -18,7 +19,10 @@ public class BenchProtocol {
         this.bench = bench;
     }
     
-    public Object processInput(String input) throws UnsupportedOperationException{
+    public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
+        if(input == null){
+            throw new EndOfTransactionException("Close");
+        }
         String[] methodCall = input.split("-");
         String method = methodCall[0];
         String[] args;
@@ -56,6 +60,8 @@ public class BenchProtocol {
                 args = methodCall[1].split(";");
                 bench.playersReady(args[0]);
                 return null;
+            case "close":
+                throw new EndOfTransactionException("Close");
             default:
                 throw new UnsupportedOperationException();
         }        

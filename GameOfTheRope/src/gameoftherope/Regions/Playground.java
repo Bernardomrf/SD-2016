@@ -5,11 +5,11 @@
  */
 package gameoftherope.Regions;
 
+import gameoftherope.Configs.PlaygroundConfig;
 import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
-import gameoftherope.Configs.PlaygroundConfig;
 
 /**
  * Class to implement the playground monitor.
@@ -281,6 +281,11 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         totalTrialPlayers = settings.getTotalTrialPlayers();
         nCoaches = settings.getNcoaches();
         pullTheRopeSleep = settings.getPullTheRopeSleep();
+    }
+
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

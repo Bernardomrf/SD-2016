@@ -78,5 +78,11 @@ public class Coach extends Thread{
                     break;
             }
         }
+        
+        refSite.close();
+        bench.close();
+        playground.close();
+        repo.close();
+        conf.close();
     }
 }    

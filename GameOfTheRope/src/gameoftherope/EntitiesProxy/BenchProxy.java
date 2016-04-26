@@ -5,11 +5,10 @@
  */
 package gameoftherope.EntitiesProxy;
 
+import gameoftherope.Configs.BenchConfig;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
-import gameoftherope.Configs.BenchConfig;
-import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -232,5 +231,13 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
             inObject = in.readObject();
         } catch (IOException | ClassNotFoundException ex) {
         }
-    }    
+    }
+    
+    public void close(){
+        outObject = "close-";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+    }
 }

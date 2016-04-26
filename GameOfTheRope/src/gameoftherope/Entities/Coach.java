@@ -8,11 +8,9 @@ package gameoftherope.Entities;
 import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IConfigRepository;
+import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
-import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.EntityStateEnum.coachState;
-import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 
 /**
  *
@@ -23,7 +21,6 @@ public class Coach extends Thread{
     private final IBenchCoach bench;
     private final IPlaygroundCoach playground;
     private final IRefSiteCoach refSite;
-    private final GeneralRepository repo;
     private final IConfigRepository conf;
     private final IGeneralRepositoryCoach repo;
     private boolean goOn = true;

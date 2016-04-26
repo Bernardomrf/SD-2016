@@ -74,7 +74,7 @@ public class ConfigRepository implements IConfigRepository {
             playground.setKnockOutForce(Integer.parseInt(prop.getProperty("knockOutForce")));
             playground.setPullTheRopeSleep(Integer.parseInt(prop.getProperty("pullTheRopeSleep")));
             playground.setPlaygroundHostName(prop.getProperty("playgroundHostName"));
-            playground.setPlaygroundPort(Integer.parseInt(prop.getProperty("playgroungPort")));
+            playground.setPlaygroundPort(Integer.parseInt(prop.getProperty("playgroundPort")));
             
             // Ref Site
             refSite.setnCoaches(Integer.parseInt(prop.getProperty("nCoaches")));

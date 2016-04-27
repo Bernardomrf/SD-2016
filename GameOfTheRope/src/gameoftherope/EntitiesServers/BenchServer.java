@@ -23,6 +23,7 @@ public class BenchServer {
         
         boolean goOn = true;
         
+        
         ServerSocket listeningSocket = null;           // socket de escuta
         //int portNumb = mainConfigs.get("refSitePort");                           // número do port em que o serviço é estabelecido
         int portNumb = 22131;

@@ -18,7 +18,6 @@ import java.net.Socket;
  */
 public class RefSiteServer {
     public static void main(String[] args) {
-        //Map<String, Integer> mainConfigs = ConfigRepository.getRefSiteConfigs();
         System.err.println("Started Server");
         RefSite refSite = new RefSite();
         
@@ -26,8 +25,7 @@ public class RefSiteServer {
         
         boolean goOn = true;
         
-        ServerSocket listeningSocket = null;           // socket de escuta
-        //int portNumb = mainConfigs.get("refSitePort");                           // número do port em que o serviço é estabelecido
+        ServerSocket listeningSocket = null;
         int portNumb = 22133;
         
         try {

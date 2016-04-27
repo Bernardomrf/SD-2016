@@ -294,7 +294,7 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
             return;
         }
         if(!knockout.equals("X")){
-            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ (trialsA+trialsB) +" trials.");
+            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ trialN +" trials.");
         }
         if(knockout.equals("X")){
             if(trialsA == trialsB){
@@ -361,7 +361,7 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     private void finishMatch(int nGame){
        
         if(!knockout.equals("X")){
-            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ (trialsA+trialsB) +" trials.");
+            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ trialN +" trials.");
         }
         if(knockout.equals("X")){
             if(trialsA == trialsB){

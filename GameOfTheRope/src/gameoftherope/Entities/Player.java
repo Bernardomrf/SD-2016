@@ -84,8 +84,8 @@ public class Player extends Thread{
                     nTrials = playground.standInPosition();
                     if(nPlayerTrials<nTrials){
                         strength+=nTrials-nPlayerTrials-1;
-                        if(strength>5){
-                            strength = 5;
+                        if(strength>maxStrength){
+                            strength = maxStrength;
                         }
                         nPlayerTrials = nTrials;
                     }

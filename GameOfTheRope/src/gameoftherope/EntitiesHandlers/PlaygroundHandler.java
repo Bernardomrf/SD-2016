@@ -56,7 +56,9 @@ public class PlaygroundHandler extends Thread {
             } catch (UnsupportedOperationException ex) {
             } catch (EndOfTransactionException ex) {
                 try {
-                    listeningSocket.close();
+                    if(!listeningSocket.isClosed()){
+                        listeningSocket.close();
+                    }
                 } catch (IOException ex1) {
                 }
                 break;

@@ -42,6 +42,7 @@ public class ConfigServer {
             try {
                 commSocket = listeningSocket.accept();
             } catch (Exception e) {
+                System.exit(0);
             }
             
             System.err.println("Connection Accepted");

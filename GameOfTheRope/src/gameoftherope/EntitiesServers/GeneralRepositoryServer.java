@@ -6,7 +6,6 @@
 package gameoftherope.EntitiesServers;
 
 import gameoftherope.EntitiesHandlers.GeneralRepositoryHandler;
-import gameoftherope.Protocols.GeneralRepositoryProtocol;
 import gameoftherope.Regions.GeneralRepository;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,7 +23,6 @@ public class GeneralRepositoryServer {
         GeneralRepository generalRepository;
         try {
             generalRepository = new GeneralRepository();
-            GeneralRepositoryProtocol bp = new GeneralRepositoryProtocol(generalRepository);
      
             boolean goOn = true;
 
@@ -39,16 +37,18 @@ public class GeneralRepositoryServer {
             while(goOn){
                 System.err.println("Waiting for connection");
                 Socket commSocket = null;
-                GeneralRepositoryHandler handler = null;
+                GeneralRepositoryHandler handler;
 
                 try {
-                    commSocket = listeningSocket.accept();
+                    if(listeningSocket != null){
+                        commSocket = listeningSocket.accept();
+                    }  
                 } catch (Exception e) {
                     System.exit(0);
                 }
                 System.err.println("Connection Accepted");
 
-                handler = new GeneralRepositoryHandler(commSocket, bp, listeningSocket);
+                handler = new GeneralRepositoryHandler(commSocket, generalRepository, listeningSocket);
                 handler.start();
             }
         

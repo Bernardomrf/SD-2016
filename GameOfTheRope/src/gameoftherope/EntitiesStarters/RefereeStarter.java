@@ -5,15 +5,15 @@
  */
 package gameoftherope.EntitiesStarters;
 
+import gameoftherope.Entities.Referee;
 import gameoftherope.EntitiesProxy.BenchProxy;
 import gameoftherope.EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.GeneralRepositoryProxy;
 import gameoftherope.EntitiesProxy.PlaygroundProxy;
 import gameoftherope.EntitiesProxy.RefSiteProxy;
-import gameoftherope.Entities.Referee;
 import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.GeneralRepository;
 import java.io.FileNotFoundException;
 
 /**
@@ -23,7 +23,7 @@ import java.io.FileNotFoundException;
 public class RefereeStarter {
     public static void main(String[] args) throws FileNotFoundException {
         
-        GeneralRepository repo = new GeneralRepository();
+        GeneralRepositoryProxy repo = new GeneralRepositoryProxy();
         BenchProxy bench = new BenchProxy();
         PlaygroundProxy playground = new PlaygroundProxy();
         RefSiteProxy refSite = new RefSiteProxy();

@@ -135,6 +135,7 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
         }
     }  
     
+    @Override
     public void close(){
         outObject = "close-";
         try {

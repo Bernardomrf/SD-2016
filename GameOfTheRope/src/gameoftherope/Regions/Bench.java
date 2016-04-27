@@ -321,6 +321,25 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         nTeamPlayers = settings.getnTeamPlayers();
         nTrialPlayers = settings.getnTrialPlayers();
     }
+    
+    @Override
+    public synchronized void waitForPlayers() {
+        while ((nBenchPlayersA + nBenchPlayersB) != (nTeamPlayers*2)){
+            try {
+                wait();
+            } catch (InterruptedException ex) {
+            }
+        }
+    }
+
+    @Override
+    public synchronized void waitForCoaches() {
+        while(coachesWaiting != nCoaches){
+            try {
+                wait();
+            } catch (InterruptedException ex) {}
+        }
+    }
 
     @Override
     public void close() {

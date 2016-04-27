@@ -5,15 +5,15 @@
  */
 package gameoftherope.EntitiesStarters;
 
+import gameoftherope.Entities.Coach;
 import gameoftherope.EntitiesProxy.BenchProxy;
 import gameoftherope.EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.GeneralRepositoryProxy;
 import gameoftherope.EntitiesProxy.PlaygroundProxy;
 import gameoftherope.EntitiesProxy.RefSiteProxy;
-import gameoftherope.Entities.Coach;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
-import gameoftherope.Regions.GeneralRepository;
 import java.io.FileNotFoundException;
 
 /**
@@ -29,7 +29,7 @@ public class CoachStarter {
         }
         String team = args[0];
         
-        GeneralRepository repo = new GeneralRepository();
+        GeneralRepositoryProxy repo = new GeneralRepositoryProxy();
         BenchProxy bench = new BenchProxy();
         PlaygroundProxy playground = new PlaygroundProxy();
         RefSiteProxy refSite = new RefSiteProxy();

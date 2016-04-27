@@ -60,6 +60,12 @@ public class BenchProtocol {
                 args = methodCall[1].split(";");
                 bench.playersReady(args[0]);
                 return null;
+            case "waitForPlayers":
+                bench.waitForPlayers();
+                return null;
+            case "waitForCoaches":
+                bench.waitForCoaches();
+                return null;
             case "close":
                 throw new EndOfTransactionException("Close");
             default:

@@ -24,7 +24,6 @@ public interface IRefSiteRef {
     
     /**
      *
-     * @param knockOut
      */
     public void declareGameWinner(); // espera que o estado mude para refSite
                                         // ver se é o ultimo jogo atraves da variavel aWins, bWins

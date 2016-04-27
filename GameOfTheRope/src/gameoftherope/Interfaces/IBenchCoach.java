@@ -42,4 +42,5 @@ public interface IBenchCoach {
     public void playersReady(String team);
     
     public void close();
+    
 }

@@ -5,13 +5,13 @@
  */
 package gameoftherope.EntitiesStarters;
 
+import gameoftherope.Entities.Player;
 import gameoftherope.EntitiesProxy.BenchProxy;
 import gameoftherope.EntitiesProxy.ConfigProxy;
+import gameoftherope.EntitiesProxy.GeneralRepositoryProxy;
 import gameoftherope.EntitiesProxy.PlaygroundProxy;
-import gameoftherope.Entities.Player;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Regions.GeneralRepository;
 import java.io.FileNotFoundException;
 
 /**
@@ -28,7 +28,7 @@ public class PlayerStarter {
         int i = Integer.parseInt(args[0]);
         String team = args[1];
         
-        GeneralRepository repo = new GeneralRepository();
+        GeneralRepositoryProxy repo = new GeneralRepositoryProxy();
         BenchProxy bench = new BenchProxy();
         PlaygroundProxy playground = new PlaygroundProxy();
         ConfigProxy conf = new ConfigProxy();

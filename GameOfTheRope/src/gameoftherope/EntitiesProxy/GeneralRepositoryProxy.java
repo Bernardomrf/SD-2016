@@ -54,7 +54,6 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     
     /**
      *
-     * @param state
      */
     @Override
     public void printHeader(){
@@ -313,6 +312,7 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
         return result;
     }
     
+    @Override
     public void close(){
         outObject = "close-";
         try {

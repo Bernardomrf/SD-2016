@@ -233,11 +233,38 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
         }
     }
     
+    @Override
     public void close(){
         outObject = "close-";
         try {
             out.writeObject(outObject);
         } catch (IOException ex) {
+        }
+    }
+
+    @Override
+    public void waitForPlayers() {
+        outObject = "waitForPlayers";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+    }
+
+    @Override
+    public void waitForCoaches() {
+        outObject = "waitForCoaches";
+        try {
+            out.writeObject(outObject);
+        } catch (IOException ex) {
+        }
+        try {
+            inObject = in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
         }
     }
 }

@@ -19,6 +19,7 @@ public class EndOfTransactionException extends Exception {
 
    /**
     *  Construtor de variáveis
+     * @param lastAnswer
     */
    public EndOfTransactionException (Object lastAnswer)
    {
@@ -28,6 +29,7 @@ public class EndOfTransactionException extends Exception {
 
    /**
     *  Extracção da última resposta do serviço
+     * @return 
     */
    public Object getLastAnswer ()
    {

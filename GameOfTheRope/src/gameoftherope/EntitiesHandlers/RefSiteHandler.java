@@ -7,6 +7,7 @@ package gameoftherope.EntitiesHandlers;
 
 import gameoftherope.EndOfTransactionException;
 import gameoftherope.Protocols.RefSiteProtocol;
+import gameoftherope.Regions.RefSite;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,9 +26,9 @@ public class RefSiteHandler extends Thread {
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
-    public RefSiteHandler(Socket commSocket, RefSiteProtocol rsp, ServerSocket listeningSocket) {
+    public RefSiteHandler(Socket commSocket, RefSite refSite, ServerSocket listeningSocket) {
         socket = commSocket;
-        protocol = rsp;
+        protocol = new RefSiteProtocol(refSite);
         this.listeningSocket = listeningSocket;
         
         try {

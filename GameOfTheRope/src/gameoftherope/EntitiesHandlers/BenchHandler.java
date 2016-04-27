@@ -7,6 +7,7 @@ package gameoftherope.EntitiesHandlers;
 
 import gameoftherope.EndOfTransactionException;
 import gameoftherope.Protocols.BenchProtocol;
+import gameoftherope.Regions.Bench;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,9 +25,9 @@ public class BenchHandler extends Thread{
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
-    public BenchHandler(Socket commSocket, BenchProtocol bp, ServerSocket listeningSocket) {
+    public BenchHandler(Socket commSocket, Bench bench, ServerSocket listeningSocket) {
         socket = commSocket;
-        protocol = bp;
+        protocol = new BenchProtocol(bench);
         this.listeningSocket = listeningSocket;
         
         try {

@@ -39,6 +39,7 @@ public class Player extends Thread{
      * @param team
      * @param id
      * @param repo
+     * @param conf
      */
     public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, IGeneralRepositoryPlayer repo, IConfigRepository conf){
 		this.conf = conf;

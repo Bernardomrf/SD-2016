@@ -66,6 +66,8 @@ public class Referee extends Thread{
     
     @Override
     public void run(){
+        bench.waitForPlayers();
+        bench.waitForCoaches();
         while(goOn){
             switch(internalState){
                 case START_OF_THE_MATCH:
@@ -119,7 +121,7 @@ public class Referee extends Thread{
                     gamesDone ++;
                     if (gamesDone == nGames){
                         internalState= refState.END_OF_THE_MATCH;
-                        
+                        repo.setWins(wins, knockOut);
                         repo.changeRefState(internalState);
                     }
                     else{
@@ -136,7 +138,6 @@ public class Referee extends Thread{
                     refSite.declareMatchWinner();
                     bench.setMatchFinish(); // Fazer setMatchFinish no playground e no refSite
                     gameWins = playground.getGameWins();
-                    repo.setWins(wins, knockOut);
                     repo.setGameWins(gameWins, gamesDone);
                     goOn = false;
                     break;    

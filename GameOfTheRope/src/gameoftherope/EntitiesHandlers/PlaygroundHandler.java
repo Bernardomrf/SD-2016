@@ -7,6 +7,7 @@ package gameoftherope.EntitiesHandlers;
 
 import gameoftherope.EndOfTransactionException;
 import gameoftherope.Protocols.PlaygroundProtocol;
+import gameoftherope.Regions.Playground;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,9 +26,9 @@ public class PlaygroundHandler extends Thread {
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
-    public PlaygroundHandler(Socket commSocket, PlaygroundProtocol rsp, ServerSocket listeningSocket) {
+    public PlaygroundHandler(Socket commSocket, Playground playground, ServerSocket listeningSocket) {
         socket = commSocket;
-        protocol = rsp;
+        protocol = new PlaygroundProtocol(playground);
         this.listeningSocket = listeningSocket;
         
         try {

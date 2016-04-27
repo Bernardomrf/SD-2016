@@ -6,7 +6,6 @@
 package gameoftherope.EntitiesServers;
 
 import gameoftherope.EntitiesHandlers.BenchHandler;
-import gameoftherope.Protocols.BenchProtocol;
 import gameoftherope.Regions.Bench;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -22,8 +21,6 @@ public class BenchServer {
         System.err.println("Started Server");
         Bench bench = new Bench();
         
-        BenchProtocol bp = new BenchProtocol(bench);
-        
         boolean goOn = true;
         
         ServerSocket listeningSocket = null;           // socket de escuta
@@ -37,16 +34,18 @@ public class BenchServer {
         while(goOn){
             System.err.println("Waiting for connection");
             Socket commSocket = null;
-            BenchHandler handler = null;
+            BenchHandler handler;
             
             try {
-                commSocket = listeningSocket.accept();
+                if(listeningSocket != null){
+                    commSocket = listeningSocket.accept();
+                }  
             } catch (Exception e) {
                 System.exit(0);
             }
             System.err.println("Connection Accepted");
             
-            handler = new BenchHandler(commSocket, bp, listeningSocket);
+            handler = new BenchHandler(commSocket, bench, listeningSocket);
             handler.start();
         }
     }

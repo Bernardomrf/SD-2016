@@ -6,7 +6,6 @@
 package gameoftherope.EntitiesServers;
 
 import gameoftherope.EntitiesHandlers.RefSiteHandler;
-import gameoftherope.Protocols.RefSiteProtocol;
 import gameoftherope.Regions.RefSite;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -21,8 +20,6 @@ public class RefSiteServer {
         System.err.println("Started Server");
         RefSite refSite = new RefSite();
         
-        RefSiteProtocol rfp = new RefSiteProtocol(refSite);
-        
         boolean goOn = true;
         
         ServerSocket listeningSocket = null;
@@ -35,16 +32,18 @@ public class RefSiteServer {
         while(goOn){
             System.err.println("Waiting for connection");
             Socket commSocket = null;
-            RefSiteHandler handler = null;
+            RefSiteHandler handler;
             
             try {
-                commSocket = listeningSocket.accept();
+                if(listeningSocket != null){
+                    commSocket = listeningSocket.accept();
+                }
             } catch (Exception e) {
                 System.exit(0);
             }
             System.err.println("Connection Accepted");
             
-            handler = new RefSiteHandler(commSocket, rfp, listeningSocket);
+            handler = new RefSiteHandler(commSocket, refSite, listeningSocket);
             handler.start();
         }
     }

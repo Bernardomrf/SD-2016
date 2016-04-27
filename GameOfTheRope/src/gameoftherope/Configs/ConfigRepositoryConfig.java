@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class ConfigRepositoryConfig implements Serializable {
     private String configRepoHostName = "localhost";
-    private int configRepoPort = 22133;
+    private int configRepoPort = 22134;
 
     /**
      * @return the configRepoHostName

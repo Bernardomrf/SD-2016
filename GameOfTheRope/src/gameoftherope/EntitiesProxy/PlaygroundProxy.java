@@ -258,6 +258,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
         return (int[]) inObject;
     }
     
+    @Override
     public void close(){
         outObject = "close-";
         try {

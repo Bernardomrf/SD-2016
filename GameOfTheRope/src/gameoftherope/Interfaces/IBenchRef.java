@@ -22,4 +22,8 @@ public interface IBenchRef {
     public void setMatchFinish();
     
     public void close();
+    
+    public void waitForPlayers();
+    
+    public void waitForCoaches();
 }

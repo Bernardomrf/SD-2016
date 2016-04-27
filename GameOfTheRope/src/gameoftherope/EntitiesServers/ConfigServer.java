@@ -7,7 +7,6 @@ package gameoftherope.EntitiesServers;
 
 import gameoftherope.Configs.ConfigRepositoryConfig;
 import gameoftherope.EntitiesHandlers.ConfigHandler;
-import gameoftherope.Protocols.ConfigServerProtocol;
 import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -21,8 +20,6 @@ public class ConfigServer {
     public static void main(String[] args) {
         System.err.println("Started Server");
         ConfigRepository conf = new ConfigRepository();
-        
-        ConfigServerProtocol csp = new ConfigServerProtocol(conf);
         
         boolean goOn = true;
         
@@ -40,14 +37,16 @@ public class ConfigServer {
             ConfigHandler handler;
             
             try {
-                commSocket = listeningSocket.accept();
+                if (listeningSocket != null){
+                    commSocket = listeningSocket.accept();
+                } 
             } catch (Exception e) {
                 System.exit(0);
             }
             
             System.err.println("Connection Accepted");
             
-            handler = new ConfigHandler(commSocket, csp, listeningSocket);
+            handler = new ConfigHandler(commSocket, conf, listeningSocket);
             handler.start();
         }
     }

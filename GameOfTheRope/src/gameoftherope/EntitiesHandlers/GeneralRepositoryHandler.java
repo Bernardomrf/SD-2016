@@ -7,6 +7,7 @@ package gameoftherope.EntitiesHandlers;
 
 import gameoftherope.EndOfTransactionException;
 import gameoftherope.Protocols.GeneralRepositoryProtocol;
+import gameoftherope.Regions.GeneralRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,9 +25,9 @@ public class GeneralRepositoryHandler extends Thread{
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
-    public GeneralRepositoryHandler(Socket commSocket, GeneralRepositoryProtocol bp, ServerSocket listeningSocket) {
+    public GeneralRepositoryHandler(Socket commSocket, GeneralRepository repo, ServerSocket listeningSocket) {
         socket = commSocket;
-        protocol = bp;
+        protocol = new GeneralRepositoryProtocol(repo);
         this.listeningSocket = listeningSocket;
         
         try {

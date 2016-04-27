@@ -7,6 +7,7 @@ package gameoftherope.EntitiesHandlers;
 
 import gameoftherope.EndOfTransactionException;
 import gameoftherope.Protocols.ConfigServerProtocol;
+import gameoftherope.Regions.ConfigRepository;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,9 +25,9 @@ public class ConfigHandler extends Thread{
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
-    public ConfigHandler(Socket commSocket, ConfigServerProtocol csp, ServerSocket listeningSocket) {
+    public ConfigHandler(Socket commSocket, ConfigRepository configRepo, ServerSocket listeningSocket) {
         socket = commSocket;
-        protocol = csp;
+        protocol = new ConfigServerProtocol(configRepo);
         this.listeningSocket = listeningSocket;
         
         try {

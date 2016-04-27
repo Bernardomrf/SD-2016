@@ -1,0 +1,37 @@
+{
+    "build-targets": [
+        {
+            "name": "ConfigServer",
+            "executable_class": "gameoftherope.EntitiesServers.ConfigServer",
+            "type": "Server"
+        },
+        {
+            "name": "BenchServer",
+            "executable_class": "gameoftherope.EntitiesServers.BenchServer"
+        },
+        {
+            "name": "PlaygroundServer",
+            "executable_class": "gameoftherope.EntitiesServers.PlaygroundServer"
+        },
+        {
+            "name": "RefSiteServer",
+            "executable_class": "gameoftherope.EntitiesServers.RefSiteServer"
+        },
+        {
+            "name": "GeneralRepositoryServer",
+            "executable_class": "gameoftherope.EntitiesServers.GeneralRepositoryServer"
+        },
+        {
+            "name": "Player",
+            "executable_class": "gameoftherope.EntitiesStarters.PlayerStarter"
+        },
+        {
+            "name": "Coach",
+            "executable_class": "gameoftherope.EntitiesStarters.CoachStarter"
+        },
+        {
+            "name": "Referee",
+            "executable_class": "gameoftherope.EntitiesStarters.RefereeStarter"
+        }
+    ]
+}

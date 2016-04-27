@@ -149,6 +149,7 @@ public class ConfigProxy implements IConfigRepository{
         return (ConfigRepositoryConfig) inObject;
     }
     
+    @Override
     public void close(){
         outObject = "close-";
         try {

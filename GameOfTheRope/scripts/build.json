@@ -3,35 +3,47 @@
         {
             "name": "ConfigServer",
             "executable_class": "gameoftherope.EntitiesServers.ConfigServer",
-            "type": "Server"
+            "type": "Server",
+            "config": "configServerHostName"
         },
         {
             "name": "BenchServer",
-            "executable_class": "gameoftherope.EntitiesServers.BenchServer"
+            "executable_class": "gameoftherope.EntitiesServers.BenchServer",
+            "type": "Server",
+            "config": "benchHostName"
         },
         {
             "name": "PlaygroundServer",
-            "executable_class": "gameoftherope.EntitiesServers.PlaygroundServer"
+            "executable_class": "gameoftherope.EntitiesServers.PlaygroundServer",
+            "type": "Server",
+            "config": "playgroundHostName"
         },
         {
             "name": "RefSiteServer",
-            "executable_class": "gameoftherope.EntitiesServers.RefSiteServer"
+            "executable_class": "gameoftherope.EntitiesServers.RefSiteServer",
+            "type": "Server",
+            "config": "refSiteHostName"
         },
         {
             "name": "GeneralRepositoryServer",
-            "executable_class": "gameoftherope.EntitiesServers.GeneralRepositoryServer"
+            "executable_class": "gameoftherope.EntitiesServers.GeneralRepositoryServer",
+            "type": "Server",
+            "config": "generalRepositoryHostName"
         },
         {
             "name": "Player",
             "executable_class": "gameoftherope.EntitiesStarters.PlayerStarter"
+            ,"type": "Client"
         },
         {
             "name": "Coach",
-            "executable_class": "gameoftherope.EntitiesStarters.CoachStarter"
+            "executable_class": "gameoftherope.EntitiesStarters.CoachStarter",
+            "type": "Client"
         },
         {
             "name": "Referee",
-            "executable_class": "gameoftherope.EntitiesStarters.RefereeStarter"
+            "executable_class": "gameoftherope.EntitiesStarters.RefereeStarter",
+            "type": "Client"
         }
     ]
 }

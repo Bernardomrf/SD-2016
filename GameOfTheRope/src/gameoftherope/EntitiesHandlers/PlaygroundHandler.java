@@ -15,8 +15,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class for the Playground handler.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class PlaygroundHandler extends Thread {
 
@@ -27,10 +29,11 @@ public class PlaygroundHandler extends Thread {
     private ServerSocket listeningSocket;
 
     /**
+     * Constructor for Playground Handler class.
      *
-     * @param commSocket
-     * @param playground
-     * @param listeningSocket
+     * @param commSocket Socket - Socket for establishing connection with the client.
+     * @param playground Playground - Playground instance.
+     * @param listeningSocket ServerSocket - Instance of Server Socket used to end simulation with a close command.
      */
     public PlaygroundHandler(Socket commSocket, Playground playground, ServerSocket listeningSocket) {
         socket = commSocket;

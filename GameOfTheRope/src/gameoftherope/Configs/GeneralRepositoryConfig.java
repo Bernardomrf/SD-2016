@@ -33,7 +33,9 @@ public class GeneralRepositoryConfig implements Serializable {
     }
 
     /**
-     * @param nCoaches the nCoaches to set
+     * Method to set the number of coaches.
+     * 
+     * @param nCoaches int - Number of coaches.
      */
     public void setnCoaches(int nCoaches) {
         this.nCoaches = nCoaches;
@@ -42,78 +44,88 @@ public class GeneralRepositoryConfig implements Serializable {
     /**  
      * Method to return the number of players.
      * 
-     * @return int - number of coaches.
+     * @return int - number of players.
      */
     public int getnPlayers() {
         return nPlayers;
     }
 
     /**
-     * @param nPlayers the nPlayers to set
+     * Method to set the number of plyers.
+     * 
+     * @param nPlayers int - Number of players.
      */
     public void setnPlayers(int nPlayers) {
         this.nPlayers = nPlayers;
     }
 
     /**  
-     * Method to return the number of coaches.
+     * Method to return the General Repository Host Name.
      * 
-     * @return int - number of coaches.
+     * @return String - Host name.
      */
     public String getGeneralRepositoryHostName() {
         return generalRepositoryHostName;
     }
 
     /**
-     * @param generalRepositoryHostName the generalRepositoryHostName to set
+     * Method to set the General Repository Host Name.
+     * 
+     * @param generalRepositoryHostName String - Host name.
      */
     public void setGeneralRepositoryHostName(String generalRepositoryHostName) {
         this.generalRepositoryHostName = generalRepositoryHostName;
     }
 
     /**  
-     * Method to return the number of coaches.
+     * Method to return the General Repository Port Number.
      * 
-     * @return int - number of coaches.
+     * @return int - Port number.
      */
     public int getGeneralRepositoryPort() {
         return generalRepositoryPort;
     }
 
     /**
-     * @param generalRepositoryPort the generalRepositoryPort to set
+     * Method to set the General Repository Port Number.
+     * 
+     * @param generalRepositoryPort int - Port number.
      */
     public void setGeneralRepositoryPort(int generalRepositoryPort) {
         this.generalRepositoryPort = generalRepositoryPort;
     }
 
     /**  
-     * Method to return the number of coaches.
+     * Method to return the number of players of a team.
      * 
-     * @return int - number of coaches.
+     * @return int - Players of a Team.
      */
     public int getnTeamPlayers() {
         return nTeamPlayers;
     }
 
     /**
-     * @param nTeamPlayers the nTeamPlayers to set
+     * Method to set the number of players of a team.
+     * 
+     * @param nTeamPlayers int - Players of a Team.
      */
     public void setnTeamPlayers(int nTeamPlayers) {
         this.nTeamPlayers = nTeamPlayers;
     }
 
     /**  
-     * Method to return the number of coaches.
+     * Method to return the number of trial players.
      * 
-     * @return int - number of coaches.
+     * @return int - number trial players.
      */
     public int getNtrialPlayers() {
         return ntrialPlayers;
     }
 
     /**
-     * @param ntrialPlayers the ntrialPlayers to set
+     * Method to set the number of trial players.
+     * 
+     * @param ntrialPlayers int - number trial players.
      */
     public void setNtrialPlayers(int ntrialPlayers) {
         this.ntrialPlayers = ntrialPlayers;

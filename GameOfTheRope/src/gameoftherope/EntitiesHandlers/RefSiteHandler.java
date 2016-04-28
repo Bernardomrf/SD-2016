@@ -15,8 +15,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class for the Referee Site handler.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class RefSiteHandler extends Thread {
 
@@ -27,10 +29,11 @@ public class RefSiteHandler extends Thread {
     private ServerSocket listeningSocket;
 
     /**
+     * Constructor for Referee Site Handler class.
      *
-     * @param commSocket
-     * @param refSite
-     * @param listeningSocket
+     * @param commSocket Socket - Socket for establishing connection with the client.
+     * @param refSite RefSite - RefSite instance.
+     * @param listeningSocket ServerSocket - Instance of Server Socket used to end simulation with a close command.
      */
     public RefSiteHandler(Socket commSocket, RefSite refSite, ServerSocket listeningSocket) {
         socket = commSocket;

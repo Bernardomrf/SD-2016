@@ -12,14 +12,12 @@ package gameoftherope;
  * @author Bernardo Ferreira <bernardomrfereira@ua.pt>
  */
 public class EndOfTransactionException extends Exception {
-   /**
-    *  Variável interna
-    */
-   private Object lastAnswer = null;                  // última resposta do serviço
+   
+   private Object lastAnswer = null;
 
    /**
     *  Construtor de variáveis
-     * @param lastAnswer
+    * @param lastAnswer
     */
    public EndOfTransactionException (Object lastAnswer)
    {
@@ -29,7 +27,7 @@ public class EndOfTransactionException extends Exception {
 
    /**
     *  Extracção da última resposta do serviço
-     * @return 
+    * @return 
     */
    public Object getLastAnswer ()
    {

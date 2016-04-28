@@ -8,51 +8,67 @@ package gameoftherope.Configs;
 import java.io.Serializable;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class to set the Ref Site configurations.
+ * If the configuration file (config.properties) is not found,
+ * the settings of the Ref Site are the ones on this class.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class RefSiteConfig implements Serializable {
     private int nCoaches = 2;
     private String refSiteHostName = "localhost";
     private int refSitePort = 22133;
 
-    /**
-     * @return the refSiteHostName
+    /**  
+     * Method to return the Ref Site host name.
+     * 
+     * @return String - Host name.
      */
     public String getRefSiteHostName() {
         return refSiteHostName;
     }
 
     /**
-     * @param refSiteHostName the refSiteHostName to set
+     * Method to set the Ref Site host name.
+     * 
+     * @param refSiteHostName String - Host name.
      */
     public void setRefSiteHostName(String refSiteHostName) {
         this.refSiteHostName = refSiteHostName;
     }
 
-    /**
-     * @return the refSitePort
+    /**  
+     * Method to return the Ref Site port number.
+     * 
+     * @return int - Port number.
      */
     public int getRefSitePort() {
         return refSitePort;
     }
 
     /**
-     * @param refSitePort the refSitePort to set
+     * Method to set the Ref Site port number.
+     * 
+     * @param refSitePort int - Port number.
      */
     public void setRefSitePort(int refSitePort) {
         this.refSitePort = refSitePort;
     }
 
-    /**
-     * @return the nCoaches
+    /**  
+     * Method to return the number of coaches.
+     * 
+     * @return int - Number of coaches.
      */
     public int getnCoaches() {
         return nCoaches;
     }
 
     /**
-     * @param nCoaches the nCoaches to set
+     * Method to set the number of coaches.
+     * 
+     * @param nCoaches int - Number of coaches.
      */
     public void setnCoaches(int nCoaches) {
         this.nCoaches = nCoaches;

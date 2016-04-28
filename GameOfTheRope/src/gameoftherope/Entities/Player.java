@@ -13,8 +13,10 @@ import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 
 /**
- *
- * @author brunosilva
+ * Class for the Player entity.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class Player extends Thread{
     private int maxStrength;
@@ -33,13 +35,14 @@ public class Player extends Thread{
     private int nPlayerTrials;
     
     /**
+     * Constructor for PLayer class
      *
-     * @param playground
-     * @param bench
-     * @param team
-     * @param id
-     * @param repo
-     * @param conf
+     * @param playground IPlaygroundPlayer - Interface for the player Playground.
+     * @param bench IBenchPlayer - Interface for the player Bench.
+     * @param team String - Team of the player.
+     * @param id int - Id of the players.
+     * @param repo IGeneralRepositoryPlayer - Interface for the player General Repository.
+     * @param conf IConfigRepository - Interface for the player Config Repository.
      */
     public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, IGeneralRepositoryPlayer repo, IConfigRepository conf){
 		this.conf = conf;

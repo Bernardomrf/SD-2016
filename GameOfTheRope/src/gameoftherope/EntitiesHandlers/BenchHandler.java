@@ -15,8 +15,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class for the Bench handler.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class BenchHandler extends Thread{
     private Socket socket;
@@ -26,10 +28,11 @@ public class BenchHandler extends Thread{
     private ServerSocket listeningSocket;
 
     /**
+     * Constructor for Bench Handler class.
      *
-     * @param commSocket
-     * @param bench
-     * @param listeningSocket
+     * @param commSocket Socket - Socket for establishing connection with the client.
+     * @param bench Bench - Bench instance.
+     * @param listeningSocket ServerSocket - Instance of Server Socket used to end simulation with a close command.
      */
     public BenchHandler(Socket commSocket, Bench bench, ServerSocket listeningSocket) {
         socket = commSocket;

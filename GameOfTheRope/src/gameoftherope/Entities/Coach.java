@@ -13,9 +13,10 @@ import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
 
 /**
- *
- * @author brunosilva
- * @author bernardoferreira
+ * Class for the Coach entity.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class Coach extends Thread{
     private final IBenchCoach bench;
@@ -29,13 +30,14 @@ public class Coach extends Thread{
     
     
     /**
+     * Constructor for Coach class.
      *
-     * @param bench
-     * @param playground
-     * @param refSite
-     * @param team
-     * @param repo
-     * @param conf
+     * @param bench IBenchCoach - Interface for the coach Bench.
+     * @param playground IPlaygroundCoach - Interface for the coach Playground.
+     * @param refSite IRefSiteCoach - Interface for the coach Ref Site.
+     * @param team String - Team of the coach.
+     * @param repo IGeneralRepositoryCoach - Interface for the coach General Repository.
+     * @param conf IConfigRepository - Interface for the coach Config Repository.
      */
     public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, IGeneralRepositoryCoach repo, IConfigRepository conf){
         this.bench = bench;

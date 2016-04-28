@@ -19,8 +19,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- *
- * @author bernardo
+ * Class for the General Repository Proxy.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneralRepositoryPlayer, IGeneralRepositoryRef{
     
@@ -33,9 +35,10 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     Object inObject = null;
     
     /**
+     * Constructor for General Repository Proxy class.
      *
-     * @param configHostName
-     * @param portNum
+     * @param configHostName String - Host name of the Config Repositotry.
+     * @param portNum int - Port Number of the Config Repositotry.
      */
     public GeneralRepositoryProxy(String configHostName, int portNum){
         ConfigProxy conf = new ConfigProxy(configHostName, portNum);

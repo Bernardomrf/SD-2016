@@ -15,8 +15,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
- * @author bernardo
+ * Class for the General Repository handler.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class GeneralRepositoryHandler extends Thread{
     private Socket socket;
@@ -26,10 +28,11 @@ public class GeneralRepositoryHandler extends Thread{
     private ServerSocket listeningSocket;
 
     /**
+     * Constructor for General Repository Handler class.
      *
-     * @param commSocket
-     * @param repo
-     * @param listeningSocket
+     * @param commSocket Socket - Socket for establishing connection with the client.
+     * @param repo GeneralRepository - GeneralRepository instance.
+     * @param listeningSocket ServerSocket - Instance of Server Socket used to end simulation with a close command.
      */
     public GeneralRepositoryHandler(Socket commSocket, GeneralRepository repo, ServerSocket listeningSocket) {
         socket = commSocket;

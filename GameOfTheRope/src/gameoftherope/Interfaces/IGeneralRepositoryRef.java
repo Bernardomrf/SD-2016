@@ -56,8 +56,13 @@ public interface IGeneralRepositoryRef {
      */
     public void setGameWins(int[] gameWins, int nGame);
     
-    
+    /**
+     *
+     */
     public void printHeader();
     
+    /**
+     *
+     */
     public void close();
 }

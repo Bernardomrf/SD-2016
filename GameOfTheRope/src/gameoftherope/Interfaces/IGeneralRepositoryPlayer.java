@@ -31,5 +31,8 @@ public interface IGeneralRepositoryPlayer {
      */
     public void initPlayer(playerState state, int strength, int id, String team);
     
+    /**
+     *
+     */
     public void close();
 }

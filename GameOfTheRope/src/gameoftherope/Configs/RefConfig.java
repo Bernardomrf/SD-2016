@@ -15,18 +15,34 @@ public class RefConfig implements Serializable {
     private int nTrials = 6;
     private int nGames = 3;
 
+    /**
+     *
+     * @return
+     */
     public int getNTrials() {
         return nTrials;
     }
     
+    /**
+     *
+     * @param n
+     */
     public void setNTrials(int n) {
         nTrials = n;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getNGames() {
         return nGames;
     }
     
+    /**
+     *
+     * @param n
+     */
     public void setNGames(int n) {
         nGames = n;
     }

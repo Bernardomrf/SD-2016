@@ -25,6 +25,12 @@ public class BenchHandler extends Thread{
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
+    /**
+     *
+     * @param commSocket
+     * @param bench
+     * @param listeningSocket
+     */
     public BenchHandler(Socket commSocket, Bench bench, ServerSocket listeningSocket) {
         socket = commSocket;
         protocol = new BenchProtocol(bench);

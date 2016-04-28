@@ -26,6 +26,12 @@ public class PlaygroundHandler extends Thread {
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
+    /**
+     *
+     * @param commSocket
+     * @param playground
+     * @param listeningSocket
+     */
     public PlaygroundHandler(Socket commSocket, Playground playground, ServerSocket listeningSocket) {
         socket = commSocket;
         protocol = new PlaygroundProtocol(playground);

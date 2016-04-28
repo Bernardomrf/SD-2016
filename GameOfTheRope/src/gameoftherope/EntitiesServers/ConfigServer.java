@@ -17,6 +17,11 @@ import java.net.Socket;
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
 public class ConfigServer {
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         System.err.println("Started Server");
         ConfigRepository conf = new ConfigRepository();

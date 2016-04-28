@@ -8,8 +8,12 @@ package gameoftherope.Configs;
 import java.io.Serializable;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class to set the Coach configurations.
+ * If the configuration file (config.properties) is not found,
+ * the settings of the Coach are the ones on this class.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class CoachConfig implements Serializable {
     

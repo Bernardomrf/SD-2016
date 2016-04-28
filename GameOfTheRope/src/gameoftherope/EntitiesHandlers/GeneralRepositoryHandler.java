@@ -25,6 +25,12 @@ public class GeneralRepositoryHandler extends Thread{
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
+    /**
+     *
+     * @param commSocket
+     * @param repo
+     * @param listeningSocket
+     */
     public GeneralRepositoryHandler(Socket commSocket, GeneralRepository repo, ServerSocket listeningSocket) {
         socket = commSocket;
         protocol = new GeneralRepositoryProtocol(repo);

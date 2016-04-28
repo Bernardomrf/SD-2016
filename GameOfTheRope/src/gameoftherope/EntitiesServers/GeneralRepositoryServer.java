@@ -5,7 +5,10 @@
  */
 package gameoftherope.EntitiesServers;
 
+import gameoftherope.Configs.BenchConfig;
+import gameoftherope.Configs.GeneralRepositoryConfig;
 import gameoftherope.EntitiesHandlers.GeneralRepositoryHandler;
+import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Regions.GeneralRepository;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,18 +20,35 @@ import java.net.Socket;
  * @author bernardo
  */
 public class GeneralRepositoryServer {
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args){
-        //Map<String, Integer> mainConfigs = ConfigRepository.getRefSiteConfigs();
+        
+        String hostName;
+        int portNum;
         System.err.println("Started Server");
+        if(args.length!=2){
+            hostName = "localhost";
+            portNum = 22134;
+        }
+        else{
+            hostName = args[0];
+            portNum = Integer.parseInt(args[1]);
+        }        
         GeneralRepository generalRepository;
         try {
-            generalRepository = new GeneralRepository();
+            generalRepository = new GeneralRepository(hostName, portNum);
      
             boolean goOn = true;
 
             ServerSocket listeningSocket = null;           // socket de escuta
-            //int portNumb = mainConfigs.get("refSitePort");                           // número do port em que o serviço é estabelecido
-            int portNumb = 22130;
+            ConfigProxy conf = new ConfigProxy(hostName, portNum);
+            GeneralRepositoryConfig settings = conf.getGeneralRepositoryConfig();
+        
+            int portNumb = settings.getGeneralRepositoryPort();
 
             try {
                 listeningSocket = new ServerSocket(portNumb);

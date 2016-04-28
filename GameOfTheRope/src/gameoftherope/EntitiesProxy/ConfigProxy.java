@@ -31,10 +31,12 @@ public class ConfigProxy implements IConfigRepository{
     Object outObject = null;
     Object inObject = null;
     
-    public ConfigProxy(){
-        
-        int port = 22134;
-        String hostName = "localhost";
+    /**
+     *
+     * @param hostName
+     * @param port
+     */
+    public ConfigProxy(String hostName, int port){
         
         try {
             benchSocket = new Socket(hostName, port);
@@ -51,6 +53,10 @@ public class ConfigProxy implements IConfigRepository{
         }
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public PlayerConfig getPlayerConfig(){
         outObject = "getPlayerConfig";
@@ -65,6 +71,10 @@ public class ConfigProxy implements IConfigRepository{
         return (PlayerConfig) inObject;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public RefConfig getRefConfig(){
         outObject = "getRefConfig";
@@ -79,6 +89,10 @@ public class ConfigProxy implements IConfigRepository{
         return (RefConfig) inObject;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public BenchConfig getBenchConfig(){
         outObject = "getBenchConfig";
@@ -93,6 +107,10 @@ public class ConfigProxy implements IConfigRepository{
         return (BenchConfig) inObject;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public PlaygroundConfig getPlaygroundConfig(){
         outObject = "getPlaygroundConfig";
@@ -107,6 +125,10 @@ public class ConfigProxy implements IConfigRepository{
         return (PlaygroundConfig) inObject;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public RefSiteConfig getRefSiteConfig(){
         outObject = "getRefSiteConfig";
@@ -121,6 +143,10 @@ public class ConfigProxy implements IConfigRepository{
         return (RefSiteConfig) inObject;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public GeneralRepositoryConfig getGeneralRepositoryConfig(){
         outObject = "getGeneralRepositoryConfig";
@@ -135,6 +161,10 @@ public class ConfigProxy implements IConfigRepository{
         return (GeneralRepositoryConfig) inObject;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public ConfigRepositoryConfig getConfigRepositoryConfig(){
         outObject = "getConfigRepositoryConfig";
@@ -149,6 +179,9 @@ public class ConfigProxy implements IConfigRepository{
         return (ConfigRepositoryConfig) inObject;
     }
     
+    /**
+     *
+     */
     @Override
     public void close(){
         outObject = "close-";

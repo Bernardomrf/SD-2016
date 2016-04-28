@@ -15,10 +15,21 @@ import gameoftherope.Regions.Bench;
 public class BenchProtocol {
     private final Bench bench;
     
+    /**
+     *
+     * @param bench
+     */
     public BenchProtocol(Bench bench){
         this.bench = bench;
     }
     
+    /**
+     *
+     * @param input
+     * @return
+     * @throws UnsupportedOperationException
+     * @throws EndOfTransactionException
+     */
     public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
         if(input == null){
             throw new EndOfTransactionException("Close");

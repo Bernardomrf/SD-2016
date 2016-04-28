@@ -39,17 +39,28 @@ public class GameOfTheRope extends Thread {
      */
     public static void main(String[] args) throws FileNotFoundException {
         
+        String hostName;
+        int portNum;
+        if(args.length!=2){
+            hostName = "localhost";
+            portNum = 22134;
+        }
+        else{
+            hostName = args[0];
+            portNum = Integer.parseInt(args[1]);
+        }        
+        
         int nCoaches;
         int nPlayers;
         
         //Bench bench = new Bench();
         //Playground playground = new Playground();
         //RefSite refSite = new RefSite();
-        ConfigProxy conf = new ConfigProxy();
-        BenchProxy bench = new BenchProxy();
-        PlaygroundProxy playground = new PlaygroundProxy();
-        RefSiteProxy refSite = new RefSiteProxy();
-        GeneralRepositoryProxy repo = new GeneralRepositoryProxy();
+        ConfigProxy conf = new ConfigProxy(hostName, portNum);
+        BenchProxy bench = new BenchProxy(hostName, portNum);
+        PlaygroundProxy playground = new PlaygroundProxy(hostName, portNum);
+        RefSiteProxy refSite = new RefSiteProxy(hostName, portNum);
+        GeneralRepositoryProxy repo = new GeneralRepositoryProxy(hostName, portNum);
         GeneralRepositoryConfig grc = conf.getGeneralRepositoryConfig();
         nCoaches = grc.getnCoaches();
         nPlayers = grc.getnPlayers();
@@ -60,11 +71,11 @@ public class GameOfTheRope extends Thread {
 
         Coach[] coach = new Coach[nCoaches];
         for (int i = 0; i < nCoaches; i++) {
-            conf = new ConfigProxy();
-            playground = new PlaygroundProxy();
-            refSite = new RefSiteProxy();
-            bench = new BenchProxy();
-            repo = new GeneralRepositoryProxy();
+            conf = new ConfigProxy(hostName, portNum);
+            playground = new PlaygroundProxy(hostName, portNum);
+            refSite = new RefSiteProxy(hostName, portNum);
+            bench = new BenchProxy(hostName, portNum);
+            repo = new GeneralRepositoryProxy(hostName, portNum);
             if (i < 1) {
                 coach[i] = new Coach((IBenchCoach) bench, (IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "A", (IGeneralRepositoryCoach) repo, conf);
             } else {
@@ -76,10 +87,10 @@ public class GameOfTheRope extends Thread {
 
         Player[] player = new Player[nPlayers];
         for (int i = 0; i < nPlayers; i++) {
-            conf = new ConfigProxy();
-            playground = new PlaygroundProxy();
-            bench = new BenchProxy();
-            repo = new GeneralRepositoryProxy();
+            conf = new ConfigProxy(hostName, portNum);
+            playground = new PlaygroundProxy(hostName, portNum);
+            bench = new BenchProxy(hostName, portNum);
+            repo = new GeneralRepositoryProxy(hostName, portNum);
             if (i < 5) {
                 player[i] = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, "A", i, (IGeneralRepositoryPlayer) repo, conf);
             } else {

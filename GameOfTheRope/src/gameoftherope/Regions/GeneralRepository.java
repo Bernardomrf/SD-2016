@@ -58,8 +58,8 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      *
      * @throws FileNotFoundException
      */
-    public GeneralRepository() throws FileNotFoundException{
-        config();
+    public GeneralRepository(String configHostName, int portNum) throws FileNotFoundException{
+        config(configHostName, portNum);
         playersStrengthA = new int[nTeamPlayers];
         playersStrengthB = new int[nTeamPlayers];
         playersStatesA = new playerState[nTeamPlayers];
@@ -387,8 +387,8 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
         
     }
 
-    private void config() {
-        ConfigProxy conf = new ConfigProxy();
+    private void config(String configHostName, int portNum) {
+        ConfigProxy conf = new ConfigProxy(configHostName, portNum);
         GeneralRepositoryConfig settings = conf.getGeneralRepositoryConfig();
         
         nCoaches = settings.getnCoaches();
@@ -396,6 +396,9 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
         nTrialPlayers = settings.getNtrialPlayers();
     }
 
+    /**
+     *
+     */
     @Override
     public void close() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

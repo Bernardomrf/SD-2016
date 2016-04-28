@@ -31,9 +31,11 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     
     /**
      *
+     * @param configHostName
+     * @param portNum
      */
-    public BenchProxy(){
-        ConfigProxy conf = new ConfigProxy();
+    public BenchProxy(String configHostName, int portNum){
+        ConfigProxy conf = new ConfigProxy(configHostName, portNum);
         BenchConfig settings = conf.getBenchConfig();
         
         String hostName = settings.getBenchHostName();
@@ -233,6 +235,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
         }
     }
     
+    /**
+     *
+     */
     @Override
     public void close(){
         outObject = "close-";
@@ -242,6 +247,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void waitForPlayers() {
         outObject = "waitForPlayers";
@@ -255,6 +263,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void waitForCoaches() {
         outObject = "waitForCoaches";

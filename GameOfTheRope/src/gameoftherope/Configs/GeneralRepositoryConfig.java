@@ -8,8 +8,12 @@ package gameoftherope.Configs;
 import java.io.Serializable;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class to set the General Repository configurations.
+ * If the configuration file (config.properties) is not found,
+ * the settings of the General Repository are the ones on this class.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class GeneralRepositoryConfig implements Serializable {
     private int nCoaches = 2;
@@ -19,8 +23,10 @@ public class GeneralRepositoryConfig implements Serializable {
     private String generalRepositoryHostName = "localhost";
     private int generalRepositoryPort = 22130;
 
-    /**
-     * @return the nCoaches
+    /**  
+     * Method to return the number of coaches.
+     * 
+     * @return int - number of coaches.
      */
     public int getnCoaches() {
         return nCoaches;
@@ -33,8 +39,10 @@ public class GeneralRepositoryConfig implements Serializable {
         this.nCoaches = nCoaches;
     }
 
-    /**
-     * @return the nPlayers
+    /**  
+     * Method to return the number of players.
+     * 
+     * @return int - number of coaches.
      */
     public int getnPlayers() {
         return nPlayers;
@@ -47,8 +55,10 @@ public class GeneralRepositoryConfig implements Serializable {
         this.nPlayers = nPlayers;
     }
 
-    /**
-     * @return the generalRepositoryHostName
+    /**  
+     * Method to return the number of coaches.
+     * 
+     * @return int - number of coaches.
      */
     public String getGeneralRepositoryHostName() {
         return generalRepositoryHostName;
@@ -61,8 +71,10 @@ public class GeneralRepositoryConfig implements Serializable {
         this.generalRepositoryHostName = generalRepositoryHostName;
     }
 
-    /**
-     * @return the generalRepositoryPort
+    /**  
+     * Method to return the number of coaches.
+     * 
+     * @return int - number of coaches.
      */
     public int getGeneralRepositoryPort() {
         return generalRepositoryPort;
@@ -75,8 +87,10 @@ public class GeneralRepositoryConfig implements Serializable {
         this.generalRepositoryPort = generalRepositoryPort;
     }
 
-    /**
-     * @return the nTeamPlayers
+    /**  
+     * Method to return the number of coaches.
+     * 
+     * @return int - number of coaches.
      */
     public int getnTeamPlayers() {
         return nTeamPlayers;
@@ -89,8 +103,10 @@ public class GeneralRepositoryConfig implements Serializable {
         this.nTeamPlayers = nTeamPlayers;
     }
 
-    /**
-     * @return the ntrialPlayers
+    /**  
+     * Method to return the number of coaches.
+     * 
+     * @return int - number of coaches.
      */
     public int getNtrialPlayers() {
         return ntrialPlayers;

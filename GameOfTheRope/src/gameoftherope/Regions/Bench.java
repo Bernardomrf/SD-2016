@@ -16,7 +16,7 @@ import java.util.Random;
  * Class to implement the bench monitor.
  *
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
- * @author Bernardo Ferreira [bernardomrf@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     
@@ -39,8 +39,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     /**
      * Constructor for Bench class
      */
-    public Bench(){
-        config();
+    public Bench(String configHostName, int portNum){
+        config(configHostName, portNum);
         nBenchPlayersA = 0;
         nBenchPlayersB = 0;
         wakeCoaches = 0;
@@ -313,8 +313,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         return array;
     }
     
-    private void config(){
-        ConfigProxy conf = new ConfigProxy();
+    private void config(String configHostName, int portNum){
+        ConfigProxy conf = new ConfigProxy(configHostName, portNum);
         BenchConfig settings = conf.getBenchConfig();
         
         nCoaches = settings.getnCoaches();
@@ -322,6 +322,9 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         nTrialPlayers = settings.getnTrialPlayers();
     }
     
+    /**
+     *
+     */
     @Override
     public synchronized void waitForPlayers() {
         while ((nBenchPlayersA + nBenchPlayersB) != (nTeamPlayers*2)){
@@ -332,6 +335,9 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         }
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void waitForCoaches() {
         while(coachesWaiting != nCoaches){
@@ -341,6 +347,9 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void close() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

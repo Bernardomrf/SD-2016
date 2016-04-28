@@ -3,6 +3,7 @@
 import os
 import sys
 import json
+import time
 from pyjavaproperties import Properties
 
 settings_file_name = "settings.properties"
@@ -42,13 +43,14 @@ def build():
     for i in jar_info:
         status = create_jars(i["name"], i["executable_class"])
         if status == 0:
-            print "Created jar file for " + name
+            print "Created jar file for " + i["name"]
         else:
-            print "Error creating jar for " + name
+            print "Error creating jar for " + i["name"]
     print "Done creating jar files."
 
 def run():
-    ping()
+    if hosts == []:
+        ping()
     get_jar_info()
     create_folder()
 
@@ -61,6 +63,7 @@ def run():
         copy_jars()
 
         run_servers()
+        run_clients()
 
 
     else:
@@ -75,22 +78,72 @@ def run_servers():
     hostname = p[configHostname]
     port = p[configPortname]
 
-    ssh(server_machines["ConfigServer"][0], server_machines["ConfigServer"][1], "java -jar ConfigServer.jar")
+    status = ssh(server_machines["ConfigServer"][0], server_machines["ConfigServer"][1], "java -jar " + server_folder + "ConfigServer.jar")
     if status != 0:
             print "Error running ConfigServer."
     print "Started ConfigServer..."
+    time.sleep(5)
     for i in server_machines:
-        status = ssh(server_machines[i][0],server_machines[i][1], "java -jar " + i + ".jar " + hostname + " " + port)
+        if i == "ConfigServer":
+            continue
+        status = ssh(server_machines[i][0],server_machines[i][1], "java -jar " + server_folder + i + ".jar " + hostname + " " + port)
         if status != 0:
             print "Error running " + i + "."
         else:
             print "Started " + i + "..."
+        time.sleep(0.5)
 
 def run_clients():
     p = Properties()
     p.load(open(property_file_name, 'r'))
     hostname = p[configHostname]
     port = p[configPortname]
+
+    total_players = int(p["nTeamPlayers"])
+    total_coaches = int(p["nCoaches"])
+
+    nRef = 0
+    nCoach = 0
+    nPlayerA = 0
+    nPlayerB = 0
+    teamCoach = "A"
+
+    while ((nPlayerA != total_players) or (nPlayerB != total_players) or (nCoach != total_coaches) or (nRef != 1)):
+        for i in range(len(servers), len(hosts_up)):
+            if nRef < 1:
+                status = ssh(hosts_up[i][0],hosts_up[i][1], "java -jar " + server_folder + clients[2] + ".jar " + hostname + " " + port)
+                if status != 0:
+                    print "Error running " + clients[2] + "."
+                else:
+                    print "Started " + clients[2] + "..."
+                nRef = nRef + 1
+
+            elif nCoach < total_coaches:
+                status = ssh(hosts_up[i][0],hosts_up[i][1], "java -jar " + server_folder + clients[1] + ".jar " + teamCoach + " " + hostname + " " + port)
+                if status != 0:
+                    print "Error running " + clients[1] + "."
+                else:
+                    print "Started " + clients[1] + "..."
+                if teamCoach == "A":
+                    teamCoach = "B"
+                nCoach = nCoach + 1
+
+            elif nPlayerA < total_players:
+                status = ssh(hosts_up[i][0],hosts_up[i][1], "java -jar " + server_folder + clients[0] + ".jar " + str(nPlayerA) + " A " + hostname + " " + port)
+                if status != 0:
+                    print "Error running " + clients[0] + "."
+                else:
+                    print "Started " + clients[0] + "..."
+                nPlayerA = nPlayerA + 1
+
+            elif nPlayerB < total_players:
+                status = ssh(hosts_up[i][0],hosts_up[i][1], "java -jar " + server_folder + clients[0] + ".jar " + str(nPlayerB) + " B " + hostname + " " + port)
+                if status != 0:
+                    print "Error running " + clients[0] + "."
+                else:
+                    print "Started " + clients[0] + "..."
+                nPlayerB = nPlayerB + 1
+            time.sleep(0.5)
 
 def create_folder():
     print "Creating remote folders for jar execution..."
@@ -140,7 +193,7 @@ def create_jars(name, executable):
     return response
 
 def ssh(server, username, cmd):
-    return os.system("ssh " + username + "@" + server + " \"" + cmd + "\" > /dev/null 2>&1")
+    return os.system("ssh " + username + "@" + server + " \"" + cmd + "\" &")
 
 def scp(server, username, file):
     return os.system("scp " + file + " " + username + "@" + server + ":" + server_folder + " > /dev/null 2>&1")

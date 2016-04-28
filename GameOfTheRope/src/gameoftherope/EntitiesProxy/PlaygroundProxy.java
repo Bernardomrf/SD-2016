@@ -15,8 +15,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class for the Playground Proxy.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef{
 
@@ -29,9 +31,10 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     Object inObject = null;
     
     /**
+     * Constructor for Playground Proxy class.
      *
-     * @param configHostName
-     * @param portNum
+     * @param configHostName String - Host name of the Config Repositotry.
+     * @param portNum int - Port Number of the Config Repositotry.
      */
     public PlaygroundProxy(String configHostName, int portNum){
         ConfigProxy conf = new ConfigProxy(configHostName, portNum);

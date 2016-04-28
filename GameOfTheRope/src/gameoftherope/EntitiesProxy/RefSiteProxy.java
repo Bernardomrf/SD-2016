@@ -14,8 +14,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class for the Referee Site Proxy.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     
@@ -28,9 +30,10 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     Object inObject = null;
     
     /**
+     * Constructor for RefSite Proxy class.
      *
-     * @param configHostName
-     * @param portNum
+     * @param configHostName String - Host name of the Config Repositotry.
+     * @param portNum int - Port Number of the Config Repositotry.
      */
     public RefSiteProxy(String configHostName, int portNum){
 

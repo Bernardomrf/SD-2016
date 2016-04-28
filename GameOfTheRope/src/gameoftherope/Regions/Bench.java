@@ -38,6 +38,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
 
     /**
      * Constructor for Bench class
+     * @param configHostName
+     * @param portNum
      */
     public Bench(String configHostName, int portNum){
         config(configHostName, portNum);

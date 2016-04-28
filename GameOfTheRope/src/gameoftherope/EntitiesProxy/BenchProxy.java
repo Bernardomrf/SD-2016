@@ -15,9 +15,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- *
+ * Class for the Bench Proxy.
+ * 
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
- * @author Bernardo Ferreira [bernardomrf@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     
@@ -30,9 +31,10 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     Object inObject = null;
     
     /**
+     * Constructor for Bench Proxy class.
      *
-     * @param configHostName
-     * @param portNum
+     * @param configHostName String - Host name of the Config Repositotry.
+     * @param portNum int - Port Number of the Config Repositotry.
      */
     public BenchProxy(String configHostName, int portNum){
         ConfigProxy conf = new ConfigProxy(configHostName, portNum);
@@ -57,7 +59,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
     
     /**
-     *
+     * Stub method to allow its remote invocation on the server.
      * @param team
      */
     @Override

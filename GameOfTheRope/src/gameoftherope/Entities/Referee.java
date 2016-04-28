@@ -15,8 +15,10 @@ import gameoftherope.Interfaces.IRefSiteRef;
 
 
 /**
- *
- * @author brunosilva
+ * Class for the Referee entity.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class Referee extends Thread{
 
@@ -39,12 +41,13 @@ public class Referee extends Thread{
     private int[] gameWins;
     
     /**
-     *
-     * @param refSite
-     * @param playground
-     * @param bench
-     * @param repo
-     * @param conf
+     * Constructor for Referee class.
+     * 
+     * @param refSite IRefSiteRef - Interface for the Referee Ref Site.
+     * @param playground IPlaygroundRef - Interface for the Referee Playground.
+     * @param bench IBenchRef - Interface for the Referee Bench.
+     * @param repo IGeneralRepositoryRef - Interface for the Referee General Repository.
+     * @param conf IConfigRepository - Interface for the Referee Config Repository.
      */
     public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, IGeneralRepositoryRef repo, IConfigRepository conf){
 		this.conf = conf;

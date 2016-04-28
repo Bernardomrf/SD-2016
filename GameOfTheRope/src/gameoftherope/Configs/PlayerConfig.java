@@ -8,23 +8,29 @@ package gameoftherope.Configs;
 import java.io.Serializable;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class to set the player configurations.
+ * If the configuration file (config.properties) is not found,
+ * the settings of the Player are the ones on this class.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class PlayerConfig implements Serializable {
     private int maxStrength = 4;
 
-    /**
-     *
-     * @return
+    /**  
+     * Method to return the maximum strength of a player.
+     * 
+     * @return int - Strength.
      */
     public int getMaxStrength() {
         return maxStrength;
     }
     
     /**
-     *
-     * @param max
+     * Method to set the maximum strength of a player.
+     * 
+     * @param max int - Strength.
      */
     public void setMaxStrength(int max) {
         maxStrength = max;

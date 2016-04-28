@@ -19,8 +19,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class for the Config Repository Proxy.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class ConfigProxy implements IConfigRepository{
     Socket benchSocket = null;
@@ -32,9 +34,10 @@ public class ConfigProxy implements IConfigRepository{
     Object inObject = null;
     
     /**
+     * Constructor for Config Proxy class.
      *
-     * @param hostName
-     * @param port
+     * @param hostName String - Host name of the Config Repositotry.
+     * @param port int - Port Number of the Config Repositotry.
      */
     public ConfigProxy(String hostName, int port){
         

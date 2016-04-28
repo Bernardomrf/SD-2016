@@ -5,7 +5,10 @@
  */
 package gameoftherope.EntitiesServers;
 
+import gameoftherope.Configs.BenchConfig;
+import gameoftherope.Configs.PlaygroundConfig;
 import gameoftherope.EntitiesHandlers.PlaygroundHandler;
+import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Regions.Playground;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,16 +19,33 @@ import java.net.Socket;
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
 public class PlaygroundServer {
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        //Map<String, Integer> mainConfigs = ConfigRepository.getRefSiteConfigs();
+
+        String hostName;
+        int portNum;
         System.err.println("Started Server");
-        Playground playground = new Playground();
+        if(args.length!=2){
+            hostName = "localhost";
+            portNum = 22134;
+        }
+        else{
+            hostName = args[0];
+            portNum = Integer.parseInt(args[1]);
+        }        
+        Playground playground = new Playground(hostName, portNum);
         
         boolean goOn = true;
         
         ServerSocket listeningSocket = null;           // socket de escuta
-        //int portNumb = mainConfigs.get("refSitePort");                           // número do port em que o serviço é estabelecido
-        int portNumb = 22132;
+        ConfigProxy conf = new ConfigProxy(hostName, portNum);
+        PlaygroundConfig settings = conf.getPlaygroundConfig();
+        
+        int portNumb = settings.getPlaygroundPort();
         
         try {
             listeningSocket = new ServerSocket(portNumb);

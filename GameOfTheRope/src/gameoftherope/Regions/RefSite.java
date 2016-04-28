@@ -24,8 +24,8 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     /**
      * Constructor for RefSite class
      */
-    public RefSite(){
-        config();
+    public RefSite(String configHostName, int portNum){
+        config(configHostName, portNum);
         coachesReady = 0;
     }
 
@@ -86,12 +86,15 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
         notifyAll();
     }
     
-    private void config(){
-        ConfigProxy conf = new ConfigProxy();
+    private void config(String configHostName, int portNum){
+        ConfigProxy conf = new ConfigProxy(configHostName, portNum);
         RefSiteConfig settings = conf.getRefSiteConfig();
         nCoaches = settings.getnCoaches();
     }
 
+    /**
+     *
+     */
     @Override
     public void close() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

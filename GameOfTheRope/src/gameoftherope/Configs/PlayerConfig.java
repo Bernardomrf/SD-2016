@@ -14,10 +14,18 @@ import java.io.Serializable;
 public class PlayerConfig implements Serializable {
     private int maxStrength = 4;
 
+    /**
+     *
+     * @return
+     */
     public int getMaxStrength() {
         return maxStrength;
     }
     
+    /**
+     *
+     * @param max
+     */
     public void setMaxStrength(int max) {
         maxStrength = max;
     }

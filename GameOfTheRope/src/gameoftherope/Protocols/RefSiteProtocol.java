@@ -14,10 +14,21 @@ import gameoftherope.Regions.RefSite;
 public class RefSiteProtocol {
     private final RefSite refSite;
     
+    /**
+     *
+     * @param refSite
+     */
     public RefSiteProtocol(RefSite refSite){
         this.refSite = refSite;
     }
     
+    /**
+     *
+     * @param input
+     * @return
+     * @throws UnsupportedOperationException
+     * @throws EndOfTransactionException
+     */
     public String processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
         if(input == null){
             throw new EndOfTransactionException("Close");

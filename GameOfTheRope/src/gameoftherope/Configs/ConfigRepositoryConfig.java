@@ -8,36 +8,48 @@ package gameoftherope.Configs;
 import java.io.Serializable;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class to set the Config Repository configurations.
+ * If the configuration file (config.properties) is not found,
+ * the settings of the Config Repository are the ones on this class.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class ConfigRepositoryConfig implements Serializable {
     private String configRepoHostName = "localhost";
     private int configRepoPort = 22134;
 
-    /**
-     * @return the configRepoHostName
+    /**  
+     * Method to return the Config Repository host name.
+     * 
+     * @return String - Host name.
      */
     public String getConfigRepoHostName() {
         return configRepoHostName;
     }
 
     /**
-     * @param configRepoHostName the configRepoHostName to set
+     * Method to set the Config Repository host name.
+     * 
+     * @param configRepoHostName String - Host name.
      */
     public void setConfigRepoHostName(String configRepoHostName) {
         this.configRepoHostName = configRepoHostName;
     }
 
-    /**
-     * @return the configRepoPort
+    /**  
+     * Method to return the Config Repositoery port number.
+     * 
+     * @return int - Port number.
      */
     public int getConfigRepoPort() {
         return configRepoPort;
     }
 
     /**
-     * @param configRepoPort the configRepoPort to set
+     * Method to return the Config Repositoery port number.
+     * 
+     * @param configRepoPort int - Port number.
      */
     public void setConfigRepoPort(int configRepoPort) {
         this.configRepoPort = configRepoPort;

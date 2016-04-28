@@ -5,6 +5,8 @@
  */
 package gameoftherope.EntitiesProxy;
 
+import gameoftherope.Configs.BenchConfig;
+import gameoftherope.Configs.GeneralRepositoryConfig;
 import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.EntityStateEnum.refState;
@@ -32,10 +34,15 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     
     /**
      *
+     * @param configHostName
+     * @param portNum
      */
-    public GeneralRepositoryProxy(){
-        int port = 22130;
-        String hostName = "localhost";
+    public GeneralRepositoryProxy(String configHostName, int portNum){
+        ConfigProxy conf = new ConfigProxy(configHostName, portNum);
+        GeneralRepositoryConfig settings = conf.getGeneralRepositoryConfig();
+        
+        String hostName = settings.getGeneralRepositoryHostName();
+        int port = settings.getGeneralRepositoryPort();
         
         try {
             generalSocket = new Socket(hostName, port);
@@ -312,6 +319,9 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
         return result;
     }
     
+    /**
+     *
+     */
     @Override
     public void close(){
         outObject = "close-";

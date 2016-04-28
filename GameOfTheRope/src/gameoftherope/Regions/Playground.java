@@ -44,8 +44,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     /**
      * Constructor for Playground class
      */
-    public Playground(){
-        this.config();
+    public Playground(String configHostName, int portNum){
+        config(configHostName, portNum);
         this.rope = 0;
         this.playersDone = 0;
         this.startTrial = false;
@@ -272,8 +272,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         return allGameWins;
     }
     
-    private void config(){
-        ConfigProxy conf = new ConfigProxy();
+    private void config(String configHostName, int portNum){
+        ConfigProxy conf = new ConfigProxy(configHostName, portNum);
         PlaygroundConfig settings = conf.getPlaygroundConfig();
         
         knockOutForce = settings.getKnockOutForce();
@@ -283,6 +283,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         pullTheRopeSleep = settings.getPullTheRopeSleep();
     }
 
+    /**
+     *
+     */
     @Override
     public void close() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

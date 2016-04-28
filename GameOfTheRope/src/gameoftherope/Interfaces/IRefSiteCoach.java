@@ -16,5 +16,8 @@ public interface IRefSiteCoach {
      */
     public void informReferee();
     
+    /**
+     *
+     */
     public void close();
 }

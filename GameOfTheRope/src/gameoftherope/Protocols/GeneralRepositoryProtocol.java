@@ -18,10 +18,21 @@ import gameoftherope.Regions.GeneralRepository;
 public class GeneralRepositoryProtocol {
     private final GeneralRepository generalRepository;
     
+    /**
+     *
+     * @param generalRepository
+     */
     public GeneralRepositoryProtocol(GeneralRepository generalRepository){
         this.generalRepository = generalRepository;
     }
     
+    /**
+     *
+     * @param input
+     * @return
+     * @throws UnsupportedOperationException
+     * @throws EndOfTransactionException
+     */
     public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
         if(input == null){
             throw new EndOfTransactionException("Close");

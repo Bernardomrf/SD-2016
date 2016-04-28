@@ -21,13 +21,22 @@ import java.io.FileNotFoundException;
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
 public class RefereeStarter {
+
+    /**
+     *
+     * @param args
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
-        
-        GeneralRepositoryProxy repo = new GeneralRepositoryProxy();
-        BenchProxy bench = new BenchProxy();
-        PlaygroundProxy playground = new PlaygroundProxy();
-        RefSiteProxy refSite = new RefSiteProxy();
-        ConfigProxy conf = new ConfigProxy();
+        if(args.length != 2){
+            System.err.println("Invalid Arguments");
+            System.exit(1);
+        }
+        GeneralRepositoryProxy repo = new GeneralRepositoryProxy(args[0], Integer.parseInt(args[1]));
+        BenchProxy bench = new BenchProxy(args[0], Integer.parseInt(args[1]));
+        PlaygroundProxy playground = new PlaygroundProxy(args[0], Integer.parseInt(args[1]));
+        RefSiteProxy refSite = new RefSiteProxy(args[0], Integer.parseInt(args[1]));
+        ConfigProxy conf = new ConfigProxy(args[0], Integer.parseInt(args[1]));
         
         Referee ref = new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, repo, conf);
         

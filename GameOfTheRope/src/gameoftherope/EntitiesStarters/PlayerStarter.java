@@ -19,19 +19,25 @@ import java.io.FileNotFoundException;
  * @author bernardo
  */
 public class PlayerStarter {
+
+    /**
+     *
+     * @param args
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
         
-        if(args.length != 2){
+        if(args.length != 4){
             System.err.println("Invalid Arguments");
             System.exit(1);
         }
         int i = Integer.parseInt(args[0]);
         String team = args[1];
         
-        GeneralRepositoryProxy repo = new GeneralRepositoryProxy();
-        BenchProxy bench = new BenchProxy();
-        PlaygroundProxy playground = new PlaygroundProxy();
-        ConfigProxy conf = new ConfigProxy();
+        GeneralRepositoryProxy repo = new GeneralRepositoryProxy(args[2],Integer.parseInt(args[3]));
+        BenchProxy bench = new BenchProxy(args[2],Integer.parseInt(args[3]));
+        PlaygroundProxy playground = new PlaygroundProxy(args[2],Integer.parseInt(args[3]));
+        ConfigProxy conf = new ConfigProxy(args[2],Integer.parseInt(args[3]));
         
         Player player = new Player((IPlaygroundPlayer) playground, (IBenchPlayer) bench, team, i, repo, conf);
         player.start();

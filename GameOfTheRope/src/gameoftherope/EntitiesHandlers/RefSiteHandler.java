@@ -26,6 +26,12 @@ public class RefSiteHandler extends Thread {
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
+    /**
+     *
+     * @param commSocket
+     * @param refSite
+     * @param listeningSocket
+     */
     public RefSiteHandler(Socket commSocket, RefSite refSite, ServerSocket listeningSocket) {
         socket = commSocket;
         protocol = new RefSiteProtocol(refSite);

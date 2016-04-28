@@ -30,9 +30,11 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     
     /**
      *
+     * @param configHostName
+     * @param portNum
      */
-    public PlaygroundProxy(){
-        ConfigProxy conf = new ConfigProxy();
+    public PlaygroundProxy(String configHostName, int portNum){
+        ConfigProxy conf = new ConfigProxy(configHostName, portNum);
         PlaygroundConfig settings = conf.getPlaygroundConfig();
         
         String hostName = settings.getPlaygroundHostName();
@@ -258,6 +260,9 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
         return (int[]) inObject;
     }
     
+    /**
+     *
+     */
     @Override
     public void close(){
         outObject = "close-";

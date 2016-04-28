@@ -25,6 +25,12 @@ public class ConfigHandler extends Thread{
     private ObjectOutputStream out = null;
     private ServerSocket listeningSocket;
 
+    /**
+     *
+     * @param commSocket
+     * @param configRepo
+     * @param listeningSocket
+     */
     public ConfigHandler(Socket commSocket, ConfigRepository configRepo, ServerSocket listeningSocket) {
         socket = commSocket;
         protocol = new ConfigServerProtocol(configRepo);

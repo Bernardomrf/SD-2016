@@ -5,7 +5,10 @@
  */
 package gameoftherope.EntitiesServers;
 
+import gameoftherope.Configs.PlaygroundConfig;
+import gameoftherope.Configs.RefSiteConfig;
 import gameoftherope.EntitiesHandlers.RefSiteHandler;
+import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Regions.RefSite;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,14 +19,32 @@ import java.net.Socket;
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
 public class RefSiteServer {
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
+        String hostName;
+        int portNum;
         System.err.println("Started Server");
-        RefSite refSite = new RefSite();
+        if(args.length!=2){
+            hostName = "localhost";
+            portNum = 22134;
+        }
+        else{
+            hostName = args[0];
+            portNum = Integer.parseInt(args[1]);
+        }        
+        RefSite refSite = new RefSite(hostName, portNum);
         
         boolean goOn = true;
         
-        ServerSocket listeningSocket = null;
-        int portNumb = 22133;
+        ServerSocket listeningSocket = null;           // socket de escuta
+        ConfigProxy conf = new ConfigProxy(hostName, portNum);
+        RefSiteConfig settings = conf.getRefSiteConfig();
+        
+        int portNumb = settings.getRefSitePort();
         
         try {
             listeningSocket = new ServerSocket(portNumb);

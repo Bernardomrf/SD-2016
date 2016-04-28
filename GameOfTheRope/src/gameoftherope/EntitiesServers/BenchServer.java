@@ -5,7 +5,9 @@
  */
 package gameoftherope.EntitiesServers;
 
+import gameoftherope.Configs.BenchConfig;
 import gameoftherope.EntitiesHandlers.BenchHandler;
+import gameoftherope.EntitiesProxy.ConfigProxy;
 import gameoftherope.Regions.Bench;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,17 +18,33 @@ import java.net.Socket;
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
 public class BenchServer {
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        //Map<String, Integer> mainConfigs = ConfigRepository.getBenchConfigs();
+        String hostName;
+        int portNum;
         System.err.println("Started Server");
-        Bench bench = new Bench();
+        if(args.length!=2){
+            hostName = "localhost";
+            portNum = 22134;
+        }
+        else{
+            hostName = args[0];
+            portNum = Integer.parseInt(args[1]);
+        }        
+        Bench bench = new Bench(hostName, portNum);
         
         boolean goOn = true;
         
         
         ServerSocket listeningSocket = null;           // socket de escuta
-        //int portNumb = mainConfigs.get("refSitePort");                           // número do port em que o serviço é estabelecido
-        int portNumb = 22131;
+        ConfigProxy conf = new ConfigProxy(hostName, portNum);
+        BenchConfig settings = conf.getBenchConfig();
+        
+        int portNumb = settings.getBenchPort();
         
         try {
             listeningSocket = new ServerSocket(portNumb);

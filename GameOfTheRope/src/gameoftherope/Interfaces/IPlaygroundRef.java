@@ -58,6 +58,9 @@ public interface IPlaygroundRef {
      */
     public int[] getGameWins(); //++
     
+    /**
+     *
+     */
     public void close();
 }
 

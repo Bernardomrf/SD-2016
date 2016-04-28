@@ -29,10 +29,12 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     
     /**
      *
+     * @param configHostName
+     * @param portNum
      */
-    public RefSiteProxy(){
+    public RefSiteProxy(String configHostName, int portNum){
 
-        ConfigProxy conf = new ConfigProxy();
+        ConfigProxy conf = new ConfigProxy(configHostName, portNum);
         RefSiteConfig settings = conf.getRefSiteConfig();
         
         String hostName = settings.getRefSiteHostName();
@@ -135,6 +137,9 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
         }
     }  
     
+    /**
+     *
+     */
     @Override
     public void close(){
         outObject = "close-";

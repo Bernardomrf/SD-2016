@@ -33,6 +33,9 @@ public class ConfigRepository implements IConfigRepository {
     private GeneralRepositoryConfig repo;
     private ConfigRepositoryConfig conf;
     
+    /**
+     *
+     */
     public ConfigRepository(){
         player = new PlayerConfig();
         ref = new RefConfig();
@@ -97,42 +100,72 @@ public class ConfigRepository implements IConfigRepository {
 	}
     }
     
-    
+    /**
+     *
+     * @return
+     */
     @Override
     public PlayerConfig getPlayerConfig(){
         return player;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public RefConfig getRefConfig(){
         return ref;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public BenchConfig getBenchConfig(){
         return bench;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public PlaygroundConfig getPlaygroundConfig(){
         return playground;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public RefSiteConfig getRefSiteConfig(){
         return refSite;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public GeneralRepositoryConfig getGeneralRepositoryConfig(){
         return repo;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public ConfigRepositoryConfig getConfigRepositoryConfig(){
         return conf;
     }
 
+    /**
+     *
+     */
     @Override
     public void close() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

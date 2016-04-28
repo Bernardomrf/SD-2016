@@ -19,20 +19,51 @@ import gameoftherope.Configs.RefSiteConfig;
  */
 public interface IConfigRepository {
 
+    /**
+     *
+     * @return
+     */
     public BenchConfig getBenchConfig();
 
+    /**
+     *
+     * @return
+     */
     public ConfigRepositoryConfig getConfigRepositoryConfig();
 
+    /**
+     *
+     * @return
+     */
     public GeneralRepositoryConfig getGeneralRepositoryConfig();
 
+    /**
+     *
+     * @return
+     */
     public PlayerConfig getPlayerConfig();
 
+    /**
+     *
+     * @return
+     */
     public PlaygroundConfig getPlaygroundConfig();
 
+    /**
+     *
+     * @return
+     */
     public RefConfig getRefConfig();
 
+    /**
+     *
+     * @return
+     */
     public RefSiteConfig getRefSiteConfig();
     
+    /**
+     *
+     */
     public void close();
     
 }

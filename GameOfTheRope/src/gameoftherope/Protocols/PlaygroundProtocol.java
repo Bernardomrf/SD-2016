@@ -15,10 +15,21 @@ import gameoftherope.Regions.Playground;
 public class PlaygroundProtocol {
     private final Playground playground;
     
+    /**
+     *
+     * @param playground
+     */
     public PlaygroundProtocol(Playground playground){
         this.playground = playground;
     }
     
+    /**
+     *
+     * @param input
+     * @return
+     * @throws UnsupportedOperationException
+     * @throws EndOfTransactionException
+     */
     public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
         if(input == null){
             throw new EndOfTransactionException("Close");

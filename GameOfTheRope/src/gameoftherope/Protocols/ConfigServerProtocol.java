@@ -15,10 +15,21 @@ import gameoftherope.Regions.ConfigRepository;
 public class ConfigServerProtocol {
     private final ConfigRepository conf;
     
+    /**
+     *
+     * @param conf
+     */
     public ConfigServerProtocol(ConfigRepository conf){
         this.conf = conf;
     }
     
+    /**
+     *
+     * @param input
+     * @return
+     * @throws UnsupportedOperationException
+     * @throws EndOfTransactionException
+     */
     public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
         if(input == null){
             throw new EndOfTransactionException("Close");

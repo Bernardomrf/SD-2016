@@ -44,6 +44,11 @@
             "hostname": "l040101-ws09.ua.pt",
             "user": "sd0103",
             "password": ""
+        },
+        {
+            "hostname": "l040101-ws10.ua.pt",
+            "user": "sd0103",
+            "password": ""
         }
     ]
 }

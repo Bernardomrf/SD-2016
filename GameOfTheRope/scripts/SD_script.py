@@ -9,7 +9,8 @@ settings_file_name = "settings.properties"
 server_folder = "~/jars/"
 # Dont Change
 property_file_name = "config.properties"
-
+configHostname = "configServerHostName"
+configPortname = "configServerPort"
 
 info = []
 hosts = []
@@ -17,6 +18,7 @@ hosts_up = []
 jar_info = []
 servers = []
 clients = []
+server_machines = {}
 
 def main():
     build()
@@ -53,7 +55,12 @@ def run():
     new_properties()
     if len(hosts_up) > len(servers):
         for i in range(0,len(servers)):
-            changePropertie(servers[i][1], hosts_up[i])
+            changePropertie(str(servers[i][1]), str(hosts_up[i][0]))
+            server_machines[servers[i][0]] = hosts_up[i]
+        copy_properties()
+        copy_jars()
+
+        run_servers()
 
 
     else:
@@ -62,10 +69,28 @@ def run():
         sys.exit()
 
 def run_servers():
-    pass
+    print "Running Servers..."
+    p = Properties()
+    p.load(open(property_file_name, 'r'))
+    hostname = p[configHostname]
+    port = p[configPortname]
+
+    ssh(server_machines["ConfigServer"][0], server_machines["ConfigServer"][1], "java -jar ConfigServer.jar")
+    if status != 0:
+            print "Error running ConfigServer."
+    print "Started ConfigServer..."
+    for i in server_machines:
+        status = ssh(server_machines[i][0],server_machines[i][1], "java -jar " + i + ".jar " + hostname + " " + port)
+        if status != 0:
+            print "Error running " + i + "."
+        else:
+            print "Started " + i + "..."
 
 def run_clients():
-    pass
+    p = Properties()
+    p.load(open(property_file_name, 'r'))
+    hostname = p[configHostname]
+    port = p[configPortname]
 
 def create_folder():
     print "Creating remote folders for jar execution..."
@@ -73,6 +98,30 @@ def create_folder():
         status = ssh(i[0], i[1], "mkdir " + server_folder)
         if status != 0:
             print "Error creating folder in " + i[0] + ", already exists."
+
+def copy_jars():
+    print "Copying jar file to machines..."
+    for i in range(0,len(servers)):
+        status = scp(hosts_up[i][0],hosts_up[i][1],"../jars/" + servers[i][0] + ".jar")
+        if status != 0:
+            print "Error copying file to " + hosts_up[i][0] + ", already exists"
+
+    for i in range(len(servers), len(hosts_up)):
+        for j in clients:
+            status = scp(hosts_up[i][0],hosts_up[i][1],"../jars/" + j + ".jar")
+            if status != 0:
+                print "Error copying file to " + hosts_up[i][0] + ", already exists"
+
+    print "Copied jars sucessfully!"
+
+def copy_properties():
+    print "Copying settings file to machine..."
+
+    status = scp(server_machines["ConfigServer"][0],server_machines["ConfigServer"][1],property_file_name)
+    if status != 0:
+        print "Error copying file to " + i[0] + ", already exists"
+    print "Copied settings file sucessfully!"
+
 
 def new_properties():
     open(property_file_name, 'w+').write(open(settings_file_name, 'r').read())
@@ -113,6 +162,15 @@ def get_hosts():
     info = j["hosts"]
     hosts = [(host["hostname"], host["user"]) for host in info]
 
+def clean():
+    ping()
+    print "Cleaning up machines..."
+    for i in hosts_up:
+        status = ssh(i[0], i[1], "rm -rf " + server_folder)
+        if status != 0:
+            print "Error cleaning machine " + i[0] + "."
+    print "Finished cleaning machines."
+
 if __name__ == '__main__':
     if len(sys.argv) > 2:
         print "Invalid usage! Only one argument should be provided"
@@ -125,6 +183,8 @@ if __name__ == '__main__':
             build()
         elif sys.argv[1] == "run":
             run()
+        elif sys.argv[1] == "clean":
+            clean()
     else:
         main()
 

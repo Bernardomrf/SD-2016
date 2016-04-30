@@ -22,9 +22,20 @@ clients = []
 server_machines = {}
 
 def main():
-    build()
     ping()
+    clean()
+    build()
     run()
+    print "Waiting for simulation to finish..."
+    f = finished()
+    while True:
+        if f:
+            break;
+        f = finished()
+        time.sleep(1)
+    print "Simulation has finished."
+    get_log()
+    clean()
 
 def ping():
     print "Pinging servers..."
@@ -49,7 +60,7 @@ def build():
     print "Done creating jar files."
 
 def run():
-    if hosts == []:
+    if hosts_up == []:
         ping()
     get_jar_info()
     create_folder()
@@ -65,10 +76,9 @@ def run():
         run_servers()
         run_clients()
 
-
     else:
         # Handle less than 6 machines where servers and players have to co-exist
-        print "Error less than 6 machines up, unable to run!!"
+        print "Error not enough machines to run servers and clients in different machines"
         sys.exit()
 
 def run_servers():
@@ -78,10 +88,14 @@ def run_servers():
     hostname = p[configHostname]
     port = p[configPortname]
 
-    status = ssh(server_machines["ConfigServer"][0], server_machines["ConfigServer"][1], "cd " + server_folder + " && java -jar ConfigServer.jar")
+    status = ssh(server_machines["ConfigServer"][0], server_machines["ConfigServer"][1], "cd " + server_folder + " && java -jar " + server_folder + "ConfigServer.jar")
     if status != 0:
             print "Error running ConfigServer."
     print "Started ConfigServer on " + server_machines["ConfigServer"][0] + "..."
+    status = ssh(server_machines["ConfigServer"][0], server_machines["ConfigServer"][1], "cd " + server_folder + " && ps aux | grep '[j]ava -jar /home' | grep " + server_machines["ConfigServer"][1] + " | awk '{print \$2}' > pid", blocking=True, verbose=True)
+    if status != 0:
+            print "Error saving pid file."
+
     time.sleep(1)
     for i in server_machines:
         if i == "ConfigServer":
@@ -91,6 +105,10 @@ def run_servers():
             print "Error running " + i + "."
         else:
             print "Started " + i + " on " + server_machines[i][0] + "..."
+        status = ssh(server_machines[i][0],server_machines[i][1], "cd " + server_folder + " && ps aux | grep '[j]ava -jar /home' | grep " + server_machines[i][1] + " | awk '{print \$2}' > pid", blocking=True, verbose=True)
+        if status != 0:
+            print "Error saving pid file."
+    time.sleep(2)
 
 def run_clients():
     p = Properties()
@@ -143,6 +161,43 @@ def run_clients():
                     print "Started " + clients[0] + " on " + hosts_up[i][0] + "..."
                 nPlayerB = nPlayerB + 1
 
+            status = ssh(hosts_up[i][0],hosts_up[i][1], "cd " + server_folder + " && ps aux | grep '[j]ava -jar /home' | grep " + hosts_up[i][1] + " | awk '{print \$2}' > pid", blocking=True, verbose=True)
+            if status != 0:
+                print "Error saving pid file."
+            time.sleep(0.1)
+
+def get_log(log_name="./"):
+    if hosts_up == []:
+        ping()
+    print "Getting log file..."
+    scp(hosts_up[4][0], hosts_up[4][1], log_name, inv_cp=True, server_file="GameOfTheRope*")
+    print "Log file saved."
+
+def finished():
+    if hosts_up == []:
+        ping()
+    for i in hosts_up:
+        status = ssh(i[0],i[1], "kill -0 \$(cat " + server_folder + "pid)", blocking=True, verbose=False)
+        if status == 0:
+            return False
+    return True
+
+def check_finished():
+    print "Checking if simulation has ended..."
+    f = finished()
+    if f:
+        print "Simulation has finished!"
+    else:
+        print "Simulation still running"
+
+def kill():
+    if hosts_up == []:
+        ping()
+    print "Killing all processes in all machines..."
+    for i in hosts_up:
+        status = ssh(i[0],i[1], "kill \$(cat " + server_folder + "pid)", blocking=True, verbose=False)
+    print "Finished killing all processes."
+
 def create_folder():
     print "Creating remote folders for jar execution..."
     for i in hosts_up:
@@ -190,10 +245,19 @@ def create_jars(name, executable):
     os.chdir("../../scripts")
     return response
 
-def ssh(server, username, cmd):
-    return os.system("ssh " + username + "@" + server + " \"" + cmd + "\" > /dev/null 2>&1 &")
+def ssh(server, username, cmd, blocking=False, verbose=False):
+    block = "&"
+    output = " > /dev/null 2>&1"
+    if blocking:
+        block = ""
+    if verbose:
+        output = ""
+    #print "ssh " + username + "@" + server + " \"" + cmd + output + "\" " + block
+    return os.system("ssh " + username + "@" + server + " \"" + cmd + output + "\" " + block)
 
-def scp(server, username, file):
+def scp(server, username, file, inv_cp=False, server_file=""):
+    if inv_cp:
+        return os.system("scp " + username + "@" + server + ":" + server_folder + server_file + " " + file + " > /dev/null 2>&1")
     return os.system("scp " + file + " " + username + "@" + server + ":" + server_folder + " > /dev/null 2>&1")
 
 def get_jar_info():
@@ -214,7 +278,8 @@ def get_hosts():
     hosts = [(host["hostname"], host["user"]) for host in info]
 
 def clean():
-    ping()
+    if hosts_up == []:
+        ping()
     print "Cleaning up machines..."
     for i in hosts_up:
         status = ssh(i[0], i[1], "rm -rf " + server_folder)
@@ -223,11 +288,7 @@ def clean():
     print "Finished cleaning machines."
 
 if __name__ == '__main__':
-    if len(sys.argv) > 2:
-        print "Invalid usage! Only one argument should be provided"
-        sys.exit()
-
-    if len(sys.argv) == 2:
+    if len(sys.argv) > 1:
         if sys.argv[1] == "ping":
             ping()
         elif sys.argv[1] == "build":
@@ -236,6 +297,42 @@ if __name__ == '__main__':
             run()
         elif sys.argv[1] == "clean":
             clean()
+        elif sys.argv[1] == "finished":
+            check_finished()
+        elif sys.argv[1] == "kill":
+            kill()
+        elif sys.argv[1] == "log":
+            if (len(sys.argv) > 2) and (sys.argv[2] == "-n"):
+                if (len(sys.argv) > 3):
+                    if (sys.argv[3] == None):
+                        print "Log name after '-n' is required"
+                        sys.exit()
+                    get_log(sys.argv[3])
+                    sys.exit()
+            get_log()
+        elif sys.argv[1] == "help":
+            print "Usage: ./SD_script.py ping | build | run | clean | finished | kill | log -n log_name | help"
+            print "If no argument is present simulation is built run and script waits for it to end to retrieve log."
+            print "\t ping - tests connectivity with the hosts"
+            print "\t build - builds jar files for servers and clients"
+            print "\t run - runs the simulation remotely"
+            print "\t clean - removes all files created on the remote machines"
+            print "\t finished - checks if simulation has finished"
+            print "\t kill - kills all processes of an ongoing simulation in all machines"
+            print "\t log - retrieves the log from the machine that created it. [-n] specifies the log name created on this machine."
+            print "\t help - displays this help menu"
+            sys.exit()
+        else:
+            print "Usage: ./SD_script.py ping | build | run | clean | finished | kill | log -n log_name | help"
+            print "\t ping - tests connectivity with the hosts"
+            print "\t build - builds jar files for servers and clients"
+            print "\t run - runs the simulation remotely"
+            print "\t clean - removes all files created on the remote machines"
+            print "\t finished - checks if simulation has finished"
+            print "\t kill - kills all processes of an ongoing simulation in all machines"
+            print "\t log - retrieves the log from the machine that created it. [-n] specifies the log name created on this machine."
+            print "\t help - displays this help menu"
+            sys.exit()
     else:
         main()
 

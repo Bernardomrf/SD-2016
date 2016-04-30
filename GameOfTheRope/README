@@ -1,4 +1,60 @@
 Game of the Rope - README
 
-To use the script you must have in the netbeans folder the scr, scripts and jar folders.
-The project must also be compiled, which implies having a build/classes directory.
+This readme is a guide to use a script to manage the remote execution of the
+Game of the Rope.
+
+IMPORTANT:
+    All commands refered bellow must be executed from inside the "/scripts" folder
+    No folder or file should be deleted(except log files) at the risk that the
+    program may stop working.
+
+
+
+To use the script you must have in the netbeans folder the scr, scripts and jars folders.
+The project must also be compiled, which implies having a "build/classes" directory.
+
+To enable you to run the script and execute the simulation on the remote machines
+you must have ssh with public key authentication in order to login automatically.
+
+The simpler way to execute the script is to run ./SD_script.py inside of the scripts
+folder. This will run a complete set of actions to build the jars, copy them to the
+remote machines, execute them, then waits for the completion of the simulation,
+after it's completete it retrieves the log file and saves it to the scripts folder,
+it cleans the files created on the remote machine as well.
+
+
+The script allows to execute this tasks independently and without blocking between states
+this is extremely useful during long simulations where you dont need to leave a terminal open.
+
+The script options are presented with the option "help" like so "./SD_scripts.py help" and the
+result is the following:
+
+Usage: ./SD_script.py ping | build | run | clean | finished | kill | log -n log_name | help
+If no argument is present simulation is built, executed and blocks for it to end to retrieve log.
+     ping - tests connectivity with the hosts
+     build - builds jar files for servers and clients
+     run - runs the simulation remotely
+     clean - removes all files created on the remote machines
+     finished - checks if simulation has finished
+     kill - kills all processes of an ongoing simulation in all machines
+     log - retrieves the log from the machine that created it. [-n] specifies the log name created on this machine.
+     help - displays this help menu
+
+
+
+User can edit simulation settings inside the file "settings.properties" file.
+
+IMPORTANT:
+    An additional file "config.properties" is created, dont edit this file,
+    edit the "settings.properties" instead
+
+Information about what hosts are to be used are present inside "hosts.json".
+Information about the build of the jars are present inside "build.json".
+
+IMPORTANT:
+    It's not recommended to change any information inside the "hosts.json" and
+    "build.json" unless you know what you're doing.
+
+
+Log files are created inside the "/scripts" folder and can be moved or deleted.
+

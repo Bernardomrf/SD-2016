@@ -312,7 +312,7 @@ if __name__ == '__main__':
             get_log()
         elif sys.argv[1] == "help":
             print "Usage: ./SD_script.py ping | build | run | clean | finished | kill | log -n log_name | help"
-            print "If no argument is present simulation is built run and script waits for it to end to retrieve log."
+            print "If no argument is present simulation is built, executed and blocks for it to end to retrieve log."
             print "\t ping - tests connectivity with the hosts"
             print "\t build - builds jar files for servers and clients"
             print "\t run - runs the simulation remotely"
@@ -324,6 +324,7 @@ if __name__ == '__main__':
             sys.exit()
         else:
             print "Usage: ./SD_script.py ping | build | run | clean | finished | kill | log -n log_name | help"
+            print "If no argument is present simulation is built, executed and blocks for it to end to retrieve log."
             print "\t ping - tests connectivity with the hosts"
             print "\t build - builds jar files for servers and clients"
             print "\t run - runs the simulation remotely"

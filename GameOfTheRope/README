@@ -1,0 +1,4 @@
+Game of the Rope - README
+
+To use the script you must have in the netbeans folder the scr, scripts and jar folders.
+The project must also be compiled, which implies having a build/classes directory.

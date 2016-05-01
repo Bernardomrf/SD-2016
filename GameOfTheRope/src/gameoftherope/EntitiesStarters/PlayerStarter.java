@@ -15,14 +15,15 @@ import gameoftherope.Interfaces.IPlaygroundPlayer;
 import java.io.FileNotFoundException;
 
 /**
- *
- * @author bernardo
+ * Main class to allow execution of a player
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class PlayerStarter {
 
     /**
-     *
-     * @param args
+     * Main method for the player starter.
+     * @param args String[] - Args required: player id, player team, config server hostname, config server port.
      * @throws FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {

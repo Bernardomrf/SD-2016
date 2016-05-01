@@ -7,12 +7,13 @@ package gameoftherope.EntityStateEnum;
 
 /**
  *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public enum coachState {
 
     /**
-     *
+     * Wait for referee state representation
      */
     WAIT_REFEREE_COMMAND{
         @Override
@@ -25,7 +26,7 @@ public enum coachState {
     },
 
     /**
-     *
+     * Assemble team state representation
      */
     ASSEMBLE_TEAM{
         @Override
@@ -38,7 +39,7 @@ public enum coachState {
     },
 
     /**
-     *
+     * Watch trial state representation
      */
     WATCH_TRIAL{
         @Override

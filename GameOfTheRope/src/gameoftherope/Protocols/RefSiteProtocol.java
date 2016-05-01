@@ -8,24 +8,25 @@ package gameoftherope.Protocols;
 import gameoftherope.EndOfTransactionException;
 import gameoftherope.Regions.RefSite;
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Protocol to handle messages for the Referee Site.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class RefSiteProtocol {
     private final RefSite refSite;
     
     /**
-     *
-     * @param refSite
+     * Constructor for the protocol.
+     * @param refSite RefSite - Referee Site to be used by the protocol.
      */
     public RefSiteProtocol(RefSite refSite){
         this.refSite = refSite;
     }
     
     /**
-     *
-     * @param input
-     * @return
+     * Method to process messages.
+     * @param input String - The message received.
+     * @return The return given by the refSite.
      * @throws UnsupportedOperationException
      * @throws EndOfTransactionException
      */

@@ -9,15 +9,16 @@ import gameoftherope.EndOfTransactionException;
 import gameoftherope.Regions.Bench;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Protocol to handle messages for the Bench
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class BenchProtocol {
     private final Bench bench;
     
     /**
-     *
-     * @param bench
+     * Constructor for the protocol.
+     * @param bench Bench - Bench to be used by the protocol.
      */
     public BenchProtocol(Bench bench){
         this.bench = bench;

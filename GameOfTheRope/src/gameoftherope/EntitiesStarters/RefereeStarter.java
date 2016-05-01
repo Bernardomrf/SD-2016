@@ -17,14 +17,15 @@ import gameoftherope.Interfaces.IRefSiteRef;
 import java.io.FileNotFoundException;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Main class to allow execution of a referee
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class RefereeStarter {
 
     /**
-     *
-     * @param args
+     * Main method for the referee starter.
+     * @param args String[] - Args required: config server hostname, config server port.
      * @throws FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {

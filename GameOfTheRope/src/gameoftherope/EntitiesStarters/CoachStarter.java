@@ -17,14 +17,15 @@ import gameoftherope.Interfaces.IRefSiteCoach;
 import java.io.FileNotFoundException;
 
 /**
- *
- * @author bernardo
+ * Main class to allow execution of a coach
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class CoachStarter {
 
     /**
-     *
-     * @param args
+     * Main method for the coach starter.
+     * @param args String[] - Args required: coach team, config server hostname, config server port.
      * @throws FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {

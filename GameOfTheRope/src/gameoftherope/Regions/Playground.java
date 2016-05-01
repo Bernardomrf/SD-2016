@@ -149,7 +149,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     *
+     * Method used to represent the state after players play.
+     * It's called by players only.
      */
     @Override
     public synchronized void iamDone() {
@@ -161,7 +162,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     *
+     * Method used to wait for the trial to end.
+     * It's called by the coaches only and blocks until the game ends.
      */
     @Override
     public synchronized void waitForTrial() {
@@ -176,7 +178,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     *
+     * Method used to stand in position on the playground waiting.
+     * It's called by the players only and blocks until everyone is on the playground.
      * @return
      */
     @Override
@@ -193,7 +196,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     *
+     * Method that blocks until trial is ongoing.
+     * It's called by the referee only.
      */
     @Override
     public synchronized void waitForTrialConclusion() {
@@ -207,8 +211,10 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     *
-     * @return
+     * Method used to check if a knockout occured during the trial.
+     * It's called by the referee only..
+     * 
+     * @return String - Representation of knockout or not and for what team
      */
     @Override
     public synchronized String checkKnockout() {
@@ -244,8 +250,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
     
     /**
-     *
-     * @return
+     * Method used to return the current position of the rope
+     * @return int - Position of the rope
      */
     @Override
     public synchronized int getRope(){
@@ -253,8 +259,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     *
-     * @return
+     * Method used to get the number of trial wins if each team.
+     * @return int[] - Number of trial wins if each team.
      */
     @Override
     public synchronized int[] getWins() {
@@ -264,8 +270,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     *
-     * @return
+     * Method used to get the number of game wins if each team.
+     * @return int[] - Number of wins if each team.
      */
     @Override
     public synchronized int[] getGameWins() {
@@ -284,7 +290,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     *
+     * Method unused in this implementation of the interface.
      */
     @Override
     public void close() {

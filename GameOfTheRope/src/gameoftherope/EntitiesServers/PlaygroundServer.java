@@ -5,7 +5,6 @@
  */
 package gameoftherope.EntitiesServers;
 
-import gameoftherope.Configs.BenchConfig;
 import gameoftherope.Configs.PlaygroundConfig;
 import gameoftherope.EntitiesHandlers.PlaygroundHandler;
 import gameoftherope.EntitiesProxy.ConfigProxy;
@@ -15,14 +14,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Main class to execute the Playground server.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class PlaygroundServer {
 
     /**
-     *
-     * @param args
+     * Main method to execute the server.
+     * @param args String[] - Args required: configServer hostname, configServerPort. If not provided defaults are used.
      */
     public static void main(String[] args) {
 

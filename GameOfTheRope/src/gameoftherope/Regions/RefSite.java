@@ -93,7 +93,7 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     }
 
     /**
-     *
+     * Method unused in this implementation of the interface.
      */
     @Override
     public void close() {

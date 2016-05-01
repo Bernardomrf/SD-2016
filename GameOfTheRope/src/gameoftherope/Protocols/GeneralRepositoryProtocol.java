@@ -12,24 +12,25 @@ import gameoftherope.EntityStateEnum.refState;
 import gameoftherope.Regions.GeneralRepository;
 
 /**
- *
- * @author bernardo
+ * Protocol to handle messages for the General Repository.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class GeneralRepositoryProtocol {
     private final GeneralRepository generalRepository;
     
     /**
-     *
-     * @param generalRepository
+     * Constructor for the protocol.
+     * @param generalRepository GeneralRepository - General repository to be used by the protocol.
      */
     public GeneralRepositoryProtocol(GeneralRepository generalRepository){
         this.generalRepository = generalRepository;
     }
     
     /**
-     *
-     * @param input
-     * @return
+     * Method to process messages.
+     * @param input String - The message received.
+     * @return The return given by the generalRepository.
      * @throws UnsupportedOperationException
      * @throws EndOfTransactionException
      */

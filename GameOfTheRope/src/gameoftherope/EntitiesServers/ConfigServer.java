@@ -13,14 +13,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Main class to execute the ConfigRepository server.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class ConfigServer {
 
     /**
-     *
-     * @param args
+     * Main method to execute the server.
+     * @param args String[] - Args required: configServer hostname, configServerPort. If not provided defaults are used.
      */
     public static void main(String[] args) {
         System.err.println("Started Server");

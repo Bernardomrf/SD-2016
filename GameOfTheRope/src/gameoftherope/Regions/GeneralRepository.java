@@ -21,8 +21,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- *
- * @author brunosilva
+ * Class to implement the methods for the General Repository Region.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepositoryPlayer, IGeneralRepositoryRef {
     
@@ -55,7 +56,10 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     private static PrintWriter pw;
     
     /**
-     *
+     * Constructor for the General Repository.
+     * @param configHostName String - Hostname for the configuration server.
+     * @param portNum int - Port for the configuration server.
+     * 
      * @throws FileNotFoundException
      */
     public GeneralRepository(String configHostName, int portNum) throws FileNotFoundException{
@@ -90,7 +94,7 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
+     * Method used to print the log file header.
      */
     @Override
     public synchronized void printHeader(){
@@ -99,8 +103,8 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param state
+     * Method to change the referee state.
+     * @param state refState - the enum value corresponding to the referee state.
      */
     @Override
     public synchronized void changeRefState(refState state){
@@ -109,11 +113,11 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param state
-     * @param id
-     * @param team
-     * @param strength
+     * Method to change the player state.
+     * @param state playerState - the enum value corresponding to the player state.
+     * @param strength int - Current strength of the player.
+     * @param id int - ID of the player in the team.
+     * @param team String - Team of the corresponding player.
      */
     @Override
     public synchronized void changePlayerState(playerState state, int id, String team, int strength){
@@ -136,9 +140,9 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param state
-     * @param team
+     * Method to change the coach state.
+     * @param state coachState - the enum value corresponding to the coach state.
+     * @param team String - Team of the caller coach team.
      */
     @Override
     public synchronized void changeCoachState(coachState state, String team){
@@ -159,11 +163,11 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param state
-     * @param strength
-     * @param id
-     * @param team
+     * Method to initializate the player state.
+     * @param state playerState - the enum value corresponding to the player state.
+     * @param strength int - Initial strength of the player.
+     * @param id int - ID of the player in the team.
+     * @param team String - Team of the corresponding player.
      */
     @Override
     public synchronized void initPlayer(playerState state, int strength, int id, String team){
@@ -178,9 +182,9 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param state
-     * @param team
+     * Method to initializate the coach state.
+     * @param state coachState - the enum value corresponding to the coach state.
+     * @param team String - Team of the caller coach team.
      */
     @Override
     public synchronized void initCoach(coachState state, String team){
@@ -193,8 +197,8 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param state
+     * Method to initializate the referee state.
+     * @param state refState - the enum value corresponding to the referee state.
      */
     @Override
     public synchronized void initRef(refState state){
@@ -202,7 +206,7 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
+     * Method used to print a line in the log file.
      */
     public void printLine(){
         pw.print(refereeState);
@@ -260,9 +264,9 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param pos
-     * @param team
+     * Method used to set the players positions for the trial.
+     * @param pos int[] - Array containing the players positions.
+     * @param team String - Team corresponding to the positions.
      */
     @Override
     public synchronized void setPlayersPositions(int[] pos, String team){
@@ -282,8 +286,8 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param nGame
+     * Method used to represent that a new trial has started.
+     * @param nGame int - Number of the new game.
      */
     @Override
     public synchronized void newGame(int nGame){
@@ -313,8 +317,8 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param nTrial
+     * Method used to represent that a new trial has started.
+     * @param nTrial int - Number of the new trial.
      */
     @Override
     public synchronized void newTrial(int nTrial){
@@ -322,8 +326,8 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param rope
+     * Method to set the rope value.
+     * @param rope int - The rope value.
      */
     @Override
     public synchronized void setRope(int rope){
@@ -331,9 +335,9 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
 
     /**
-     *
-     * @param wins
-     * @param knockout
+     * Method used to set the trial wins.
+     * @param wins int[] - Trial wins.
+     * @param knockout String - Representing if a knockout existed in that trial.
      */
     @Override
     public synchronized void setWins(int[] wins, String knockout){
@@ -343,9 +347,9 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
 
     /**
-     *
-     * @param gameWins
-     * @param nGame
+     * Method used to set the game wins.
+     * @param gameWins int[] - Wins for both teams.
+     * @param nGame int - Number of the game the wins are refering.
      */
     @Override
     public synchronized void setGameWins(int[] gameWins, int nGame){
@@ -355,8 +359,8 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
     
     /**
-     *
-     * @param nGame
+     * Method used to print the final line that declares the winner
+     * @param nGame int - Number of the last game
      */
     private void finishMatch(int nGame){
        
@@ -397,7 +401,7 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     }
 
     /**
-     *
+     * Method unused in this implementation of the interface.
      */
     @Override
     public void close() {

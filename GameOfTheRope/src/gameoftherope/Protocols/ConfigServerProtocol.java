@@ -9,24 +9,26 @@ import gameoftherope.EndOfTransactionException;
 import gameoftherope.Regions.ConfigRepository;
 
 /**
- *
+ * Protocol to handle messages for the Configuration Server.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
 public class ConfigServerProtocol {
     private final ConfigRepository conf;
     
     /**
-     *
-     * @param conf
+     * Constructor for the protocol.
+     * @param conf ConfigRepository - Configuration repository to be used by the protocol.
      */
     public ConfigServerProtocol(ConfigRepository conf){
         this.conf = conf;
     }
     
     /**
-     *
-     * @param input
-     * @return
+     * Method to process messages.
+     * @param input String - The message received.
+     * @return The return given by the configServer.
      * @throws UnsupportedOperationException
      * @throws EndOfTransactionException
      */

@@ -7,12 +7,13 @@ package gameoftherope.EntityStateEnum;
 
 /**
  *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public enum playerState {
 
     /**
-     *
+     *  Seat at the bench state representation
      */
     SEAT_AT_THE_BENCH{
         @Override
@@ -25,7 +26,7 @@ public enum playerState {
     },
 
     /**
-     *
+     * Stand in position state representation
      */
     STAND_IN_POSITION{
         @Override
@@ -38,7 +39,7 @@ public enum playerState {
     },
 
     /**
-     *
+     * Do your best state representation
      */
     DO_YOUR_BEST{
         @Override

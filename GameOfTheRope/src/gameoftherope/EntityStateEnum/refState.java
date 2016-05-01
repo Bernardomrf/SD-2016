@@ -7,12 +7,13 @@ package gameoftherope.EntityStateEnum;
 
 /**
  *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public enum refState {
     
     /**
-     *
+     * Start of the match state representation
      */
     START_OF_THE_MATCH{
         @Override
@@ -25,7 +26,7 @@ public enum refState {
     },
 
     /**
-     *
+     * Start of a game state representation
      */
     START_OF_A_GAME{
         @Override
@@ -38,7 +39,7 @@ public enum refState {
     },
 
     /**
-     *
+     * Teams ready state representation
      */
     TEAMS_READY{
         @Override
@@ -51,7 +52,7 @@ public enum refState {
     },
 
     /**
-     *
+     * Wait for trial conclusion state representation
      */
     WAIT_FOR_TRIAL_CONCLUSION{
         @Override
@@ -64,7 +65,7 @@ public enum refState {
     },
 
     /**
-     *
+     * End of a game state representation
      */
     END_OF_A_GAME{
         @Override
@@ -77,7 +78,7 @@ public enum refState {
     },
 
     /**
-     *
+     * End of the match state representation
      */
     END_OF_THE_MATCH{
         @Override

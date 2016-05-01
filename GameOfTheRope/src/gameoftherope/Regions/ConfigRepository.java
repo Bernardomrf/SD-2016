@@ -19,8 +19,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Class to implement a Configuration Server.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class ConfigRepository implements IConfigRepository {
     
@@ -34,7 +35,7 @@ public class ConfigRepository implements IConfigRepository {
     private ConfigRepositoryConfig conf;
     
     /**
-     *
+     * Constructor for the Configuration Server.
      */
     public ConfigRepository(){
         player = new PlayerConfig();
@@ -101,8 +102,8 @@ public class ConfigRepository implements IConfigRepository {
     }
     
     /**
-     *
-     * @return
+     * Method to get the players configuration fields.
+     * @return PlayerConfig - The player Configuration.
      */
     @Override
     public PlayerConfig getPlayerConfig(){
@@ -110,8 +111,8 @@ public class ConfigRepository implements IConfigRepository {
     }
     
     /**
-     *
-     * @return
+     * Method to get the referee configuration fields.
+     * @return RefConfig - The referee Configuration.
      */
     @Override
     public RefConfig getRefConfig(){
@@ -119,8 +120,8 @@ public class ConfigRepository implements IConfigRepository {
     }
     
     /**
-     *
-     * @return
+     * Method to get the bench configuration fields.
+     * @return BenchConfig - The bench Configuration.
      */
     @Override
     public BenchConfig getBenchConfig(){
@@ -128,8 +129,8 @@ public class ConfigRepository implements IConfigRepository {
     }
     
     /**
-     *
-     * @return
+     * Method to get the playground configuration fields.
+     * @return PlaygroundConfig - The playground Configuration.
      */
     @Override
     public PlaygroundConfig getPlaygroundConfig(){
@@ -137,8 +138,8 @@ public class ConfigRepository implements IConfigRepository {
     }
     
     /**
-     *
-     * @return
+     * Method to get the referee site configuration fields.
+     * @return RefSiteConfig - The referee site Configuration.
      */
     @Override
     public RefSiteConfig getRefSiteConfig(){
@@ -146,8 +147,8 @@ public class ConfigRepository implements IConfigRepository {
     }
     
     /**
-     *
-     * @return
+     * Method to get the general repository configuration fields.
+     * @return GeneralRepositoryConfig - The general repository Configuration.
      */
     @Override
     public GeneralRepositoryConfig getGeneralRepositoryConfig(){
@@ -155,8 +156,8 @@ public class ConfigRepository implements IConfigRepository {
     }
     
     /**
-     *
-     * @return
+     * Method to get the configuration server fields.
+     * @return ConfigRepositoryConfig - The configuration server Configuration.
      */
     @Override
     public ConfigRepositoryConfig getConfigRepositoryConfig(){
@@ -164,7 +165,7 @@ public class ConfigRepository implements IConfigRepository {
     }
 
     /**
-     *
+     * Method unused in this implementation of the interface.
      */
     @Override
     public void close() {

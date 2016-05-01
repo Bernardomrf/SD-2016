@@ -9,24 +9,25 @@ import gameoftherope.EndOfTransactionException;
 import gameoftherope.Regions.Playground;
 
 /**
- *
- * @author bernardo
+ * Protocol to handle messages for the Playground
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class PlaygroundProtocol {
     private final Playground playground;
     
     /**
-     *
-     * @param playground
+     * Constructor for the protocol.
+     * @param playground Playground - Playground to be used by the protocol.
      */
     public PlaygroundProtocol(Playground playground){
         this.playground = playground;
     }
     
     /**
-     *
-     * @param input
-     * @return
+     * Method to process messages.
+     * @param input String - The message received.
+     * @return The return given by the playground.
      * @throws UnsupportedOperationException
      * @throws EndOfTransactionException
      */

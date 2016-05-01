@@ -325,7 +325,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
     
     /**
-     *
+     * Method called by the referee to wait for all players to be ready before 
+     * starting the match.
      */
     @Override
     public synchronized void waitForPlayers() {
@@ -338,7 +339,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
-     *
+     * Method called by the referee to wait for all coaches to be ready before 
+     * starting the match.
      */
     @Override
     public synchronized void waitForCoaches() {
@@ -350,7 +352,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
-     *
+     * Method unused in this implementation of the interface.
      */
     @Override
     public void close() {

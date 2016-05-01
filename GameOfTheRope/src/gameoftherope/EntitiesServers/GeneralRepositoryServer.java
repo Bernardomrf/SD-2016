@@ -5,7 +5,6 @@
  */
 package gameoftherope.EntitiesServers;
 
-import gameoftherope.Configs.BenchConfig;
 import gameoftherope.Configs.GeneralRepositoryConfig;
 import gameoftherope.EntitiesHandlers.GeneralRepositoryHandler;
 import gameoftherope.EntitiesProxy.ConfigProxy;
@@ -16,14 +15,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
- * @author bernardo
+ * Main class to execute the GeneralRepository server.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class GeneralRepositoryServer {
 
     /**
-     *
-     * @param args
+     * Main method to execute the server.
+     * @param args String[] - Args required: configServer hostname, configServerPort. If not provided defaults are used.
      */
     public static void main(String[] args){
         

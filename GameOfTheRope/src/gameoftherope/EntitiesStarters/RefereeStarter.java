@@ -26,7 +26,7 @@ public class RefereeStarter {
     /**
      * Main method for the referee starter.
      * @param args String[] - Args required: config server hostname, config server port.
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException - Exception for file not found
      */
     public static void main(String[] args) throws FileNotFoundException {
         if(args.length != 2){

@@ -26,7 +26,7 @@ public class CoachStarter {
     /**
      * Main method for the coach starter.
      * @param args String[] - Args required: coach team, config server hostname, config server port.
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException - Exception for file not found
      */
     public static void main(String[] args) throws FileNotFoundException {
         

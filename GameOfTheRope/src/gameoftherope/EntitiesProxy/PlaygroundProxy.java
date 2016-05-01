@@ -59,6 +59,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
     
     /**
+     * Stub method for waitForTrial to allow its remote invocation on the server.
      *
      */
     @Override
@@ -75,8 +76,9 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for standInPosition to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the standInPosition return
      */
     @Override
     public int standInPosition() {
@@ -93,9 +95,10 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for pullTheRope to allow its remote invocation on the server.
      *
-     * @param strenght
-     * @param team
+     * @param strenght - Player strength
+     * @param team - Player team
      */
     @Override
     public void pullTheRope(int strenght, String team) {
@@ -112,6 +115,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for iamDone to allow its remote invocation on the server.
      *
      */
     @Override
@@ -128,6 +132,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for callTrial to allow its remote invocation on the server.
      *
      */
     @Override
@@ -144,6 +149,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for startTrial to allow its remote invocation on the server.
      *
      */
     @Override
@@ -160,6 +166,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for waitForTrialConclusion to allow its remote invocation on the server.
      *
      */
     @Override
@@ -176,6 +183,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for assertTrialDecision to allow its remote invocation on the server.
      *
      */
     @Override
@@ -192,8 +200,9 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for checkKnockout to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the checkKnockout return
      */
     @Override
     public String checkKnockout() {
@@ -210,8 +219,9 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for getRope to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getRope return
      */
     @Override
     public int getRope() {
@@ -228,8 +238,9 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for getWins to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getWins return
      */
     @Override
     public int[] getWins() {
@@ -246,8 +257,9 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
 
     /**
+     * Stub method for getGameWins to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getGameWins return     
      */
     @Override
     public int[] getGameWins() {
@@ -264,6 +276,7 @@ public class PlaygroundProxy implements IPlaygroundCoach, IPlaygroundPlayer, IPl
     }
     
     /**
+     * Stub method for close to allow its remote invocation on the server.
      *
      */
     @Override

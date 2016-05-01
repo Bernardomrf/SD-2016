@@ -14,55 +14,56 @@ import gameoftherope.Configs.RefConfig;
 import gameoftherope.Configs.RefSiteConfig;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Interface for the Config Repository.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public interface IConfigRepository {
 
     /**
-     *
-     * @return
+     * Method to get the bench configuration fields.
+     * @return BenchConfig - The bench Configuration.
      */
     public BenchConfig getBenchConfig();
 
     /**
-     *
-     * @return
+     * Method to get the configuration server fields.
+     * @return ConfigRepositoryConfig - The configuration server Configuration.
      */
     public ConfigRepositoryConfig getConfigRepositoryConfig();
 
     /**
-     *
-     * @return
+     * Method to get the general repository configuration fields.
+     * @return GeneralRepositoryConfig - The general repository Configuration.
      */
     public GeneralRepositoryConfig getGeneralRepositoryConfig();
 
     /**
-     *
-     * @return
+     * Method to get the players configuration fields.
+     * @return PlayerConfig - The player Configuration.
      */
     public PlayerConfig getPlayerConfig();
 
     /**
-     *
-     * @return
+     * Method to get the playground configuration fields.
+     * @return PlaygroundConfig - The playground Configuration.
      */
     public PlaygroundConfig getPlaygroundConfig();
 
     /**
-     *
-     * @return
+     * Method to get the referee configuration fields.
+     * @return RefConfig - The referee Configuration.
      */
     public RefConfig getRefConfig();
 
     /**
-     *
-     * @return
+     * Method to get the referee site configuration fields.
+     * @return RefSiteConfig - The referee site Configuration.
      */
     public RefSiteConfig getRefSiteConfig();
     
     /**
-     *
+     * Method unused in this implementation of the interface.
      */
     public void close();
     

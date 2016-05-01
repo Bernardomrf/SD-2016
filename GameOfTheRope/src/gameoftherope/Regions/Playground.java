@@ -43,6 +43,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     
     /**
      * Constructor for Playground class
+     * @param configHostName - Host name for configs
+     * @param portNum - Port number for configs
      */
     public Playground(String configHostName, int portNum){
         config(configHostName, portNum);
@@ -123,7 +125,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     }
 
     /**
-     * Method used to evaluate who won the trail.
+     * Method used to evaluate who won the trial.
      * It's able to distinguish between normal win and knockout win.
      * Method is called by the referee only.
      * Notifies players and coaches.
@@ -180,7 +182,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     /**
      * Method used to stand in position on the playground waiting.
      * It's called by the players only and blocks until everyone is on the playground.
-     * @return
+     * @return nTrials - number of trials
      */
     @Override
     public synchronized int standInPosition() {

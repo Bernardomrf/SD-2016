@@ -6,37 +6,34 @@
 package gameoftherope.Interfaces;
 
 /**
- *
- * @author brunosilva
+ * Interface for the Referee interaction with the RefSite.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public interface IRefSiteRef {
     
     /**
-     *
+     * Method to wait for coach signal.
      */
-    public void waitForCoach(); // (TeamsReady)  Esperar pelo informReferee dos dois treinadores
+    public void waitForCoach(); 
     
     /**
-     *
+     * Method to announce new game.
      */
-    public void announceNewGame(); // espera tempo aleatorio para começar um jogo novo
-                                    // Muda o estado para o playground
+    public void announceNewGame(); 
     
     /**
-     *
+     * Method to declare the game winner.
      */
-    public void declareGameWinner(); // espera que o estado mude para refSite
-                                        // ver se é o ultimo jogo atraves da variavel aWins, bWins
-                                        // Se for o ultimo jogo chamar declareMatchWinner
-                                        // Se nao for o ultimo jogo chamar announceNewGame
+    public void declareGameWinner(); 
     
     /**
-     *
+     * Method to declare the match winner.
      */
-    public void declareMatchWinner(); // Ver o vencedor, matar tudo !!!!
+    public void declareMatchWinner(); 
     
     /**
-     *
+     * Method unused in this implementation of the interface.
      */
     public void close();
 }

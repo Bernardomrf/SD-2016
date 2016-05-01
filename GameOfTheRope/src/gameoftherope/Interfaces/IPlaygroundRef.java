@@ -6,60 +6,59 @@
 package gameoftherope.Interfaces;
 
 /**
- *
- * @author brunosilva
+ * Interface for the Referee interaction with the Playground.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public interface IPlaygroundRef {
 
     /**
-     *
+     * Method used to reset current trial and call a new one.
      */
-    public void callTrial();//++ // Acorda os treinadores do waitForRefCommand
+    public void callTrial();
     
     /**
-     *
+     * Method used to start a new trial.
      */
-    public void startTrial(); //+ Dá inicio a trial
+    public void startTrial();
                                 
     /**
-     *
+     * Method that blocks until trial is ongoing.
      */
-    public void waitForTrialConclusion(); //++ bloqueia a espera que o ultimo jogador acabe (imDone)
+    public void waitForTrialConclusion(); 
     
     /**
-     *
+     * Method used to evaluate who won the trial.
      */
-    public void assertTrialDecision(); //++ Ve se todos os jogadores ja jogaram (playersDone) se não volta a bloquear em waitForTrialConclusion
-                                        // Se todos os jogadores já tiverem jogado da uma decisao do trial
-                                        // Se for o ultimo trial mudar o estado para refSite
-                                        // Se nao for o ultmo trial acorda treinador do watchTrial e voltar a chamar callTrial    
+    public void assertTrialDecision();
     
     /**
-     *
-     * @return
+     * Method used to check if a knockout occured during the trial.
+     * 
+     * @return String - Representation of knockout or not and for what team
      */
-    public String checkKnockout(); //++
+    public String checkKnockout();
 
     /**
-     *
-     * @return
+     * Method used to return the current position of the rope
+     * @return int - Position of the rope
      */
-    public int getRope(); //++
+    public int getRope();
     
     /**
-     *
-     * @return
+     * Method used to get the number of trial wins if each team.
+     * @return int[] - Number of trial wins if each team.
      */
-    public int[] getWins(); //++
+    public int[] getWins();
 
     /**
-     *
-     * @return
+     * Method used to get the number of game wins if each team.
+     * @return int[] - Number of wins if each team.
      */
-    public int[] getGameWins(); //++
+    public int[] getGameWins();
     
     /**
-     *
+     * Method unused in this implementation of the interface.
      */
     public void close();
 }

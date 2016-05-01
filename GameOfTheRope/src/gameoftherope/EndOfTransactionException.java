@@ -8,8 +8,8 @@ package gameoftherope;
 /**
  * Descrição geral:
  *       definição de uma excepção que sinaliza o fim de transacção num modelo de comunicação cliente-sevidor.
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
- * @author Bernardo Ferreira <bernardomrfereira@ua.pt>
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrfereira@ua.pt]
  */
 public class EndOfTransactionException extends Exception {
    
@@ -17,7 +17,7 @@ public class EndOfTransactionException extends Exception {
 
    /**
     *  Construtor de variáveis
-    * @param lastAnswer
+    * @param lastAnswer - Last Answer
     */
    public EndOfTransactionException (Object lastAnswer)
    {
@@ -27,7 +27,7 @@ public class EndOfTransactionException extends Exception {
 
    /**
     *  Extracção da última resposta do serviço
-    * @return 
+    * @return  lastAnswer
     */
    public Object getLastAnswer ()
    {

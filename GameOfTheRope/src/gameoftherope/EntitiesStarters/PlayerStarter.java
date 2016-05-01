@@ -24,7 +24,7 @@ public class PlayerStarter {
     /**
      * Main method for the player starter.
      * @param args String[] - Args required: player id, player team, config server hostname, config server port.
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException - Exception for file not found
      */
     public static void main(String[] args) throws FileNotFoundException {
         

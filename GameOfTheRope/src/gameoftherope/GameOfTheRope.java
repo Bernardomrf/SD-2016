@@ -35,7 +35,7 @@ public class GameOfTheRope extends Thread {
 
     /**
      * @param args the command line arguments
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException - exception for file not found
      */
     public static void main(String[] args) throws FileNotFoundException {
         

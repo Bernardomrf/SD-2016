@@ -63,6 +63,7 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for printHeader to allow its remote invocation on the server.
      *
      */
     @Override
@@ -80,8 +81,9 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for changeRefState to allow its remote invocation on the server.
      *
-     * @param state
+     * @param state - Ref State
      */
     @Override
     public void changeRefState(refState state){
@@ -98,11 +100,12 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
-     *
-     * @param state
-     * @param id
-     * @param team
-     * @param strength
+     * Stub method for changePlayerState to allow its remote invocation on the server.
+     * 
+     * @param state - Player State
+     * @param id - Player ID
+     * @param team - Player Team
+     * @param strength - Player Strength
      */
     @Override
     public void changePlayerState(playerState state, int id, String team, int strength){
@@ -119,9 +122,10 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
-     *
-     * @param state
-     * @param team
+     * Stub method for changeCoachState to allow its remote invocation on the server.
+     * 
+     * @param state - Coach State
+     * @param team - Coach Team 
      */
     @Override
     public void changeCoachState(coachState state, String team){
@@ -138,11 +142,12 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for initPlayer to allow its remote invocation on the server.
      *
-     * @param state
-     * @param strength
-     * @param id
-     * @param team
+     * @param state - Player State
+     * @param id - Player ID
+     * @param team - Player Team
+     * @param strength - Player Strength
      */
     @Override
     public void initPlayer(playerState state, int strength, int id, String team){
@@ -159,9 +164,10 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for initCoach to allow its remote invocation on the server.
      *
-     * @param state
-     * @param team
+     * @param state - Coach State
+     * @param team - Coach Team
      */
     @Override
     public void initCoach(coachState state, String team){
@@ -178,8 +184,9 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for initRef to allow its remote invocation on the server.
      *
-     * @param state
+     * @param state - Ref state
      */
     @Override
     public void initRef(refState state){
@@ -196,9 +203,10 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for setPlayersPositions to allow its remote invocation on the server.
      *
-     * @param pos
-     * @param team
+     * @param pos - Player positions
+     * @param team - Team
      */
     @Override
     public void setPlayersPositions(int[] pos, String team){
@@ -217,8 +225,9 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for newGame to allow its remote invocation on the server.
      *
-     * @param nGame
+     * @param nGame - Game number
      */
     @Override
     public void newGame(int nGame){
@@ -235,8 +244,9 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for newTrial to allow its remote invocation on the server.
      *
-     * @param nTrial
+     * @param nTrial - Trial Number
      */
     @Override
     public void newTrial(int nTrial){
@@ -253,8 +263,9 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for setRope to allow its remote invocation on the server.
      *
-     * @param rope
+     * @param rope - Rope Pos
      */
     @Override
     public void setRope(int rope){
@@ -271,9 +282,10 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
 
     /**
+     * Stub method for setWins to allow its remote invocation on the server.
      *
-     * @param wins
-     * @param knockout
+     * @param wins - Wins of each team
+     * @param knockout - Knockout flag
      */
     @Override
     public void setWins(int[] wins, String knockout){
@@ -293,9 +305,10 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
 
     /**
+     * Stub method for setGameWins to allow its remote invocation on the server.
      *
-     * @param gameWins
-     * @param nGame
+     * @param gameWins - Game wins
+     * @param nGame - Game number
      */
     @Override
     public void setGameWins(int[] gameWins, int nGame){
@@ -323,6 +336,7 @@ public class GeneralRepositoryProxy implements IGeneralRepositoryCoach, IGeneral
     }
     
     /**
+     * Stub method for close to allow its remote invocation on the server.
      *
      */
     @Override

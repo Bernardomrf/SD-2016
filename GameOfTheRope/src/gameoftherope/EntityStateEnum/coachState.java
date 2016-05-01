@@ -6,7 +6,7 @@
 package gameoftherope.EntityStateEnum;
 
 /**
- *
+ * Enumerator for coaches states
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */

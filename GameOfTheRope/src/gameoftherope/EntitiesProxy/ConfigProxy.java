@@ -57,8 +57,9 @@ public class ConfigProxy implements IConfigRepository{
     }
     
     /**
+     * Stub method for getPlayerConfig to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getPlayerConfig return
      */
     @Override
     public PlayerConfig getPlayerConfig(){
@@ -75,8 +76,9 @@ public class ConfigProxy implements IConfigRepository{
     }
     
     /**
+     * Stub method for getRefConfig to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getRefConfig return
      */
     @Override
     public RefConfig getRefConfig(){
@@ -93,8 +95,9 @@ public class ConfigProxy implements IConfigRepository{
     }
     
     /**
+     * Stub method for getBenchConfig to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getBenchConfig return
      */
     @Override
     public BenchConfig getBenchConfig(){
@@ -111,8 +114,9 @@ public class ConfigProxy implements IConfigRepository{
     }
     
     /**
+     * Stub method for getPlaygroundConfig to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getPlaygroundConfig return
      */
     @Override
     public PlaygroundConfig getPlaygroundConfig(){
@@ -129,8 +133,9 @@ public class ConfigProxy implements IConfigRepository{
     }
     
     /**
+     * Stub method for getRefSiteConfig to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getRefSiteConfig return
      */
     @Override
     public RefSiteConfig getRefSiteConfig(){
@@ -147,8 +152,9 @@ public class ConfigProxy implements IConfigRepository{
     }
     
     /**
+     * Stub method for getGeneralRepositoryConfig to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getGeneralRepositoryConfig return
      */
     @Override
     public GeneralRepositoryConfig getGeneralRepositoryConfig(){
@@ -165,8 +171,9 @@ public class ConfigProxy implements IConfigRepository{
     }
     
     /**
+     * Stub method for getConfigRepositoryConfig to allow its remote invocation on the server.
      *
-     * @return
+     * @return Object with the getConfigRepositoryConfig return
      */
     @Override
     public ConfigRepositoryConfig getConfigRepositoryConfig(){
@@ -183,6 +190,7 @@ public class ConfigProxy implements IConfigRepository{
     }
     
     /**
+     * Stub method for close to allow its remote invocation on the server.
      *
      */
     @Override

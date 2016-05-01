@@ -59,8 +59,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
     
     /**
-     * Stub method to allow its remote invocation on the server.
-     * @param team
+     * Stub method for reviewNotes to allow its remote invocation on the server.
+     * 
+     * @param team - Team for review notes.
      */
     @Override
     public void reviewNotes(String team) {
@@ -77,9 +78,10 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
-     *
-     * @param team
-     * @return
+     * Stub method for callContestants to allow its remote invocation on the server.
+     * 
+     * @param team - Team 
+     * @return Object with the callContestants return
      */
     @Override
     public int[] callContestants(String team) {
@@ -97,7 +99,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
-     *
+     * Stub method for waitForRefCommand to allow its remote invocation on the server.
      */
     @Override
     public void waitForRefCommand() {
@@ -113,8 +115,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
-     *
-     * @return
+     * Stub method for hasMatchFinished to allow its remote invocation on the server.
+     * 
+     * @return Object with the hasMatchFinished return
      */
     @Override
     public boolean hasMatchFinished() {
@@ -131,8 +134,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
+     * Stub method for playersReady to allow its remote invocation on the server.
      *
-     * @param team
+     * @param team - Team
      */
     @Override
     public void playersReady(String team) {
@@ -149,10 +153,11 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
+     * Stub method for seatAtTheBench to allow its remote invocation on the server.
      *
-     * @param team
-     * @param id
-     * @return
+     * @param team - Team
+     * @param id -Player ID
+     * @return Object with the seatAtTheBench return
      */
     @Override
     public boolean seatAtTheBench(String team, int id) {
@@ -170,8 +175,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
+     * Stub method for seatDown to allow its remote invocation on the server.
      *
-     * @param team
+     * @param team - Team
      */
     @Override
     public void seatDown(String team) {
@@ -188,8 +194,9 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
+     * Stub method for followCoachAdvice to allow its remote invocation on the server.
      *
-     * @param team
+     * @param team - Team
      */
     @Override
     public void followCoachAdvice(String team) {
@@ -206,6 +213,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
+     * Stub method for signalCoaches to allow its remote invocation on the server.
      *
      */
     @Override
@@ -222,6 +230,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
+     * Stub method for setMatchFinish to allow its remote invocation on the server.
      *
      */
     @Override
@@ -238,6 +247,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
     
     /**
+     * Stub method for close to allow its remote invocation on the server.
      *
      */
     @Override
@@ -250,6 +260,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
+     * Stub method for waitForPlayers to allow its remote invocation on the server.
      *
      */
     @Override
@@ -266,6 +277,7 @@ public class BenchProxy implements IBenchCoach, IBenchPlayer, IBenchRef{
     }
 
     /**
+     * Stub method for waitForCoaches to allow its remote invocation on the server.
      *
      */
     @Override

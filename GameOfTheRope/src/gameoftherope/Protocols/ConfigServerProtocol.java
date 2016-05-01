@@ -12,7 +12,6 @@ import gameoftherope.Regions.ConfigRepository;
  * Protocol to handle messages for the Configuration Server.
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
 public class ConfigServerProtocol {
     private final ConfigRepository conf;
@@ -29,8 +28,8 @@ public class ConfigServerProtocol {
      * Method to process messages.
      * @param input String - The message received.
      * @return The return given by the configServer.
-     * @throws UnsupportedOperationException
-     * @throws EndOfTransactionException
+     * @throws UnsupportedOperationException - Exception for unsupported operation.
+     * @throws EndOfTransactionException - Exception for End Of Transaction.
      */
     public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
         if(input == null){

@@ -31,8 +31,8 @@ public class GeneralRepositoryProtocol {
      * Method to process messages.
      * @param input String - The message received.
      * @return The return given by the generalRepository.
-     * @throws UnsupportedOperationException
-     * @throws EndOfTransactionException
+     * @throws UnsupportedOperationException - Exception for unsupported operation.
+     * @throws EndOfTransactionException - Exception for End Of Transaction.
      */
     public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
         if(input == null){

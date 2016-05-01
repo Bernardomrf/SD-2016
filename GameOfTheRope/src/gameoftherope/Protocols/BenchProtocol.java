@@ -25,11 +25,12 @@ public class BenchProtocol {
     }
     
     /**
-     *
-     * @param input
-     * @return
-     * @throws UnsupportedOperationException
-     * @throws EndOfTransactionException
+     * Method to process the messages.
+     * 
+     * @param input - Message string
+     * @return Null or methods return.
+     * @throws UnsupportedOperationException - Exception for unsupported operation.
+     * @throws EndOfTransactionException - Exception for End Of Transaction.
      */
     public Object processInput(String input) throws UnsupportedOperationException, EndOfTransactionException{
         if(input == null){

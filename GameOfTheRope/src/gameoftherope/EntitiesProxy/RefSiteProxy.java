@@ -60,6 +60,7 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     }
     
     /**
+     * Stub method for informReferee to allow its remote invocation on the server.
      *
      */
     @Override
@@ -77,6 +78,7 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     }
 
     /**
+     * Stub method for waitForCoach to allow its remote invocation on the server.
      *
      */
     @Override
@@ -93,6 +95,7 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     }
 
     /**
+     * Stub method for announceNewGame to allow its remote invocation on the server.
      *
      */
     @Override
@@ -109,6 +112,7 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     }
 
     /**
+     * Stub method for declareGameWinner to allow its remote invocation on the server.
      *
      */
     @Override
@@ -125,6 +129,7 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     }
 
     /**
+     * Stub method for declareMatchWinner to allow its remote invocation on the server.
      *
      */
     @Override
@@ -141,6 +146,7 @@ public class RefSiteProxy implements IRefSiteCoach, IRefSiteRef{
     }  
     
     /**
+     * Stub method for close to allow its remote invocation on the server.
      *
      */
     @Override

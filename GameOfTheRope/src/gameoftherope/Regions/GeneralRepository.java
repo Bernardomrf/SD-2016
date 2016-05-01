@@ -60,7 +60,7 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param configHostName String - Hostname for the configuration server.
      * @param portNum int - Port for the configuration server.
      * 
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException - Exception for file not found
      */
     public GeneralRepository(String configHostName, int portNum) throws FileNotFoundException{
         config(configHostName, portNum);

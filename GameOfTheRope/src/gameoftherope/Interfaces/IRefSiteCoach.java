@@ -6,18 +6,19 @@
 package gameoftherope.Interfaces;
 
 /**
- *
- * @author Bruno Silva <brunomiguelsilva@ua.pt>
+ * Interface for the Coach interaction with the RefSite.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public interface IRefSiteCoach {
     
-    /**
-     *
+    /** 
+     * Method does not block and notifies the coaches.
      */
     public void informReferee();
     
     /**
-     *
+     * Method unused in this implementation of the interface.
      */
     public void close();
 }

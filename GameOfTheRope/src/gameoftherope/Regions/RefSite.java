@@ -23,6 +23,8 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
     
     /**
      * Constructor for RefSite class
+     * @param configHostName - Host name for configs
+     * @param portNum - Port number for configs
      */
     public RefSite(String configHostName, int portNum){
         config(configHostName, portNum);

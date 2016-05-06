@@ -32,8 +32,8 @@
         },
         {
             "name": "Player",
-            "executable_class": "gameoftherope.EntitiesStarters.PlayerStarter"
-            ,"type": "Client"
+            "executable_class": "gameoftherope.EntitiesStarters.PlayerStarter",
+            "type": "Client"
         },
         {
             "name": "Coach",

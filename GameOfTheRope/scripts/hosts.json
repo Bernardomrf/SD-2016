@@ -2,43 +2,43 @@
     "hosts": [
         {
             "hostname": "l040101-ws01.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         },
         {
             "hostname": "l040101-ws02.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         },
         {
             "hostname": "l040101-ws03.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         },
         {
             "hostname": "l040101-ws04.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         },
         {
             "hostname": "l040101-ws05.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         },
         {
             "hostname": "l040101-ws06.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         },
         {
             "hostname": "l040101-ws07.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         },
         {
             "hostname": "l040101-ws08.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         },
         {
             "hostname": "l040101-ws09.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         },
         {
             "hostname": "l040101-ws10.ua.pt",
-            "user": "sd0103",
+            "user": "sd0103"
         }
     ]
 }

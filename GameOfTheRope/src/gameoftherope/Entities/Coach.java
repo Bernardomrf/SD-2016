@@ -9,7 +9,7 @@ import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.coachState;
+import gameoftherope.States.coachState;
 
 /**
  *

@@ -8,7 +8,7 @@ package gameoftherope.Entities;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.playerState;
+import gameoftherope.States.playerState;
 
 /**
  *

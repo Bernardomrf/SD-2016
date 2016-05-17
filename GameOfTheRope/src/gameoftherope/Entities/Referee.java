@@ -9,7 +9,7 @@ import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.refState;
+import gameoftherope.States.refState;
 
 
 /**

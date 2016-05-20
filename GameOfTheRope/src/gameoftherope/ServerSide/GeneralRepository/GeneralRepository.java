@@ -3,11 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameoftherope.Regions;
+package gameoftherope.ServerSide.GeneralRepository;
 
-import gameoftherope.States.coachState;
-import gameoftherope.States.playerState;
-import gameoftherope.States.refState;
+import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
+import gameoftherope.Configs.GeneralRepositoryConfig;
+import gameoftherope.EntityStateEnum.coachState;
+import gameoftherope.EntityStateEnum.playerState;
+import gameoftherope.EntityStateEnum.refState;
+import gameoftherope.Interfaces.IGeneralRepositoryCoach;
+import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
+import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -16,19 +21,25 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- *
- * @author brunosilva
+ * Class to implement the methods for the General Repository Region.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
-public class GeneralRepository {
+public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepositoryPlayer, IGeneralRepositoryRef {
     
-    private int [] playersStrengthA;
-    private int [] playersStrengthB;
-    private playerState [] playersStatesA;
-    private playerState [] playersStatesB;
-    private coachState [] coachesStates;
+    
+    private int nTeamPlayers;
+    private int nTrialPlayers;
+    private int nCoaches;
+    
+    private final int [] playersStrengthA;
+    private final int [] playersStrengthB;
+    private final playerState [] playersStatesA;
+    private final playerState [] playersStatesB;
+    private final coachState [] coachesStates;
     private refState refereeState;
-    private int [] trialPosA;
-    private int [] trialPosB;
+    private final int [] trialPosA;
+    private final int [] trialPosB;
     private int trialN;
     private int ropePos;
     private int gamesA;
@@ -41,18 +52,26 @@ public class GeneralRepository {
     
     
     private final File log;
-    private String filename;
+    private final String filename;
     private static PrintWriter pw;
     
+    /**
+     * Constructor for the General Repository.
+     * @param configHostName String - Hostname for the configuration server.
+     * @param portNum int - Port for the configuration server.
+     * 
+     * @throws FileNotFoundException - Exception for file not found
+     */
     public GeneralRepository() throws FileNotFoundException{
-        playersStrengthA = new int[5];
-        playersStrengthB = new int[5];
-        playersStatesA = new playerState[5];
-        playersStatesB = new playerState[5];
-        coachesStates = new coachState[2];
+        config();
+        playersStrengthA = new int[nTeamPlayers];
+        playersStrengthB = new int[nTeamPlayers];
+        playersStatesA = new playerState[nTeamPlayers];
+        playersStatesB = new playerState[nTeamPlayers];
+        coachesStates = new coachState[nCoaches];
         refereeState = null;
-        trialPosA = new int[3];
-        trialPosB = new int[3];
+        trialPosA = new int[nTrialPlayers];
+        trialPosB = new int[nTrialPlayers];
         trialN = 0;
         ropePos = 0;
         gamesA = 0;
@@ -74,16 +93,33 @@ public class GeneralRepository {
         pw.println();
     }
     
+    /**
+     * Method used to print the log file header.
+     */
+    @Override
     public synchronized void printHeader(){
             pw.println("Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5       Trial");
             pw.println("Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS");
     }
     
+    /**
+     * Method to change the referee state.
+     * @param state refState - the enum value corresponding to the referee state.
+     */
+    @Override
     public synchronized void changeRefState(refState state){
         refereeState = state;
         printLine();
     }
     
+    /**
+     * Method to change the player state.
+     * @param state playerState - the enum value corresponding to the player state.
+     * @param strength int - Current strength of the player.
+     * @param id int - ID of the player in the team.
+     * @param team String - Team of the corresponding player.
+     */
+    @Override
     public synchronized void changePlayerState(playerState state, int id, String team, int strength){
         if (team.equals("A")){
             if (state == playersStatesA[id]) {
@@ -103,6 +139,12 @@ public class GeneralRepository {
         printLine();
     }
     
+    /**
+     * Method to change the coach state.
+     * @param state coachState - the enum value corresponding to the coach state.
+     * @param team String - Team of the caller coach team.
+     */
+    @Override
     public synchronized void changeCoachState(coachState state, String team){
         if (team.equals("A")){
             if (state == coachesStates[0]) {
@@ -120,6 +162,14 @@ public class GeneralRepository {
         printLine();
     }
     
+    /**
+     * Method to initializate the player state.
+     * @param state playerState - the enum value corresponding to the player state.
+     * @param strength int - Initial strength of the player.
+     * @param id int - ID of the player in the team.
+     * @param team String - Team of the corresponding player.
+     */
+    @Override
     public synchronized void initPlayer(playerState state, int strength, int id, String team){
         if (team.equals("A")){
             playersStatesA[id] = state;
@@ -131,6 +181,12 @@ public class GeneralRepository {
         }
     }
     
+    /**
+     * Method to initializate the coach state.
+     * @param state coachState - the enum value corresponding to the coach state.
+     * @param team String - Team of the caller coach team.
+     */
+    @Override
     public synchronized void initCoach(coachState state, String team){
         if (team.equals("A")){
             coachesStates[0] = state;
@@ -140,10 +196,18 @@ public class GeneralRepository {
         }        
     }
     
+    /**
+     * Method to initializate the referee state.
+     * @param state refState - the enum value corresponding to the referee state.
+     */
+    @Override
     public synchronized void initRef(refState state){
         refereeState = state;
     }
     
+    /**
+     * Method used to print a line in the log file.
+     */
     public void printLine(){
         pw.print(refereeState);
         pw.print("  ");
@@ -199,6 +263,12 @@ public class GeneralRepository {
 
     }
     
+    /**
+     * Method used to set the players positions for the trial.
+     * @param pos int[] - Array containing the players positions.
+     * @param team String - Team corresponding to the positions.
+     */
+    @Override
     public synchronized void setPlayersPositions(int[] pos, String team){
         if (team.equals("A")){
             System.arraycopy(pos, 0, trialPosA, 0, trialPosA.length);  
@@ -215,6 +285,11 @@ public class GeneralRepository {
         return false;
     }
     
+    /**
+     * Method used to represent that a new trial has started.
+     * @param nGame int - Number of the new game.
+     */
+    @Override
     public synchronized void newGame(int nGame){
         if(knockout.equals("newGame")){
             pw.println("Game "+ (nGame+1));
@@ -223,7 +298,7 @@ public class GeneralRepository {
             return;
         }
         if(!knockout.equals("X")){
-            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ (trialsA+trialsB) +" trials.");
+            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ trialN +" trials.");
         }
         if(knockout.equals("X")){
             if(trialsA == trialsB){
@@ -241,28 +316,56 @@ public class GeneralRepository {
         printHeader();
     }
     
+    /**
+     * Method used to represent that a new trial has started.
+     * @param nTrial int - Number of the new trial.
+     */
+    @Override
     public synchronized void newTrial(int nTrial){
         trialN = nTrial;
     }
     
+    /**
+     * Method to set the rope value.
+     * @param rope int - The rope value.
+     */
+    @Override
     public synchronized void setRope(int rope){
         ropePos = rope;
     }
+
+    /**
+     * Method used to set the trial wins.
+     * @param wins int[] - Trial wins.
+     * @param knockout String - Representing if a knockout existed in that trial.
+     */
+    @Override
     public synchronized void setWins(int[] wins, String knockout){
         trialsA = wins[0];
         trialsB = wins[1];
         this.knockout = knockout;
     }
+
+    /**
+     * Method used to set the game wins.
+     * @param gameWins int[] - Wins for both teams.
+     * @param nGame int - Number of the game the wins are refering.
+     */
+    @Override
     public synchronized void setGameWins(int[] gameWins, int nGame){
         gamesA = gameWins[0];
         gamesB = gameWins[1];
         finishMatch(nGame);
     }
     
-    public synchronized void finishMatch(int nGame){
+    /**
+     * Method used to print the final line that declares the winner
+     * @param nGame int - Number of the last game
+     */
+    private void finishMatch(int nGame){
        
         if(!knockout.equals("X")){
-            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ (trialsA+trialsB) +" trials.");
+            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ trialN +" trials.");
         }
         if(knockout.equals("X")){
             if(trialsA == trialsB){
@@ -286,5 +389,22 @@ public class GeneralRepository {
         }
         pw.flush();
         
+    }
+
+    private void config() {
+        ConfigRepository conf = new ConfigRepository();
+        GeneralRepositoryConfig settings = conf.getGeneralRepositoryConfig();
+        
+        nCoaches = settings.getnCoaches();
+        nTeamPlayers = settings.getnTeamPlayers();
+        nTrialPlayers = settings.getNtrialPlayers();
+    }
+
+    /**
+     * Method unused in this implementation of the interface.
+     */
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

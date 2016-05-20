@@ -5,21 +5,25 @@
  */
 package gameoftherope;
 
-import gameoftherope.Entities.Coach;
-import gameoftherope.Entities.Player;
-import gameoftherope.Entities.Referee;
+import gameoftherope.ClientSide.Coach.Coach;
+import gameoftherope.ClientSide.Player.Player;
+import gameoftherope.ClientSide.Referee.Referee;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
+import gameoftherope.Interfaces.IGeneralRepositoryCoach;
+import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
+import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.Bench;
-import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.Regions.Playground;
-import gameoftherope.Regions.RefSite;
+import gameoftherope.ServerSide.Bench.Bench;
+import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
+import gameoftherope.ServerSide.GeneralRepository.GeneralRepository;
+import gameoftherope.ServerSide.Playground.Playground;
+import gameoftherope.ServerSide.RefSite.RefSite;
 import java.io.FileNotFoundException;
 
 
@@ -42,25 +46,26 @@ public class GameOfTheRope extends Thread {
         Playground playground = new Playground();
         RefSite refSite = new RefSite();
         GeneralRepository repo = new GeneralRepository();
+        ConfigRepository conf = new ConfigRepository();
         
         repo.printHeader();
         
-        Referee ref =  new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, repo);
+        Referee ref =  new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, (IGeneralRepositoryRef) repo, conf);
         ref.setName("Ref");
         //ref.start();
         
         Coach [] coach =  new Coach [nCoaches];
         for(int i = 0; i<nCoaches; i++){
-            if(i<1) coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground,(IRefSiteCoach) refSite ,"A", repo);
-            else coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "B", repo);
+            if(i<1) coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground,(IRefSiteCoach) refSite ,"A", (IGeneralRepositoryCoach)repo, conf);
+            else coach[i] = new Coach((IBenchCoach) bench,(IPlaygroundCoach) playground, (IRefSiteCoach) refSite, "B", (IGeneralRepositoryCoach)repo, conf);
             coach[i].setName("Coach"+i);
             coach[i].start();
         }
         
         Player [] player = new Player[nPlayers];
         for(int i = 0; i<nPlayers; i++){
-            if(i<5) player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "A", i, repo);
-            else player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "B", i-5, repo);
+            if(i<5) player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "A", i, (IGeneralRepositoryPlayer) repo, conf);
+            else player[i] = new Player((IPlaygroundPlayer) playground,(IBenchPlayer) bench, "B", i-5, (IGeneralRepositoryPlayer) repo, conf);
             player[i].setName("Player"+i);
             player[i].start();
         }

@@ -3,33 +3,46 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameoftherope.Entities;
+package gameoftherope.ClientSide.Coach;
 
+import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.Interfaces.IBenchCoach;
+import gameoftherope.Interfaces.IConfigRepository;
+import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
-import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.States.coachState;
 
 /**
- *
- * @author brunosilva
- * @author bernardoferreira
+ * Class for the Coach entity.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class Coach extends Thread{
-    
-    
     private final IBenchCoach bench;
     private final IPlaygroundCoach playground;
     private final IRefSiteCoach refSite;
-    private final GeneralRepository repo;
+    private final IConfigRepository conf;
+    private final IGeneralRepositoryCoach repo;
     private boolean goOn = true;
     private coachState internalState;
     private final String team;
     
-    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, GeneralRepository repo){
+    
+    /**
+     * Constructor for Coach class.
+     *
+     * @param bench IBenchCoach - Interface for the coach Bench.
+     * @param playground IPlaygroundCoach - Interface for the coach Playground.
+     * @param refSite IRefSiteCoach - Interface for the coach Ref Site.
+     * @param team String - Team of the coach.
+     * @param repo IGeneralRepositoryCoach - Interface for the coach General Repository.
+     * @param conf IConfigRepository - Interface for the coach Config Repository.
+     */
+    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, IGeneralRepositoryCoach repo, IConfigRepository conf){
         this.bench = bench;
         this.playground = playground;
+        this.conf = conf;
         this.internalState = coachState.WAIT_REFEREE_COMMAND;
         this.refSite = refSite;
         this.team = team;
@@ -39,6 +52,7 @@ public class Coach extends Thread{
     
     @Override
     public void run(){
+        
         while(goOn){
             switch(internalState){
                 case WAIT_REFEREE_COMMAND:
@@ -66,9 +80,6 @@ public class Coach extends Thread{
                     break;
             }
         }
+
     }
-
-
-
-
 }    

@@ -3,25 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameoftherope.Entities;
+package gameoftherope.ClientSide.Player;
 
+import gameoftherope.Configs.PlayerConfig;
+import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.Interfaces.IBenchPlayer;
+import gameoftherope.Interfaces.IConfigRepository;
+import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
-import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.States.playerState;
 
 /**
- *
- * @author brunosilva
+ * Class for the Player entity.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class Player extends Thread{
-
-    
-    private static final int maxStrength = 4;
+    private int maxStrength;
     
     private final IBenchPlayer bench;
     private final IPlaygroundPlayer playground;
-    private final GeneralRepository repo;
+    private final IConfigRepository conf;
+    private final IGeneralRepositoryPlayer repo;
     private boolean goOn = true;
     private playerState internalState;
     private final String team;
@@ -31,16 +34,27 @@ public class Player extends Thread{
     private int nTrials;
     private int nPlayerTrials;
     
-        
-    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, GeneralRepository repo){
+    /**
+     * Constructor for PLayer class
+     *
+     * @param playground IPlaygroundPlayer - Interface for the player Playground.
+     * @param bench IBenchPlayer - Interface for the player Bench.
+     * @param team String - Team of the player.
+     * @param id int - Id of the players.
+     * @param repo IGeneralRepositoryPlayer - Interface for the player General Repository.
+     * @param conf IConfigRepository - Interface for the player Config Repository.
+     */
+    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, IGeneralRepositoryPlayer repo, IConfigRepository conf){
+		this.conf = conf;
+        config();
         this.team = team;
         this.bench = bench;
         this.playground = playground;
+        this.repo = repo;
         this.internalState = playerState.SEAT_AT_THE_BENCH;
         this.strength = (int) (Math.random() * maxStrength + 1);
         this.id = id;
         this.iWillPlay = false;
-        this.repo = repo;
         this.nPlayerTrials = 0;
         repo.initPlayer(internalState, strength, id, team);
     }
@@ -73,8 +87,8 @@ public class Player extends Thread{
                     nTrials = playground.standInPosition();
                     if(nPlayerTrials<nTrials){
                         strength+=nTrials-nPlayerTrials-1;
-                        if(strength>5){
-                            strength = 5;
+                        if(strength>maxStrength){
+                            strength = maxStrength;
                         }
                         nPlayerTrials = nTrials;
                     }
@@ -94,5 +108,11 @@ public class Player extends Thread{
                     break;
             }
         }
+
+    }
+    
+    private void config(){
+        PlayerConfig settings = conf.getPlayerConfig();
+        maxStrength = settings.getMaxStrength();
     }
 }

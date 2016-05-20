@@ -3,18 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameoftherope.Entities;
+package gameoftherope.ClientSide.Referee;
 
+import gameoftherope.Configs.RefConfig;
+import gameoftherope.EntityStateEnum.refState;
 import gameoftherope.Interfaces.IBenchRef;
+import gameoftherope.Interfaces.IConfigRepository;
+import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import gameoftherope.Interfaces.IPlaygroundRef;
 import gameoftherope.Interfaces.IRefSiteRef;
-import gameoftherope.Regions.GeneralRepository;
-import gameoftherope.States.refState;
 
 
 /**
- *
- * @author brunosilva
+ * Class for the Referee entity.
+ * 
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public class Referee extends Thread{
 
@@ -22,39 +26,51 @@ public class Referee extends Thread{
     private final IRefSiteRef refSite;
     private final IPlaygroundRef playground;
     private final IBenchRef bench;
-    private final GeneralRepository repo;
+    private final IConfigRepository conf;
+    private final IGeneralRepositoryRef repo;
 
     private boolean goOn = true;
     private refState internalState;
     private int trialsDone;
-    private int nTrialsOfGame;
     private int gamesDone;
-    private final int nTrials = 6;
-    private final int nGames = 3;
+    private int nTrials;
+    private int nGames;
     private String knockOut;
     private int rope;
     private int[] wins;
     private int[] gameWins;
     
-    
-    public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, GeneralRepository repo){
+    /**
+     * Constructor for Referee class.
+     * 
+     * @param refSite IRefSiteRef - Interface for the Referee Ref Site.
+     * @param playground IPlaygroundRef - Interface for the Referee Playground.
+     * @param bench IBenchRef - Interface for the Referee Bench.
+     * @param repo IGeneralRepositoryRef - Interface for the Referee General Repository.
+     * @param conf IConfigRepository - Interface for the Referee Config Repository.
+     */
+    public Referee(IRefSiteRef refSite, IPlaygroundRef playground, IBenchRef bench, IGeneralRepositoryRef repo, IConfigRepository conf){
+		this.conf = conf;
+        config();
         this.refSite = refSite;
         this.playground = playground;
         this.bench = bench;
+        this.repo = repo;
         this.internalState = refState.START_OF_THE_MATCH;
         this.trialsDone = 0;
         this.gamesDone = 0;
         this.knockOut = "X";
-        this.repo = repo;
-        this.nTrialsOfGame = 0;
         this.rope = 0;
         this.wins = new int[2];
         this.gameWins = new int[2];
+        repo.printHeader();
         repo.initRef(internalState);
     }
     
     @Override
     public void run(){
+        bench.waitForPlayers();
+        bench.waitForCoaches();
         while(goOn){
             switch(internalState){
                 case START_OF_THE_MATCH:
@@ -65,9 +81,7 @@ public class Referee extends Thread{
                     repo.newGame(gamesDone);
                     repo.changeRefState(internalState);
                     break;
-                case START_OF_A_GAME:
-                    nTrialsOfGame = 0;
-                    
+                case START_OF_A_GAME:                    
                     playground.callTrial();
                     bench.signalCoaches();
                     internalState= refState.TEAMS_READY;
@@ -105,12 +119,12 @@ public class Referee extends Thread{
                 case END_OF_A_GAME:
                     trialsDone = 0;
     
-                    refSite.declareGameWinner(knockOut);
+                    refSite.declareGameWinner();
                     //System.out.println(gamesDone);
                     gamesDone ++;
                     if (gamesDone == nGames){
                         internalState= refState.END_OF_THE_MATCH;
-                        
+                        repo.setWins(wins, knockOut);
                         repo.changeRefState(internalState);
                     }
                     else{
@@ -125,14 +139,21 @@ public class Referee extends Thread{
                     break;
                 case END_OF_THE_MATCH:
                     refSite.declareMatchWinner();
-                    bench.setMatchFinish();
+                    bench.setMatchFinish(); // Fazer setMatchFinish no playground e no refSite
                     gameWins = playground.getGameWins();
-                    repo.setWins(wins, knockOut);
                     repo.setGameWins(gameWins, gamesDone);
                     goOn = false;
                     break;    
                     
             }
         }
+
+    }
+    
+    private void config(){
+        RefConfig settings = conf.getRefConfig();
+        nGames = settings.getNGames();
+        nTrials = settings.getNTrials();
+ 
     }
 }

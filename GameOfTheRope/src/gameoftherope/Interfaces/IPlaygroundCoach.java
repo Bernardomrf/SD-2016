@@ -6,10 +6,19 @@
 package gameoftherope.Interfaces;
 
 /**
- *
- * @author brunosilva
+ * Interface for the Coach interaction with the Playground.
+ * @author Bruno Silva [brunomiguelsilva@ua.pt]
+ * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
 public interface IPlaygroundCoach {
     
+    /**
+     * Method used to wait for the trial to end.
+     */
     public void waitForTrial(); // Esperar que o trial acabe 
+    
+    /**
+     * Method unused in this implementation of the interface.
+     */
+    public void close();
 }

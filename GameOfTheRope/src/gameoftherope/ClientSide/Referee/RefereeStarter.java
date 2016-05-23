@@ -19,7 +19,7 @@ import java.rmi.registry.Registry;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class RefSiteStarter {
+public class RefereeStarter {
 
     public static void main(String args[]) throws NotBoundException, RemoteException {
         String rmiRegHostName = "localhost";

@@ -5,10 +5,10 @@
  */
 package gameoftherope.ServerSide.RefSite;
 
-import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
 import gameoftherope.Configs.RefSiteConfig;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
+import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
 
 /**
  * Class to implement the bench monitor.
@@ -92,13 +92,5 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach{
         ConfigRepository conf = new ConfigRepository();
         RefSiteConfig settings = conf.getRefSiteConfig();
         nCoaches = settings.getnCoaches();
-    }
-
-    /**
-     * Method unused in this implementation of the interface.
-     */
-    @Override
-    public void close() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

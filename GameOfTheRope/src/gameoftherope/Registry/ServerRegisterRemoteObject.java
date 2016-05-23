@@ -27,7 +27,7 @@ public class ServerRegisterRemoteObject {
             rmiRegHostName = args[0];
             rmiRegPortNumb = Integer.parseInt(args[1]);
         } catch (Exception e) {
-            System.err.println("Naughty arguments!! ;)");
+            System.err.println("Bad arguments!");
             //System.exit(1);
         }
 
@@ -42,7 +42,7 @@ public class ServerRegisterRemoteObject {
         /* instantiate a registration remote object and generate a stub for it */
         RegisterRemoteObject regEngine = new RegisterRemoteObject(rmiRegHostName, rmiRegPortNumb);
         Register regEngineStub = null;
-        int listeningPort = 22130;
+        int listeningPort = 22131;
         /* it should be set accordingly in each case */
 
         try {

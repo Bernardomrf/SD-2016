@@ -12,59 +12,57 @@ import gameoftherope.Configs.PlayerConfig;
 import gameoftherope.Configs.PlaygroundConfig;
 import gameoftherope.Configs.RefConfig;
 import gameoftherope.Configs.RefSiteConfig;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * Interface for the Config Repository.
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
-public interface IConfigRepository {
+public interface IConfigRepository extends Remote {
 
     /**
      * Method to get the bench configuration fields.
      * @return BenchConfig - The bench Configuration.
      */
-    public BenchConfig getBenchConfig();
+    public BenchConfig getBenchConfig() throws RemoteException;
 
     /**
      * Method to get the configuration server fields.
      * @return ConfigRepositoryConfig - The configuration server Configuration.
      */
-    public ConfigRepositoryConfig getConfigRepositoryConfig();
+    public ConfigRepositoryConfig getConfigRepositoryConfig() throws RemoteException;
 
     /**
      * Method to get the general repository configuration fields.
      * @return GeneralRepositoryConfig - The general repository Configuration.
      */
-    public GeneralRepositoryConfig getGeneralRepositoryConfig();
+    public GeneralRepositoryConfig getGeneralRepositoryConfig() throws RemoteException;
 
     /**
      * Method to get the players configuration fields.
      * @return PlayerConfig - The player Configuration.
      */
-    public PlayerConfig getPlayerConfig();
+    public PlayerConfig getPlayerConfig() throws RemoteException;
 
     /**
      * Method to get the playground configuration fields.
      * @return PlaygroundConfig - The playground Configuration.
      */
-    public PlaygroundConfig getPlaygroundConfig();
+    public PlaygroundConfig getPlaygroundConfig() throws RemoteException;
 
     /**
      * Method to get the referee configuration fields.
      * @return RefConfig - The referee Configuration.
      */
-    public RefConfig getRefConfig();
+    public RefConfig getRefConfig() throws RemoteException;
 
     /**
      * Method to get the referee site configuration fields.
      * @return RefSiteConfig - The referee site Configuration.
      */
-    public RefSiteConfig getRefSiteConfig();
+    public RefSiteConfig getRefSiteConfig() throws RemoteException;
     
-    /**
-     * Method unused in this implementation of the interface.
-     */
-    public void close();
     
 }

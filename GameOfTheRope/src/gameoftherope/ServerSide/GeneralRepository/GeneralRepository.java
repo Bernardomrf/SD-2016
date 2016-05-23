@@ -5,7 +5,6 @@
  */
 package gameoftherope.ServerSide.GeneralRepository;
 
-import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
 import gameoftherope.Configs.GeneralRepositoryConfig;
 import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.EntityStateEnum.playerState;
@@ -13,6 +12,7 @@ import gameoftherope.EntityStateEnum.refState;
 import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.IGeneralRepositoryRef;
+import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -400,11 +400,4 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
         nTrialPlayers = settings.getNtrialPlayers();
     }
 
-    /**
-     * Method unused in this implementation of the interface.
-     */
-    @Override
-    public void close() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

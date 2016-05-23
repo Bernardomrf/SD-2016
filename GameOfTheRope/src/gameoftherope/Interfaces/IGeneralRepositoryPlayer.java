@@ -6,13 +6,15 @@
 package gameoftherope.Interfaces;
 
 import gameoftherope.EntityStateEnum.playerState;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * Interface for the Player interaction with the General Repository.
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
-public interface IGeneralRepositoryPlayer {
+public interface IGeneralRepositoryPlayer extends Remote{
     
     /**
      * Method to change the player state.
@@ -21,7 +23,7 @@ public interface IGeneralRepositoryPlayer {
      * @param id int - ID of the player in the team.
      * @param team String - Team of the corresponding player.
      */
-    public void changePlayerState(playerState state, int id, String team, int strength);
+    public void changePlayerState(playerState state, int id, String team, int strength) throws RemoteException;
     
     /**
      * Method to initializate the player state.
@@ -30,10 +32,6 @@ public interface IGeneralRepositoryPlayer {
      * @param id int - ID of the player in the team.
      * @param team String - Team of the corresponding player.
      */
-    public void initPlayer(playerState state, int strength, int id, String team);
+    public void initPlayer(playerState state, int strength, int id, String team) throws RemoteException;
     
-    /**
-     * Method unused in this implementation of the interface.
-     */
-    public void close();
 }

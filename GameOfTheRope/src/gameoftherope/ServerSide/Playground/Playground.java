@@ -5,11 +5,11 @@
  */
 package gameoftherope.ServerSide.Playground;
 
-import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
 import gameoftherope.Configs.PlaygroundConfig;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
+import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
 
 /**
  * Class to implement the playground monitor.
@@ -290,13 +290,4 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         nCoaches = settings.getNcoaches();
         pullTheRopeSleep = settings.getPullTheRopeSleep();
     }
-
-    /**
-     * Method unused in this implementation of the interface.
-     */
-    @Override
-    public void close() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

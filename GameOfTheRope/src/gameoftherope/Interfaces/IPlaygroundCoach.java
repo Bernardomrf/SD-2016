@@ -5,20 +5,19 @@
  */
 package gameoftherope.Interfaces;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Interface for the Coach interaction with the Playground.
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
-public interface IPlaygroundCoach {
+public interface IPlaygroundCoach extends Remote {
     
     /**
      * Method used to wait for the trial to end.
      */
-    public void waitForTrial(); // Esperar que o trial acabe 
+    public void waitForTrial() throws RemoteException; // Esperar que o trial acabe 
     
-    /**
-     * Method unused in this implementation of the interface.
-     */
-    public void close();
 }

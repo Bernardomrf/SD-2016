@@ -5,35 +5,34 @@
  */
 package gameoftherope.Interfaces;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Interface for the Referee interaction with the RefSite.
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
-public interface IRefSiteRef {
+public interface IRefSiteRef extends Remote{
     
     /**
      * Method to wait for coach signal.
      */
-    public void waitForCoach(); 
+    public void waitForCoach() throws RemoteException; 
     
     /**
      * Method to announce new game.
      */
-    public void announceNewGame(); 
+    public void announceNewGame() throws RemoteException; 
     
     /**
      * Method to declare the game winner.
      */
-    public void declareGameWinner(); 
+    public void declareGameWinner() throws RemoteException; 
     
     /**
      * Method to declare the match winner.
      */
-    public void declareMatchWinner(); 
+    public void declareMatchWinner() throws RemoteException; 
     
-    /**
-     * Method unused in this implementation of the interface.
-     */
-    public void close();
 }

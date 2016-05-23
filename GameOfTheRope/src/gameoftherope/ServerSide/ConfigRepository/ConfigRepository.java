@@ -163,12 +163,4 @@ public class ConfigRepository implements IConfigRepository {
     public ConfigRepositoryConfig getConfigRepositoryConfig(){
         return conf;
     }
-
-    /**
-     * Method unused in this implementation of the interface.
-     */
-    @Override
-    public void close() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

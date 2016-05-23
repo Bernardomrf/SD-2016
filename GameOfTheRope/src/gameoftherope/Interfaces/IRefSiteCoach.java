@@ -5,20 +5,19 @@
  */
 package gameoftherope.Interfaces;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Interface for the Coach interaction with the RefSite.
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
-public interface IRefSiteCoach {
+public interface IRefSiteCoach extends Remote{
     
     /** 
      * Method does not block and notifies the coaches.
      */
-    public void informReferee();
+    public void informReferee() throws RemoteException;
     
-    /**
-     * Method unused in this implementation of the interface.
-     */
-    public void close();
 }

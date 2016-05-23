@@ -11,6 +11,7 @@ import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
+import java.rmi.RemoteException;
 
 /**
  * Class for the Player entity.
@@ -43,9 +44,10 @@ public class Player extends Thread{
      * @param id int - Id of the players.
      * @param repo IGeneralRepositoryPlayer - Interface for the player General Repository.
      * @param conf IConfigRepository - Interface for the player Config Repository.
+     * @throws java.rmi.RemoteException
      */
-    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, IGeneralRepositoryPlayer repo, IConfigRepository conf){
-		this.conf = conf;
+    public Player(IPlaygroundPlayer playground, IBenchPlayer bench, String team, int id, IGeneralRepositoryPlayer repo, IConfigRepository conf) throws RemoteException{
+        this.conf = conf;
         config();
         this.team = team;
         this.bench = bench;
@@ -61,57 +63,60 @@ public class Player extends Thread{
     
     @Override
     public void run(){
-        while(goOn){
-            switch(internalState){
-                case SEAT_AT_THE_BENCH:
-                    
-                    bench.seatDown(team);
-                    iWillPlay = bench.seatAtTheBench(team, id); // bloqueante - espera pelo coach
-                    if(bench.hasMatchFinished()){
-                        goOn = false;
-                        break;
-                    }
-                    
-                    if (!iWillPlay){
-                        /*if(strength < 5){
-                            strength++;
-                        }*/
-                        break;
-                    }
-                    bench.followCoachAdvice(team);
-                    // sai do banco(variaveis!!!!)
-                    internalState= playerState.STAND_IN_POSITION;
-                    repo.changePlayerState(internalState, id, team, strength);
-                    break;
-                case STAND_IN_POSITION:
-                    nTrials = playground.standInPosition();
-                    if(nPlayerTrials<nTrials){
-                        strength+=nTrials-nPlayerTrials-1;
-                        if(strength>maxStrength){
-                            strength = maxStrength;
+        try {
+            while(goOn){
+                switch(internalState){
+                    case SEAT_AT_THE_BENCH:
+
+                        bench.seatDown(team);
+                        iWillPlay = bench.seatAtTheBench(team, id); // bloqueante - espera pelo coach
+                        if(bench.hasMatchFinished()){
+                            goOn = false;
+                            break;
                         }
-                        nPlayerTrials = nTrials;
-                    }
-                    // bloqueante - espera pelo arbitro
-                    internalState= playerState.DO_YOUR_BEST;
-                    repo.changePlayerState(internalState, id, team, strength);
-                    break;
-                case DO_YOUR_BEST:
-                    playground.pullTheRope(strength, team); // puxa a corda(variaveis!!!!)
-                    repo.changePlayerState(internalState, id, team, strength);
-                    playground.iamDone(); //o sexto jogador a chamar faz notify ao arbitro
-                    if(strength > 0){
-                        strength--;
-                    }
-                    internalState= playerState.SEAT_AT_THE_BENCH;
-                    repo.changePlayerState(internalState, id, team, strength);
-                    break;
+
+                        if (!iWillPlay){
+                            /*if(strength < 5){
+                                strength++;
+                            }*/
+                            break;
+                        }
+                        bench.followCoachAdvice(team);
+                        // sai do banco(variaveis!!!!)
+                        internalState= playerState.STAND_IN_POSITION;
+                        repo.changePlayerState(internalState, id, team, strength);
+                        break;
+                    case STAND_IN_POSITION:
+                        nTrials = playground.standInPosition();
+                        if(nPlayerTrials<nTrials){
+                            strength+=nTrials-nPlayerTrials-1;
+                            if(strength>maxStrength){
+                                strength = maxStrength;
+                            }
+                            nPlayerTrials = nTrials;
+                        }
+                        // bloqueante - espera pelo arbitro
+                        internalState= playerState.DO_YOUR_BEST;
+                        repo.changePlayerState(internalState, id, team, strength);
+                        break;
+                    case DO_YOUR_BEST:
+                        playground.pullTheRope(strength, team); // puxa a corda(variaveis!!!!)
+                        repo.changePlayerState(internalState, id, team, strength);
+                        playground.iamDone(); //o sexto jogador a chamar faz notify ao arbitro
+                        if(strength > 0){
+                            strength--;
+                        }
+                        internalState= playerState.SEAT_AT_THE_BENCH;
+                        repo.changePlayerState(internalState, id, team, strength);
+                        break;
+                }
             }
+        } catch (Exception e) {
         }
 
     }
     
-    private void config(){
+    private void config() throws RemoteException{
         PlayerConfig settings = conf.getPlayerConfig();
         maxStrength = settings.getMaxStrength();
     }

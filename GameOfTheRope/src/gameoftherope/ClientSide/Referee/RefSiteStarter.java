@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameoftherope.ClientSide.Coach;
+package gameoftherope.ClientSide.Referee;
 
-import gameoftherope.Interfaces.IBenchCoach;
+import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.Interfaces.IConfigRepository;
-import gameoftherope.Interfaces.IGeneralRepositoryCoach;
-import gameoftherope.Interfaces.IPlaygroundCoach;
-import gameoftherope.Interfaces.IRefSiteCoach;
+import gameoftherope.Interfaces.IGeneralRepositoryRef;
+import gameoftherope.Interfaces.IPlaygroundRef;
+import gameoftherope.Interfaces.IRefSiteRef;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -19,18 +19,15 @@ import java.rmi.registry.Registry;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class CoachStarter {
+public class RefSiteStarter {
 
-    public static void main(String args[]) throws NotBoundException {
+    public static void main(String args[]) throws NotBoundException, RemoteException {
         String rmiRegHostName = "localhost";
         int rmiRegPortNumb = 22130;
         
-        String team = "A";
-
         try {
             rmiRegHostName = args[0];
             rmiRegPortNumb = Integer.parseInt(args[1]);
-            team = args[2];
         } catch (Exception e) {
             System.err.println("Bad arguments!");
             //System.exit(1);
@@ -38,19 +35,19 @@ public class CoachStarter {
 
 
         /* look for the remote object by name in the remote host registry */
-        String nameEntryBench = "BenchCoach";
-        IBenchCoach bench = null;
+        String nameEntryBench = "BenchRef";
+        IBenchRef bench = null;
         
-        String nameEntryPlayground = "PlaygroundCoach";
-        IPlaygroundCoach playground = null;
+        String nameEntryPlayground = "PlaygroundRef";
+        IPlaygroundRef playground = null;
         
-        String nameEntryRefSite = "RefSiteCoach";
-        IRefSiteCoach refSite = null;
+        String nameEntryRefSite = "RefSiteRef";
+        IRefSiteRef refSite = null;
         
-        String nameEntryGeneral = "GeneralRepoCoach";
-        IGeneralRepositoryCoach generalRepo = null;
+        String nameEntryGeneral = "GeneralRepoRef";
+        IGeneralRepositoryRef generalRepo = null;
         
-        String nameEntryConfig = "ConfigRepoCoach";
+        String nameEntryConfig = "ConfigRepo";
         IConfigRepository configRepo = null;
         
         Registry registry = null;
@@ -62,22 +59,17 @@ public class CoachStarter {
         }
 
         try {
-            bench = (IBenchCoach) registry.lookup(nameEntryBench);
+            bench = (IBenchRef) registry.lookup(nameEntryBench);
         } catch (RemoteException | NotBoundException e) {
             System.exit(1);
         }
         try {
-            playground = (IPlaygroundCoach) registry.lookup(nameEntryPlayground);
+            playground = (IPlaygroundRef) registry.lookup(nameEntryPlayground);
         } catch (RemoteException | NotBoundException e) {
             System.exit(1);
         }
         try {
-            refSite = (IRefSiteCoach) registry.lookup(nameEntryRefSite);
-        } catch (RemoteException | NotBoundException e) {
-            System.exit(1);
-        }
-        try {
-            generalRepo = (IGeneralRepositoryCoach) registry.lookup(nameEntryGeneral);
+            generalRepo = (IGeneralRepositoryRef) registry.lookup(nameEntryGeneral);
         } catch (RemoteException | NotBoundException e) {
             System.exit(1);
         }
@@ -87,12 +79,12 @@ public class CoachStarter {
             System.exit(1);
         }
         
-        Coach coach = new Coach(bench, playground, refSite , team, generalRepo, configRepo);
+        Referee ref = new Referee(refSite, playground, bench, generalRepo, configRepo);
         
-        coach.start();
+        ref.start();
         
         try {
-            coach.join();
+            ref.join();
         } catch (InterruptedException ex) {
         }
 

@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameoftherope.ClientSide.Coach;
+package gameoftherope.ClientSide.Player;
 
-import gameoftherope.Interfaces.IBenchCoach;
+import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IConfigRepository;
-import gameoftherope.Interfaces.IGeneralRepositoryCoach;
-import gameoftherope.Interfaces.IPlaygroundCoach;
-import gameoftherope.Interfaces.IRefSiteCoach;
+import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
+import gameoftherope.Interfaces.IPlaygroundPlayer;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -19,18 +18,20 @@ import java.rmi.registry.Registry;
  *
  * @author Bruno Silva <brunomiguelsilva@ua.pt>
  */
-public class CoachStarter {
+public class PlayerStarter {
 
-    public static void main(String args[]) throws NotBoundException {
+    public static void main(String args[]) throws NotBoundException, RemoteException {
         String rmiRegHostName = "localhost";
         int rmiRegPortNumb = 22130;
         
         String team = "A";
+        int id = 0;
 
         try {
             rmiRegHostName = args[0];
             rmiRegPortNumb = Integer.parseInt(args[1]);
             team = args[2];
+            id = Integer.parseInt(args[3]);
         } catch (Exception e) {
             System.err.println("Bad arguments!");
             //System.exit(1);
@@ -38,19 +39,16 @@ public class CoachStarter {
 
 
         /* look for the remote object by name in the remote host registry */
-        String nameEntryBench = "BenchCoach";
-        IBenchCoach bench = null;
+        String nameEntryBench = "BenchPlayer";
+        IBenchPlayer bench = null;
         
-        String nameEntryPlayground = "PlaygroundCoach";
-        IPlaygroundCoach playground = null;
+        String nameEntryPlayground = "PlaygroundPlayer";
+        IPlaygroundPlayer playground = null;
         
-        String nameEntryRefSite = "RefSiteCoach";
-        IRefSiteCoach refSite = null;
+        String nameEntryGeneral = "GeneralRepoPlayer";
+        IGeneralRepositoryPlayer generalRepo = null;
         
-        String nameEntryGeneral = "GeneralRepoCoach";
-        IGeneralRepositoryCoach generalRepo = null;
-        
-        String nameEntryConfig = "ConfigRepoCoach";
+        String nameEntryConfig = "ConfigRepo";
         IConfigRepository configRepo = null;
         
         Registry registry = null;
@@ -62,22 +60,17 @@ public class CoachStarter {
         }
 
         try {
-            bench = (IBenchCoach) registry.lookup(nameEntryBench);
+            bench = (IBenchPlayer) registry.lookup(nameEntryBench);
         } catch (RemoteException | NotBoundException e) {
             System.exit(1);
         }
         try {
-            playground = (IPlaygroundCoach) registry.lookup(nameEntryPlayground);
+            playground = (IPlaygroundPlayer) registry.lookup(nameEntryPlayground);
         } catch (RemoteException | NotBoundException e) {
             System.exit(1);
         }
         try {
-            refSite = (IRefSiteCoach) registry.lookup(nameEntryRefSite);
-        } catch (RemoteException | NotBoundException e) {
-            System.exit(1);
-        }
-        try {
-            generalRepo = (IGeneralRepositoryCoach) registry.lookup(nameEntryGeneral);
+            generalRepo = (IGeneralRepositoryPlayer) registry.lookup(nameEntryGeneral);
         } catch (RemoteException | NotBoundException e) {
             System.exit(1);
         }
@@ -87,7 +80,7 @@ public class CoachStarter {
             System.exit(1);
         }
         
-        Coach coach = new Coach(bench, playground, refSite , team, generalRepo, configRepo);
+        Player coach = new Player(playground, bench, team, id, generalRepo, configRepo);
         
         coach.start();
         

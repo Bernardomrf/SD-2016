@@ -11,6 +11,7 @@ import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
+import java.rmi.RemoteException;
 
 /**
  * Class for the Coach entity.
@@ -39,7 +40,7 @@ public class Coach extends Thread{
      * @param repo IGeneralRepositoryCoach - Interface for the coach General Repository.
      * @param conf IConfigRepository - Interface for the coach Config Repository.
      */
-    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, IGeneralRepositoryCoach repo, IConfigRepository conf){
+    public Coach(IBenchCoach bench, IPlaygroundCoach playground, IRefSiteCoach refSite, String team, IGeneralRepositoryCoach repo, IConfigRepository conf) throws RemoteException{
         this.bench = bench;
         this.playground = playground;
         this.conf = conf;
@@ -53,33 +54,36 @@ public class Coach extends Thread{
     @Override
     public void run(){
         
-        while(goOn){
-            switch(internalState){
-                case WAIT_REFEREE_COMMAND:
-                    bench.waitForRefCommand(); //bloqueante - espera pelo arbitro
-                    if(bench.hasMatchFinished()){
-                        goOn = false;
+        try{
+            while(goOn){
+                switch(internalState){
+                    case WAIT_REFEREE_COMMAND:
+                        bench.waitForRefCommand(); //bloqueante - espera pelo arbitro
+                        if(bench.hasMatchFinished()){
+                            goOn = false;
+                            break;
+                        }
+                        internalState = coachState.ASSEMBLE_TEAM;
+                        repo.changeCoachState(internalState, team);
                         break;
-                    }
-                    internalState = coachState.ASSEMBLE_TEAM;
-                    repo.changeCoachState(internalState, team);
-                    break;
-                case ASSEMBLE_TEAM:
-                    
-                    repo.setPlayersPositions(bench.callContestants(team), team);
-                    bench.playersReady(team); // bloqueia espera que os jogadores estejam todos no campo
-                    refSite.informReferee(); //transiçao
-                    internalState = coachState.WATCH_TRIAL;
-                    repo.changeCoachState(internalState, team);
-                    break;
-                case WATCH_TRIAL:
-                    playground.waitForTrial(); //bloqueante - espera pelo arbitro
-                    bench.reviewNotes(team); //bloqueante - espera pelos jogadors
-                    internalState = coachState.WAIT_REFEREE_COMMAND;
-                    repo.changeCoachState(internalState, team);
-                    break;
-            }
-        }
+                    case ASSEMBLE_TEAM:
 
+                        repo.setPlayersPositions(bench.callContestants(team), team);
+                        bench.playersReady(team); // bloqueia espera que os jogadores estejam todos no campo
+                        refSite.informReferee(); //transiçao
+                        internalState = coachState.WATCH_TRIAL;
+                        repo.changeCoachState(internalState, team);
+                        break;
+                    case WATCH_TRIAL:
+                        playground.waitForTrial(); //bloqueante - espera pelo arbitro
+                        bench.reviewNotes(team); //bloqueante - espera pelos jogadors
+                        internalState = coachState.WAIT_REFEREE_COMMAND;
+                        repo.changeCoachState(internalState, team);
+                        break;
+                }
+            }
+        } catch(Exception e){
+            System.exit(1);
+        }
     }
 }    

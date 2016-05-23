@@ -15,7 +15,7 @@ import java.rmi.server.UnicastRemoteObject;
  * This data type instantiates and registers a remote object that will run
  * mobile code. Communication is based in Java RMI.
  */
-public class ServerBench {
+public class BenchServer {
 
     /**
      * Main task.

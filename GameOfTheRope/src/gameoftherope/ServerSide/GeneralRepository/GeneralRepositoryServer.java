@@ -7,6 +7,7 @@ package gameoftherope.ServerSide.GeneralRepository;
 
 import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 import gameoftherope.Interfaces.IGeneralRepositoryRef;
+import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.Register;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
@@ -41,6 +42,7 @@ public class GeneralRepositoryServer {
         /* instantiate a remote object that runs mobile code and generate a stub for it */
         GeneralRepository generalRepo = new GeneralRepository();
         IGeneralRepositoryCoach generalRepoStubCoach = null;
+        IGeneralRepositoryPlayer generalRepoStubPlayer = null;
         IGeneralRepositoryRef generalRepoStubRef = null;
 
         int listeningPort = 22135;
@@ -49,6 +51,8 @@ public class GeneralRepositoryServer {
         try {
             generalRepoStubCoach = (IGeneralRepositoryCoach) UnicastRemoteObject.exportObject(generalRepo, listeningPort);
             generalRepoStubRef = (IGeneralRepositoryRef) UnicastRemoteObject.exportObject(generalRepo, listeningPort);
+            generalRepoStubPlayer = (IGeneralRepositoryPlayer) UnicastRemoteObject.exportObject(generalRepo, listeningPort);
+
         } catch (RemoteException e) {
             System.exit(1);
         }
@@ -73,8 +77,10 @@ public class GeneralRepositoryServer {
         }
 
         try {
-            reg.bind("IGeneralRepositoryCoach", generalRepoStubCoach);
-            reg.bind("IGeneralRepositoryRef", generalRepoStubRef);
+            reg.bind("GeneralRepoCoach", generalRepoStubCoach);
+            reg.bind("GeneralRepoRef", generalRepoStubRef);
+            reg.bind("GeneralRepoPlayer", generalRepoStubPlayer);
+
         } catch (RemoteException | AlreadyBoundException e) {
             System.exit(1);
         }

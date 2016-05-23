@@ -25,6 +25,7 @@ import gameoftherope.ServerSide.GeneralRepository.GeneralRepository;
 import gameoftherope.ServerSide.Playground.Playground;
 import gameoftherope.ServerSide.RefSite.RefSite;
 import java.io.FileNotFoundException;
+import java.rmi.RemoteException;
 
 
 /**
@@ -36,8 +37,9 @@ public class GameOfTheRope extends Thread {
     /**
      * @param args the command line arguments
      * @throws java.io.FileNotFoundException
+     * @throws java.rmi.RemoteException
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, RemoteException {
         
         
         int nCoaches = 2;

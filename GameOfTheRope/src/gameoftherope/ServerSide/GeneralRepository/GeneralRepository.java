@@ -19,6 +19,8 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class to implement the methods for the General Repository Region.
@@ -62,7 +64,7 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * 
      * @throws FileNotFoundException - Exception for file not found
      */
-    public GeneralRepository() throws FileNotFoundException{
+    public GeneralRepository(){
         config();
         playersStrengthA = new int[nTeamPlayers];
         playersStrengthB = new int[nTeamPlayers];
@@ -88,7 +90,10 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
         this.filename = "GameOfTheRope_" + date.format(today) + ".log";
         
         this.log = new File(this.filename);
-        pw = new PrintWriter(log);
+        try {
+            pw = new PrintWriter(log);
+        } catch (FileNotFoundException ex) {
+        }
         pw.println("                               Game of the Rope - Description of the internal state");
         pw.println();
     }

@@ -21,7 +21,7 @@ import java.rmi.registry.Registry;
  */
 public class CoachStarter {
 
-    public static void main(String args[]) throws NotBoundException {
+    public static void main(String args[]) throws NotBoundException, RemoteException {
         String rmiRegHostName = "localhost";
         int rmiRegPortNumb = 22130;
         

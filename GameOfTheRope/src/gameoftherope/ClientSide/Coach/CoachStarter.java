@@ -50,7 +50,7 @@ public class CoachStarter {
         String nameEntryGeneral = "GeneralRepoCoach";
         IGeneralRepositoryCoach generalRepo = null;
         
-        String nameEntryConfig = "ConfigRepoCoach";
+        String nameEntryConfig = "ConfigRepo";
         IConfigRepository configRepo = null;
         
         Registry registry = null;
@@ -58,32 +58,38 @@ public class CoachStarter {
         try {
             registry = LocateRegistry.getRegistry(rmiRegHostName, rmiRegPortNumb);
         } catch (RemoteException e) {
+            System.out.println("Error registering");
             System.exit(1);
         }
 
         try {
             bench = (IBenchCoach) registry.lookup(nameEntryBench);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup bench coach");
             System.exit(1);
         }
         try {
             playground = (IPlaygroundCoach) registry.lookup(nameEntryPlayground);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup playground coach");
             System.exit(1);
         }
         try {
             refSite = (IRefSiteCoach) registry.lookup(nameEntryRefSite);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup refsite coach");
             System.exit(1);
         }
         try {
             generalRepo = (IGeneralRepositoryCoach) registry.lookup(nameEntryGeneral);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup general coach");
             System.exit(1);
         }
         try {
             configRepo = (IConfigRepository) registry.lookup(nameEntryConfig);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup config coach");
             System.exit(1);
         }
         

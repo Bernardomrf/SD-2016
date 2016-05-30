@@ -1,5 +1,6 @@
 package gameoftherope.ServerSide.Bench;
 
+import gameoftherope.Interfaces.IBench;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
@@ -46,6 +47,7 @@ public class BenchServer {
 
         /* instantiate a remote object that runs mobile code and generate a stub for it */
         Bench bench = new Bench();
+        IBench benchStub = null;
         IBenchPlayer benchStubPlayer = null;
         IBenchCoach benchStubCoach = null;
         IBenchRef benchStubRef = null;
@@ -54,13 +56,14 @@ public class BenchServer {
         /* it should be set accordingly in each case */
 
         try {
-            benchStubCoach = (IBenchCoach) UnicastRemoteObject.exportObject(bench, listeningPort);
-            benchStubPlayer = (IBenchPlayer) UnicastRemoteObject.exportObject(bench, listeningPort);
-            benchStubRef = (IBenchRef) UnicastRemoteObject.exportObject(bench, listeningPort);
+            benchStub = (IBench) UnicastRemoteObject.exportObject(bench, listeningPort);
+            benchStubCoach = (IBenchCoach) benchStub;
+            benchStubPlayer = (IBenchPlayer) benchStub;
+            benchStubRef = (IBenchRef) benchStub;
         } catch (RemoteException e) {
             System.exit(1);
         }
-        //GenericIO.writelnString ("Stub was generated!");
+        System.out.println("Stub was generated!");
 
         /* register it with the general registry service */
         String nameEntryBase = "RegisterHandler";
@@ -72,7 +75,7 @@ public class BenchServer {
         } catch (RemoteException e) {
             System.exit(1);
         }
-        //GenericIO.writelnString ("RMI registry was created!");
+        System.out.println("RMI registry was created!");
 
         try {
             reg = (Register) registry.lookup(nameEntryBase);
@@ -87,7 +90,7 @@ public class BenchServer {
         } catch (RemoteException | AlreadyBoundException e) {
             System.exit(1);
         }
-        //GenericIO.writelnString ("ComputeEngine object was registered!");
+        System.out.println("Bench object was registered!");
 
         //GenericIO.writelnString ("ComputeEngine object was registered!");
     }

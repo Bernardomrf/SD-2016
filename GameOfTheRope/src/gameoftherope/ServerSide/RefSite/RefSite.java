@@ -6,6 +6,7 @@
 package gameoftherope.ServerSide.RefSite;
 
 import gameoftherope.Configs.RefSiteConfig;
+import gameoftherope.Interfaces.IRefSite;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
@@ -16,7 +17,7 @@ import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrf@ua.pt]
  */
-public class RefSite implements IRefSiteRef, IRefSiteCoach{
+public class RefSite implements IRefSiteRef, IRefSiteCoach, IRefSite{
     
     private int nCoaches;
     private int coachesReady;

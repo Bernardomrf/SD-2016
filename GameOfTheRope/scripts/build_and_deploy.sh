@@ -1,14 +1,29 @@
-javac interfaces/*.java registry/*.java serverSide/*.java clientSide/*.java
-cp interfaces/Register.class dir_registry/interfaces/
-cp registry/*.class dir_registry/registry/
-cp interfaces/*.class dir_serverSide/interfaces/
-cp serverSide/*.class dir_serverSide/serverSide/
-cp interfaces/Compute.class interfaces/Task.class dir_clientSide/interfaces/
-cp clientSide/*.class dir_clientSide/clientSide/
-mkdir -p /home/sd0103/Public/classes
-mkdir -p /home/sd0103/Public/classes/interfaces
-mkdir -p /home/sd0103/Public/classes/clientSide
-cp interfaces/*.class /home/sd0103/Public/classes/interfaces
-cp clientSide/Pi.class /home/sd0103/Public/classes/clientSide
-cp set_rmiregistry.sh /home/sd0103
-cp set_rmiregistry_alt.sh /home/sd0103
+mkdir gameoftherope
+cp -r ../src/gameoftherope/ gameoftherope/
+
+javac gameoftherope/Registry/*.java
+javac gameoftherope/ServerSide/Bench/*.java
+javac gameoftherope/ServerSide/ConfigRepository/*.java
+javac gameoftherope/ServerSide/GeneralRepository/*.java
+javac gameoftherope/ServerSide/Playground/*.java
+javac gameoftherope/ServerSide/RefSite/*.java
+javac gameoftherope/ClientSide/Player/*.java
+javac gameoftherope/ClientSide/Coach/*.java
+javac gameoftherope/ClientSide/Referee/*.java
+
+cp -r gameoftherope dir_registry/
+cp -r gameoftherope dir_bench/
+cp -r gameoftherope dir_configRepo/
+cp -r gameoftherope dir_generalRepo/
+cp -r gameoftherope dir_playground/
+cp -r gameoftherope dir_refSite/
+cp -r gameoftherope dir_player/
+cp -r gameoftherope dir_coach/
+cp -r gameoftherope dir_ref/
+
+scp -r ./ sd0103@l040101-ws02.ua.pt:~
+
+ssh sd0103@l040101-ws02.ua.pt "mkdir -p /home/sd0103/Public/classes"
+ssh sd0103@l040101-ws02.ua.pt "mkdir -p /home/sd0103/Public/classes/interfaces"
+ssh sd0103@l040101-ws02.ua.pt "cp /home/sd0103/gameoftherope/Interfaces/*.class /home/sd0103/Public/classes/interfaces"
+

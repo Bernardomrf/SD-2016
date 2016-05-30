@@ -1,4 +1,4 @@
-java -Djava.rmi.server.codebase="file:///home/sd0103/gameoftherope/ServerSide/Bench"\
+java -Djava.rmi.server.codebase="file:///home/sd0103/gameoftherope"\
      -Djava.rmi.server.useCodebaseOnly=false\
      -Djava.security.policy=java.policy\
-     BenchServer
+     gameoftherope.ServerSide.Bench.BenchServer

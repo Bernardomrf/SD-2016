@@ -9,6 +9,7 @@ import gameoftherope.Configs.GeneralRepositoryConfig;
 import gameoftherope.EntityStateEnum.coachState;
 import gameoftherope.EntityStateEnum.playerState;
 import gameoftherope.EntityStateEnum.refState;
+import gameoftherope.Interfaces.IGeneralRepository;
 import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.IGeneralRepositoryRef;
@@ -19,15 +20,13 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class to implement the methods for the General Repository Region.
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
-public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepositoryPlayer, IGeneralRepositoryRef {
+public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepositoryPlayer, IGeneralRepositoryRef, IGeneralRepository {
     
     
     private int nTeamPlayers;

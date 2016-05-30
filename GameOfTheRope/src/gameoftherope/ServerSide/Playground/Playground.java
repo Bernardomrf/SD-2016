@@ -6,6 +6,7 @@
 package gameoftherope.ServerSide.Playground;
 
 import gameoftherope.Configs.PlaygroundConfig;
+import gameoftherope.Interfaces.IPlayground;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
@@ -17,7 +18,7 @@ import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrf@ua.pt]
  */
-public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef{
+public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygroundRef, IPlayground{
 
     private int knockOutForce;
     private int nTrialsOfGameDefault;

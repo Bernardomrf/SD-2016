@@ -1,4 +1,4 @@
-java -Djava.rmi.server.codebase="file:///home/sd0103/gameoftherope/ServerSide/ConfigRepository/"\
+java -Djava.rmi.server.codebase="file:///home/sd0103/gameoftherope/"\
      -Djava.rmi.server.useCodebaseOnly=false\
      -Djava.security.policy=java.policy\
-     ConfigRepositoryServer
+     gameoftherope.ServerSide.ConfigRepository.ConfigRepositoryServer

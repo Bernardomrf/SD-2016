@@ -5,6 +5,7 @@
  */
 package gameoftherope.ServerSide.Playground;
 
+import gameoftherope.Interfaces.IPlayground;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
@@ -42,6 +43,7 @@ public class PlaygroundServer {
 
         /* instantiate a remote object that runs mobile code and generate a stub for it */
         Playground playground = new Playground();
+        IPlayground playgroundStub = null;
         IPlaygroundPlayer playgroundStubPlayer = null;
         IPlaygroundCoach playgroundStubCoach = null;
         IPlaygroundRef playgroundStubRef = null;
@@ -50,13 +52,16 @@ public class PlaygroundServer {
         /* it should be set accordingly in each case */
 
         try {
-            playgroundStubCoach = (IPlaygroundCoach) UnicastRemoteObject.exportObject(playground, listeningPort);
-            playgroundStubPlayer = (IPlaygroundPlayer) UnicastRemoteObject.exportObject(playground, listeningPort);
-            playgroundStubRef = (IPlaygroundRef) UnicastRemoteObject.exportObject(playground, listeningPort);
+            playgroundStub = (IPlayground) UnicastRemoteObject.exportObject(playground, listeningPort);
+            playgroundStubCoach = (IPlaygroundCoach) playgroundStub;
+            playgroundStubPlayer = (IPlaygroundPlayer) playgroundStub;
+            playgroundStubRef = (IPlaygroundRef) playgroundStub;
         } catch (RemoteException e) {
+            e.printStackTrace();
+            System.out.println("Error Creating stub");
             System.exit(1);
         }
-        //GenericIO.writelnString ("Stub was generated!");
+        System.out.println("Stub was generated!");
 
         /* register it with the general registry service */
         String nameEntryBase = "RegisterHandler";
@@ -66,13 +71,15 @@ public class PlaygroundServer {
         try {
             registry = LocateRegistry.getRegistry(rmiRegHostName, rmiRegPortNumb);
         } catch (RemoteException e) {
+            System.out.println("Error creating RMI");
             System.exit(1);
         }
-        //GenericIO.writelnString ("RMI registry was created!");
+        System.out.println("RMI registry was created!");
 
         try {
             reg = (Register) registry.lookup(nameEntryBase);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error looking up");
             System.exit(1);
         }
 
@@ -81,10 +88,9 @@ public class PlaygroundServer {
             reg.bind("PlaygroundCoach", playgroundStubCoach);
             reg.bind("PlaygroundRef", playgroundStubRef);
         } catch (RemoteException | AlreadyBoundException e) {
+            System.out.println("Error binding");
             System.exit(1);
         }
-        //GenericIO.writelnString ("ComputeEngine object was registered!");
-
-        //GenericIO.writelnString ("ComputeEngine object was registered!");
+        System.out.println("Playground object was registered!");
     }
 }

@@ -5,9 +5,10 @@
  */
 package gameoftherope.ServerSide.GeneralRepository;
 
+import gameoftherope.Interfaces.IGeneralRepository;
 import gameoftherope.Interfaces.IGeneralRepositoryCoach;
-import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
+import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import gameoftherope.Interfaces.Register;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
@@ -41,6 +42,7 @@ public class GeneralRepositoryServer {
 
         /* instantiate a remote object that runs mobile code and generate a stub for it */
         GeneralRepository generalRepo = new GeneralRepository();
+        IGeneralRepository generalRepositoryStub = null;
         IGeneralRepositoryCoach generalRepoStubCoach = null;
         IGeneralRepositoryPlayer generalRepoStubPlayer = null;
         IGeneralRepositoryRef generalRepoStubRef = null;
@@ -49,14 +51,15 @@ public class GeneralRepositoryServer {
         /* it should be set accordingly in each case */
 
         try {
-            generalRepoStubCoach = (IGeneralRepositoryCoach) UnicastRemoteObject.exportObject(generalRepo, listeningPort);
-            generalRepoStubRef = (IGeneralRepositoryRef) UnicastRemoteObject.exportObject(generalRepo, listeningPort);
-            generalRepoStubPlayer = (IGeneralRepositoryPlayer) UnicastRemoteObject.exportObject(generalRepo, listeningPort);
+            generalRepositoryStub = (IGeneralRepository) UnicastRemoteObject.exportObject(generalRepo, listeningPort);
+            generalRepoStubCoach = (IGeneralRepositoryCoach) generalRepositoryStub;
+            generalRepoStubRef = (IGeneralRepositoryRef) generalRepositoryStub;
+            generalRepoStubPlayer = (IGeneralRepositoryPlayer) generalRepositoryStub;
 
         } catch (RemoteException e) {
             System.exit(1);
         }
-        //GenericIO.writelnString ("Stub was generated!");
+        System.out.println("Stub was generated!");
 
         /* register it with the general registry service */
         String nameEntryBase = "RegisterHandler";
@@ -68,7 +71,7 @@ public class GeneralRepositoryServer {
         } catch (RemoteException e) {
             System.exit(1);
         }
-        //GenericIO.writelnString ("RMI registry was created!");
+        System.out.println("RMI registry was created!");
 
         try {
             reg = (Register) registry.lookup(nameEntryBase);
@@ -84,7 +87,7 @@ public class GeneralRepositoryServer {
         } catch (RemoteException | AlreadyBoundException e) {
             System.exit(1);
         }
-        //GenericIO.writelnString ("ComputeEngine object was registered!");
+        System.out.println("General Repository object was registered!");
 
         //GenericIO.writelnString ("ComputeEngine object was registered!");
     }

@@ -6,6 +6,7 @@
 package gameoftherope.ServerSide.Bench;
 
 import gameoftherope.Configs.BenchConfig;
+import gameoftherope.Interfaces.IBench;
 import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
@@ -18,7 +19,7 @@ import java.util.Random;
  * @author Bruno Silva [brunomiguelsilva@ua.pt]
  * @author Bernardo Ferreira [bernardomrferreira@ua.pt]
  */
-public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef{
+public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
     
     private int nCoaches;
     private int nTeamPlayers;

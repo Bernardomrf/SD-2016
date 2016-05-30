@@ -1,4 +1,4 @@
-java -Djava.rmi.server.codebase="file:///home/sd0103/gameoftherope/Registry/"\
+java -Djava.rmi.server.codebase="file:///home/sd0103/gameoftherope/"\
      -Djava.rmi.server.useCodebaseOnly=false\
      -Djava.security.policy=java.policy\
-     ServerRegisterRemoteObject
+     gameoftherope.Registry.ServerRegisterRemoteObject

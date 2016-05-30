@@ -6,6 +6,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+
+
 /**
  * This data type instantiates and registers a remote object that enables the
  * registration of other remote objects located in the same or other processing
@@ -15,6 +17,7 @@ public class ServerRegisterRemoteObject {
 
     /**
      * Main task.
+     * @param args
      */
 
     public static void main(String[] args) {

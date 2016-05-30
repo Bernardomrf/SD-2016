@@ -1,4 +1,4 @@
-java -Djava.rmi.server.codebase="file:///home/sd0103/gameoftherope/Clientside/Coach"\
+java -Djava.rmi.server.codebase="file:///home/sd0103/gameoftherope/"\
      -Djava.rmi.server.useCodebaseOnly=false\
      -Djava.security.policy=java.policy\
-     CoachStarter $1 $2 $3
+     gameoftherope.ClientSide.Coach.CoachStarter $1 $2 $3

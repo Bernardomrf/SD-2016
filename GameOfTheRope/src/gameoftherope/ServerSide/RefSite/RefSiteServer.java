@@ -5,6 +5,7 @@
  */
 package gameoftherope.ServerSide.RefSite;
 
+import gameoftherope.Interfaces.IRefSite;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.Interfaces.Register;
@@ -40,6 +41,7 @@ public class RefSiteServer {
 
         /* instantiate a remote object that runs mobile code and generate a stub for it */
         RefSite refSite = new RefSite();
+        IRefSite refSiteStub = null;
         IRefSiteCoach refSiteStubCoach = null;
         IRefSiteRef refSiteStubRef = null;
 
@@ -47,12 +49,13 @@ public class RefSiteServer {
         /* it should be set accordingly in each case */
 
         try {
-            refSiteStubCoach = (IRefSiteCoach) UnicastRemoteObject.exportObject(refSite, listeningPort);
-            refSiteStubRef = (IRefSiteRef) UnicastRemoteObject.exportObject(refSite, listeningPort);
+            refSiteStub = (IRefSite) UnicastRemoteObject.exportObject(refSite, listeningPort);
+            refSiteStubCoach = (IRefSiteCoach) refSiteStub;
+            refSiteStubRef = (IRefSiteRef) refSiteStub;
         } catch (RemoteException e) {
             System.exit(1);
         }
-        //GenericIO.writelnString ("Stub was generated!");
+        System.out.println("Stub was generated!");
 
         /* register it with the general registry service */
         String nameEntryBase = "RegisterHandler";
@@ -64,7 +67,7 @@ public class RefSiteServer {
         } catch (RemoteException e) {
             System.exit(1);
         }
-        //GenericIO.writelnString ("RMI registry was created!");
+        System.out.println("RMI registry was created!");
 
         try {
             reg = (Register) registry.lookup(nameEntryBase);
@@ -78,7 +81,7 @@ public class RefSiteServer {
         } catch (RemoteException | AlreadyBoundException e) {
             System.exit(1);
         }
-        //GenericIO.writelnString ("ComputeEngine object was registered!");
+        System.out.println("ComputeEngine object was registered!");
 
         //GenericIO.writelnString ("ComputeEngine object was registered!");
     }

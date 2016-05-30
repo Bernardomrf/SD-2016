@@ -55,27 +55,32 @@ public class RefereeStarter {
         try {
             registry = LocateRegistry.getRegistry(rmiRegHostName, rmiRegPortNumb);
         } catch (RemoteException e) {
+            System.out.println("Error registering");
             System.exit(1);
         }
 
         try {
             bench = (IBenchRef) registry.lookup(nameEntryBench);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup");
             System.exit(1);
         }
         try {
             playground = (IPlaygroundRef) registry.lookup(nameEntryPlayground);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup");
             System.exit(1);
         }
         try {
             generalRepo = (IGeneralRepositoryRef) registry.lookup(nameEntryGeneral);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup");
             System.exit(1);
         }
         try {
             configRepo = (IConfigRepository) registry.lookup(nameEntryConfig);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup");
             System.exit(1);
         }
         

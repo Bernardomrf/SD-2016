@@ -56,27 +56,32 @@ public class PlayerStarter {
         try {
             registry = LocateRegistry.getRegistry(rmiRegHostName, rmiRegPortNumb);
         } catch (RemoteException e) {
+            System.out.println("Error registering player");
             System.exit(1);
         }
 
         try {
             bench = (IBenchPlayer) registry.lookup(nameEntryBench);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup bench player");
             System.exit(1);
         }
         try {
             playground = (IPlaygroundPlayer) registry.lookup(nameEntryPlayground);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup playground player");
             System.exit(1);
         }
         try {
             generalRepo = (IGeneralRepositoryPlayer) registry.lookup(nameEntryGeneral);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup general player");
             System.exit(1);
         }
         try {
             configRepo = (IConfigRepository) registry.lookup(nameEntryConfig);
         } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup config player");
             System.exit(1);
         }
         

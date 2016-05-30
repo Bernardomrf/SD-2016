@@ -83,7 +83,7 @@ public class Coach extends Thread{
                 }
             }
         } catch(Exception e){
-            System.exit(1);
+            e.printStackTrace();
         }
     }
 }    

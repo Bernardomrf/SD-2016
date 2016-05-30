@@ -151,6 +151,7 @@ public class Referee extends Thread{
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

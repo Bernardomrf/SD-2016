@@ -78,6 +78,13 @@ public class RefereeStarter {
             System.exit(1);
         }
         try {
+            refSite = (IRefSiteRef) registry.lookup(nameEntryRefSite);
+        } catch (RemoteException | NotBoundException e) {
+            System.out.println("Error lookup");
+            System.exit(1);
+        }
+        
+        try {
             configRepo = (IConfigRepository) registry.lookup(nameEntryConfig);
         } catch (RemoteException | NotBoundException e) {
             System.out.println("Error lookup");

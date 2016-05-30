@@ -25,5 +25,5 @@ scp -r ./ sd0103@l040101-ws02.ua.pt:~
 
 ssh sd0103@l040101-ws02.ua.pt "mkdir -p /home/sd0103/Public/classes"
 ssh sd0103@l040101-ws02.ua.pt "mkdir -p /home/sd0103/Public/classes/interfaces"
-ssh sd0103@l040101-ws02.ua.pt "cp /home/sd0103/gameoftherope/Interfaces/*.class /home/sd0103/Public/classes/interfaces"
+ssh sd0103@l040101-ws02.ua.pt "cp /home/sd0103/gameoftherope/Interfaces/*.class /home/sd0103/Public/classes/interfaces/"
 

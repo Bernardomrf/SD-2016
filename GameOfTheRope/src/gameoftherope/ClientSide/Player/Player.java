@@ -112,6 +112,7 @@ public class Player extends Thread{
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

@@ -41,6 +41,7 @@ public class Referee extends Thread{
     private int rope;
     private int[] wins;
     private int[] gameWins;
+    private Object[] returns;
     
     private final VectorClock ownClock;
     private VectorClock returnClock;
@@ -132,7 +133,11 @@ public class Referee extends Thread{
                         
                         trialsDone ++;
                         wins = playground.getWins();
-                        knockOut = playground.checkKnockout();
+                        
+                        ownClock.increment();
+                        returns = playground.checkKnockout(ownClock.clone());
+                        ownClock.update((VectorClock)returns[1]);
+                        knockOut = (String)returns[0];
                         //System.err.println("trial Done");
                         if (trialsDone == nTrials || !knockOut.equals("X")){
                             //System.out.println("Knockout " + knockOut);

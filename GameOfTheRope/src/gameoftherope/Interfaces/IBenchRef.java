@@ -41,18 +41,14 @@ public interface IBenchRef extends Remote{
     /**
      * Method called by the referee to wait for all players to be ready before 
      * starting the match.
-     * @param vc
-     * @return 
      * @throws java.rmi.RemoteException
      */
-    public VectorClock waitForPlayers(VectorClock vc) throws RemoteException;
+    public void waitForPlayers() throws RemoteException;
     
     /**
      * Method called by the referee to wait for all coaches to be ready before 
      * starting the match.
-     * @param vc
-     * @return 
      * @throws java.rmi.RemoteException
      */
-    public VectorClock waitForCoaches(VectorClock vc) throws RemoteException;
+    public void waitForCoaches() throws RemoteException;
 }

@@ -89,7 +89,7 @@ public interface IPlayground extends Remote {
      * @return String - Representation of knockout or not and for what team
      * @throws java.rmi.RemoteException
      */
-    public String checkKnockout() throws RemoteException;
+    public Object[] checkKnockout(VectorClock vc) throws RemoteException;
 
     /**
      * Method used to return the current position of the rope

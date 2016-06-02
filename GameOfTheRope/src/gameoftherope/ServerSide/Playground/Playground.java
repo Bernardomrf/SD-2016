@@ -10,6 +10,7 @@ import gameoftherope.Interfaces.IPlayground;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
 import gameoftherope.Interfaces.IPlaygroundRef;
+import gameoftherope.VectorClock.VectorClock;
 import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
 
 /**
@@ -42,6 +43,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
     private final int allWins[];
     private final int allGameWins[];
     
+    private final VectorClock clocks;
+    
     /**
      * Constructor for Playground class
      * @param configHostName - Host name for configs
@@ -66,6 +69,7 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         this.allGameWins = new int[2];
         this.allGameWins[0] = 0;
         this.allGameWins[1] = 0;
+        clocks = new VectorClock(13, 0);
     }
 
     /**
@@ -77,7 +81,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
      *                      Valid options are only "A" or "B".
      */
     @Override
-    public synchronized void pullTheRope(int strenght, String team) {
+    public synchronized VectorClock pullTheRope(int strenght, String team, VectorClock vc) {
+        clocks.update(vc);
+        
         if(team.equals("A")){
             rope += strenght;
         }
@@ -88,6 +94,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
               Thread.sleep(pullTheRopeSleep);
         } catch (InterruptedException ex) {}
         
+        return clocks.clone();
+        
     }
 
     /**
@@ -97,7 +105,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
      *
      */
     @Override
-    public synchronized void callTrial() {
+    public synchronized VectorClock callTrial(VectorClock vc) {
+        clocks.update(vc);
+        
         while(coachesWaiting != nCoaches){
             try {
                 wait();
@@ -109,7 +119,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         coachesWaiting = 0;
         playersReady = 0;
         knockOutA = false;
-        knockOutB = false;   
+        knockOutB = false;  
+        
+        return clocks.clone();
     }
 
     /**
@@ -119,10 +131,13 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
      *
      */
     @Override
-    public synchronized void startTrial() {
+    public synchronized VectorClock startTrial(VectorClock vc) {
+        clocks.update(vc);
+        
         startTrial = true;
         nTrials++;
         notifyAll();
+        return clocks.clone();
     }
 
     /**
@@ -133,7 +148,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
      * 
      */
     @Override
-    public synchronized void assertTrialDecision() {
+    public synchronized VectorClock assertTrialDecision(VectorClock vc) {
+        clocks.update(vc);
+        
         if (rope > 0){
             if(rope >= knockOutForce){
                 knockOutA = true;
@@ -149,6 +166,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         nTrialsOfGame++;
         trialFinished = true;
         notifyAll();
+        
+        return clocks.clone();
     }
 
     /**
@@ -156,12 +175,15 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
      * It's called by players only.
      */
     @Override
-    public synchronized void iamDone() {
+    public synchronized VectorClock iamDone(VectorClock vc) {
+        clocks.update(vc);
+        
         playersDone++;
         if(playersDone == totalTrialPlayers){
             wakeRef = true;
             notifyAll();
         }
+        return clocks.clone();
     }
 
     /**
@@ -169,7 +191,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
      * It's called by the coaches only and blocks until the game ends.
      */
     @Override
-    public synchronized void waitForTrial() {
+    public synchronized VectorClock waitForTrial(VectorClock vc) {
+        clocks.update(vc);
+        
         while(!trialFinished){
             try {
                 wait();
@@ -178,6 +202,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
         }
         coachesWaiting++;
         notifyAll();
+        
+        return clocks.clone();
     }
 
     /**
@@ -186,7 +212,10 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
      * @return nTrials - number of trials
      */
     @Override
-    public synchronized int standInPosition() {
+    public synchronized Object[] standInPosition(VectorClock vc) {
+        clocks.update(vc);
+        
+        Object[] res = new Object[2];
         playersReady++;
         notifyAll();
         while(!startTrial || playersReady!=totalTrialPlayers){
@@ -195,7 +224,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             } catch (InterruptedException ex) {
             }
         }
-        return nTrials;
+        res[0] = nTrials;
+        res[1] = clocks.clone();
+        return res;
     }
 
     /**
@@ -203,7 +234,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
      * It's called by the referee only.
      */
     @Override
-    public synchronized void waitForTrialConclusion() {
+    public synchronized VectorClock waitForTrialConclusion(VectorClock vc) {
+        clocks.update(vc);
+        
         while (!wakeRef){
             try {
                 wait();
@@ -211,6 +244,8 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             }
         }
         wakeRef = false;
+        
+        return clocks.clone();
     }
 
     /**
@@ -220,14 +255,21 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
      * @return String - Representation of knockout or not and for what team
      */
     @Override
-    public synchronized String checkKnockout() {
+    public synchronized Object[] checkKnockout(VectorClock vc) {
+        clocks.update(vc);
+        
+        Object[] res = new Object[2];
+        
         if (knockOutA){
             nTrialsOfGame=0;
             aTrialWins = 0;
             bTrialWins = 0;
             rope = 0;
             allGameWins[0]++;
-            return "A";
+            
+            res[0] = "A";
+            res[1] = clocks.clone();
+            return res;
         }
         else if (knockOutB){
             nTrialsOfGame=0;
@@ -235,7 +277,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             bTrialWins = 0;
             rope=0;
             allGameWins[1]++;
-            return "B";
+            res[0] = "B";
+            res[1] = clocks.clone();
+            return res;
         }
         if(nTrialsOfGame == nTrialsOfGameDefault){
             if(aTrialWins>bTrialWins){
@@ -249,7 +293,9 @@ public class Playground implements IPlaygroundCoach, IPlaygroundPlayer, IPlaygro
             aTrialWins = 0;
             bTrialWins = 0;
         }
-        return "X";
+        res[0] = "X";
+        res[1] = clocks.clone();
+        return res;
     }
     
     /**

@@ -70,7 +70,9 @@ public class Player extends Thread{
             ownClock = new VectorClock(13,8+id);
         }
         
-        repo.initPlayer(internalState, strength, id, team, ownClock.clone());
+        ownClock.increment();
+        returnClock = repo.initPlayer(internalState, strength, id, team, ownClock.clone());
+        ownClock.update(returnClock);
     }
     
     @Override
@@ -106,7 +108,10 @@ public class Player extends Thread{
                         
                         // sai do banco(variaveis!!!!)
                         internalState= playerState.STAND_IN_POSITION;
-                        repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
+                        ownClock.update(returnClock);
                         break;
                     case STAND_IN_POSITION:
                         ownClock.increment();
@@ -123,14 +128,19 @@ public class Player extends Thread{
                         }
                         // bloqueante - espera pelo arbitro
                         internalState= playerState.DO_YOUR_BEST;
-                        repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
+                        ownClock.update(returnClock);
                         break;
                     case DO_YOUR_BEST:
                         ownClock.increment();
                         returnClock = playground.pullTheRope(strength, team, ownClock.clone()); // puxa a corda(variaveis!!!!)
                         ownClock.update(returnClock);
                         
-                        repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
+                        ownClock.increment();
+                        returnClock = repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
+                        ownClock.update(returnClock);
                         
                         ownClock.increment();
                         returnClock = playground.iamDone(ownClock.clone()); //o sexto jogador a chamar faz notify ao arbitro
@@ -141,7 +151,10 @@ public class Player extends Thread{
                         }
                         
                         internalState= playerState.SEAT_AT_THE_BENCH;
-                        repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
+                        ownClock.update(returnClock);
                         break;
                 }
             }

@@ -22,27 +22,30 @@ public interface IGeneralRepositoryCoach extends Remote{
      * @param state coachState - the enum value corresponding to the coach state.
      * @param team String - Team of the caller coach team.
      * @param vc
+     * @return 
      * @throws java.rmi.RemoteException
      */
-    public void changeCoachState(coachState state, String team, VectorClock vc) throws RemoteException;
+    public VectorClock changeCoachState(coachState state, String team, VectorClock vc) throws RemoteException;
     
     /**
      * Method to initializate the coach state.
      * @param state coachState - the enum value corresponding to the coach state.
      * @param team String - Team of the caller coach team.
      * @param vc
+     * @return 
      * @throws java.rmi.RemoteException
      */
-    public void initCoach(coachState state, String team, VectorClock vc) throws RemoteException;
+    public VectorClock initCoach(coachState state, String team, VectorClock vc) throws RemoteException;
     
     /**
      * Method used to set the players positions for the trial.
      * @param pos int[] - Array containing the players positions.
      * @param team String - Team corresponding to the positions.
      * @param vc
+     * @return 
      * @throws java.rmi.RemoteException
      */
-    public void setPlayersPositions(int[] pos, String team, VectorClock vc) throws RemoteException;
+    public VectorClock setPlayersPositions(int[] pos, String team, VectorClock vc) throws RemoteException;
     
 
 }

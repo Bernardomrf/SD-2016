@@ -51,7 +51,7 @@ public class GameOfTheRope extends Thread {
         GeneralRepository repo = new GeneralRepository();
         ConfigRepository conf = new ConfigRepository();
         
-        repo.printHeader();
+        //repo.printHeader();
         
         Referee ref =  new Referee((IRefSiteRef) refSite, (IPlaygroundRef) playground, (IBenchRef) bench, (IGeneralRepositoryRef) repo, conf);
         ref.setName("Ref");

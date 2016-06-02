@@ -24,9 +24,10 @@ public interface IGeneralRepositoryPlayer extends Remote{
      * @param id int - ID of the player in the team.
      * @param team String - Team of the corresponding player.
      * @param vc
+     * @return 
      * @throws java.rmi.RemoteException
      */
-    public void changePlayerState(playerState state, int id, String team, int strength, VectorClock vc) throws RemoteException;
+    public VectorClock changePlayerState(playerState state, int id, String team, int strength, VectorClock vc) throws RemoteException;
     
     /**
      * Method to initializate the player state.
@@ -35,8 +36,9 @@ public interface IGeneralRepositoryPlayer extends Remote{
      * @param id int - ID of the player in the team.
      * @param team String - Team of the corresponding player.
      * @param vc
+     * @return 
      * @throws java.rmi.RemoteException
      */
-    public void initPlayer(playerState state, int strength, int id, String team, VectorClock vc) throws RemoteException;
+    public VectorClock initPlayer(playerState state, int strength, int id, String team, VectorClock vc) throws RemoteException;
     
 }

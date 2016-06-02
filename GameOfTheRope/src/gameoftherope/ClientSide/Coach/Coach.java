@@ -58,8 +58,9 @@ public class Coach extends Thread{
         }else{
             ownClock = new VectorClock(13,2);
         }
-       
-        repo.initCoach(internalState, team, ownClock.clone());
+        ownClock.increment();
+        returnClock = repo.initCoach(internalState, team, ownClock.clone());
+        ownClock.update(returnClock);
     }
     
     @Override
@@ -78,14 +79,19 @@ public class Coach extends Thread{
                             break;
                         }
                         internalState = coachState.ASSEMBLE_TEAM;
-                        repo.changeCoachState(internalState, team, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = repo.changeCoachState(internalState, team, ownClock.clone());
+                        ownClock.update(returnClock);
                         break;
                     case ASSEMBLE_TEAM:
                         ownClock.increment();
                         returns = bench.callContestants(team, ownClock.clone());
                         ownClock.update((VectorClock)returns[1]);
                         
-                        repo.setPlayersPositions((int[])returns[0], team, ownClock.clone());
+                        ownClock.increment();
+                        returnClock = repo.setPlayersPositions((int[])returns[0], team, ownClock.clone());
+                        ownClock.update(returnClock);
                         
                         ownClock.increment();
                         returnClock = bench.playersReady(team, ownClock.clone()); // bloqueia espera que os jogadores estejam todos no campo
@@ -96,7 +102,10 @@ public class Coach extends Thread{
                         ownClock.update(returnClock);
                         
                         internalState = coachState.WATCH_TRIAL;
-                        repo.changeCoachState(internalState, team, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = repo.changeCoachState(internalState, team, ownClock.clone());
+                        ownClock.update(returnClock);
                         break;
                     case WATCH_TRIAL:
                         ownClock.increment();
@@ -108,7 +117,10 @@ public class Coach extends Thread{
                         ownClock.update(returnClock);
                         
                         internalState = coachState.WAIT_REFEREE_COMMAND;
-                        repo.changeCoachState(internalState, team, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = repo.changeCoachState(internalState, team, ownClock.clone());
+                        ownClock.update(returnClock);
                         break;
                 }
             }

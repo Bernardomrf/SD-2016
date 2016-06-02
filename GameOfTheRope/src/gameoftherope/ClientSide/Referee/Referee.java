@@ -73,8 +73,13 @@ public class Referee extends Thread{
         
         ownClock = new VectorClock(13,0);
         
-        repo.printHeader(ownClock.clone());
-        repo.initRef(internalState, ownClock.clone());
+        ownClock.increment();
+        returnClock = repo.printHeader(ownClock.clone());
+        ownClock.update(returnClock);
+        
+        ownClock.increment();
+        returnClock = repo.initRef(internalState, ownClock.clone());
+        ownClock.update(returnClock);
     }
     
     @Override
@@ -85,7 +90,9 @@ public class Referee extends Thread{
             while(goOn){
                 switch(internalState){
                     case START_OF_THE_MATCH:
-                        repo.changeRefState(internalState, ownClock.clone());
+                        ownClock.increment();
+                        returnClock = repo.changeRefState(internalState, ownClock.clone());
+                        ownClock.update(returnClock);
                         //System.out.println(internalState);
                         
                         ownClock.increment();
@@ -93,8 +100,14 @@ public class Referee extends Thread{
                         ownClock.update(returnClock);
                         
                         internalState= refState.START_OF_A_GAME;
-                        repo.newGame(gamesDone, ownClock.clone());
-                        repo.changeRefState(internalState, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = repo.newGame(gamesDone, ownClock.clone());
+                        ownClock.update(returnClock);
+                        
+                        ownClock.increment();
+                        returnClock = repo.changeRefState(internalState, ownClock.clone());
+                        ownClock.update(returnClock);
                         break;
                     case START_OF_A_GAME: 
                         ownClock.increment();
@@ -106,8 +119,14 @@ public class Referee extends Thread{
                         ownClock.update(returnClock);
                         
                         internalState= refState.TEAMS_READY;
-                        repo.newTrial(trialsDone+1, ownClock.clone());
-                        repo.changeRefState(internalState, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = repo.newTrial(trialsDone+1, ownClock.clone());
+                        ownClock.update(returnClock);
+                        
+                        ownClock.increment();
+                        returnClock = repo.changeRefState(internalState, ownClock.clone());
+                        ownClock.update(returnClock);
                         break;
                     case TEAMS_READY:
                         ownClock.increment();
@@ -119,6 +138,10 @@ public class Referee extends Thread{
                         ownClock.update(returnClock);
                         
                         internalState= refState.WAIT_FOR_TRIAL_CONCLUSION;
+                        
+                        FALTA DAQUI PARA BAIXO!!!
+                        
+                        
                         repo.changeRefState(internalState, ownClock.clone());
                         break;
                     case WAIT_FOR_TRIAL_CONCLUSION:

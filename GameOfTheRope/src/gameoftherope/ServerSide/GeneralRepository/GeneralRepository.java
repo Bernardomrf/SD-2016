@@ -14,12 +14,18 @@ import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.IGeneralRepositoryRef;
 import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
+import gameoftherope.VectorClock.VectorClock;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Class to implement the methods for the General Repository Region.
@@ -52,16 +58,18 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     private String knockout;
     
     
-    private final File log;
-    private final String filename;
-    private static PrintWriter pw;
+    private final File log, reorder_log;
+    private final String filename, filename_reorder;
+    private static PrintWriter pw, reorder;
+    
+    private final ArrayList<Update> updates;
+    private int nEntitiesRunning;
+    
+    private final VectorClock clocks;
     
     /**
      * Constructor for the General Repository.
-     * @param configHostName String - Hostname for the configuration server.
-     * @param portNum int - Port for the configuration server.
      * 
-     * @throws FileNotFoundException - Exception for file not found
      */
     public GeneralRepository(){
         config();
@@ -83,27 +91,48 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
         inPositionB = 0;
         knockout = "newGame";
         
+        updates = new ArrayList<>();
+        nEntitiesRunning = 2* nTeamPlayers + nCoaches + 1;
+        
+        clocks = new VectorClock(13, 0);
         
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat date = new SimpleDateFormat("yyyyMMddhhmmss");
         this.filename = "GameOfTheRope_" + date.format(today) + ".log";
+        this.filename_reorder = "GameOfTheRope_REORDERED_" + date.format(today) + ".log";
         
         this.log = new File(this.filename);
+        this.reorder_log = new File(this.filename_reorder);
         try {
             pw = new PrintWriter(log);
+            reorder = new PrintWriter(reorder_log);
         } catch (FileNotFoundException ex) {
         }
-        pw.println("                               Game of the Rope - Description of the internal state");
-        pw.println();
+        String toWrite = "";
+        toWrite += "                               Game of the Rope - Description of the internal state\n";
+        
+        pw.write(toWrite);
+        pw.flush();
+        Update u = new Update(toWrite, clocks.toIntArray());
+        updates.add(u);
+        
     }
     
     /**
      * Method used to print the log file header.
      */
     @Override
-    public synchronized void printHeader(){
-            pw.println("Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5       Trial");
-            pw.println("Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS");
+    public synchronized VectorClock printHeader(VectorClock vc){
+        clocks.update(vc);
+        String toWrite = "";
+        toWrite += "Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5       Trial                          VCk\n";
+        toWrite += "Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS 0  1  2  3  4  5  6  7  8  9 10 11 12\n";
+        
+        pw.write(toWrite);
+        pw.flush();
+        Update u = new Update(toWrite, clocks.toIntArray());
+        updates.add(u);
+        return clocks.clone();
     }
     
     /**
@@ -111,9 +140,11 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param state refState - the enum value corresponding to the referee state.
      */
     @Override
-    public synchronized void changeRefState(refState state){
+    public synchronized VectorClock changeRefState(refState state, VectorClock vc){
+        clocks.update(vc);
         refereeState = state;
-        printLine();
+        printLine(clocks);
+        return clocks.clone();
     }
     
     /**
@@ -124,23 +155,25 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param team String - Team of the corresponding player.
      */
     @Override
-    public synchronized void changePlayerState(playerState state, int id, String team, int strength){
+    public synchronized VectorClock changePlayerState(playerState state, int id, String team, int strength, VectorClock vc){
+        clocks.update(vc);
         if (team.equals("A")){
             if (state == playersStatesA[id]) {
-                return;
+                return clocks.clone();
             }
             playersStrengthA[id] = strength;
             playersStatesA[id] = state;
         }
         else if (team.equals("B")){
             if (state == playersStatesB[id]) {
-                return;
+                return clocks.clone();
             }
             playersStrengthB[id] = strength;
             playersStatesB[id] = state;
         }
         
-        printLine();
+        printLine(clocks);
+        return clocks.clone();
     }
     
     /**
@@ -149,21 +182,23 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param team String - Team of the caller coach team.
      */
     @Override
-    public synchronized void changeCoachState(coachState state, String team){
+    public synchronized VectorClock changeCoachState(coachState state, String team, VectorClock vc){
+        clocks.update(vc);
         if (team.equals("A")){
             if (state == coachesStates[0]) {
-                return;
+                return clocks.clone();
             }
             coachesStates[0] = state;
         }
         else if (team.equals("B")){
             if (state == coachesStates[1]) {
-                return;
+                return clocks.clone();
             }
             coachesStates[1] = state;
         }
         
-        printLine();
+        printLine(clocks);
+        return clocks.clone();
     }
     
     /**
@@ -174,7 +209,8 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param team String - Team of the corresponding player.
      */
     @Override
-    public synchronized void initPlayer(playerState state, int strength, int id, String team){
+    public synchronized VectorClock initPlayer(playerState state, int strength, int id, String team, VectorClock vc){
+        clocks.update(vc);
         if (team.equals("A")){
             playersStatesA[id] = state;
             playersStrengthA[id] = strength;
@@ -183,6 +219,7 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
             playersStatesB[id] = state;
             playersStrengthB[id] = strength;
         }
+        return clocks.clone();
     }
     
     /**
@@ -191,13 +228,15 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param team String - Team of the caller coach team.
      */
     @Override
-    public synchronized void initCoach(coachState state, String team){
+    public synchronized VectorClock initCoach(coachState state, String team, VectorClock vc){
+        clocks.update(vc);
         if (team.equals("A")){
             coachesStates[0] = state;
         }
         else if (team.equals("B")){
             coachesStates[1] = state;
-        }        
+        }
+        return clocks.clone();
     }
     
     /**
@@ -205,65 +244,79 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param state refState - the enum value corresponding to the referee state.
      */
     @Override
-    public synchronized void initRef(refState state){
+    public synchronized VectorClock initRef(refState state, VectorClock vc){
+        clocks.update(vc);
         refereeState = state;
+        return clocks.update(vc);
     }
     
     /**
      * Method used to print a line in the log file.
+     * @param vc
      */
-    public void printLine(){
-        pw.print(refereeState);
-        pw.print("  ");
-        pw.print(coachesStates[0]);
-        pw.print(" ");
+    public void printLine(VectorClock vc){
+        String toWrite = "";
+        toWrite += refereeState;
+        toWrite += "  ";
+        toWrite += coachesStates[0];
+        toWrite += " ";
         for(int i = 0; i < playersStatesA.length; i++){
-            pw.print(playersStatesA[i]);
-            pw.print("  ");
-            pw.print(playersStrengthA[i]);
-            pw.print(" ");
+            toWrite += playersStatesA[i];
+            toWrite += "  ";
+            toWrite += playersStrengthA[i];
+            toWrite += " ";
         }
-        pw.print(" ");
-        pw.print(coachesStates[1]);
-        pw.print(" ");
+        toWrite += " ";
+        toWrite += coachesStates[1];
+        toWrite += " ";
         for(int i = 0; i < playersStatesB.length; i++){
-            pw.print(playersStatesB[i]);
-            pw.print("  ");
-            pw.print(playersStrengthB[i]);
-            pw.print(" ");
+            toWrite += playersStatesB[i];
+            toWrite += "  ";
+            toWrite += playersStrengthB[i];
+            toWrite += " ";
         }
         for(int i = 0; i<playersStatesA.length;i++){
             
             if(playersStatesA[i].equals(playerState.STAND_IN_POSITION) || playersStatesA[i].equals(playerState.DO_YOUR_BEST)){
                 inPositionA++;
-                pw.print((i+1) + " ");
+                toWrite += (i+1) + " ";
             }
         }
         if(inPositionA != 3){
             for (int i = inPositionA; i<3;i++){
-                pw.print("- ");
+                toWrite += "- ";
             }
         }
-        pw.print(". ");
+        toWrite += ". ";
 
         for(int i = 0; i<playersStatesB.length;i++){
             
             if(playersStatesB[i].equals(playerState.STAND_IN_POSITION) || playersStatesB[i].equals(playerState.DO_YOUR_BEST)){
                 inPositionB++;
-                pw.print((i+1) + " ");
+                toWrite += (i+1) + " ";
             }
         }
         if(inPositionB != 3){
             for (int i = inPositionB; i<3;i++){
-                pw.print("- ");
+                toWrite += "- ";
             }
         }
         inPositionA = 0;
         inPositionB = 0;
-        pw.print(" " + trialN);
-        pw.print(" " + ropePos);
-        pw.println();
+        toWrite += " " + trialN;
+        toWrite += " " + ropePos;
+        
+        int[] arrayClocks = vc.toIntArray();
+        for (int i = 0; i < 13; i++) {
+            toWrite += String.format(" %2d", arrayClocks[i]);
+        }
+        
+        toWrite += "\n";
+        
+        pw.write(toWrite);
         pw.flush();
+        Update u = new Update(toWrite, arrayClocks);
+        updates.add(u);
 
     }
     
@@ -273,14 +326,17 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param team String - Team corresponding to the positions.
      */
     @Override
-    public synchronized void setPlayersPositions(int[] pos, String team){
+    public synchronized VectorClock setPlayersPositions(int[] pos, String team, VectorClock vc){
+        clocks.update(vc);
         if (team.equals("A")){
             System.arraycopy(pos, 0, trialPosA, 0, trialPosA.length);  
         }
         else if (team.equals("B")){
             System.arraycopy(pos, 0, trialPosB, 0, trialPosB.length);
         }
+        return clocks.clone();
     }
+    
     private boolean contains(int [] array, int value){
         for(int i = 0; i < array.length; i++){
             if (array[i] == value)
@@ -294,30 +350,44 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param nGame int - Number of the new game.
      */
     @Override
-    public synchronized void newGame(int nGame){
+    public synchronized VectorClock newGame(int nGame, VectorClock vc){
+        clocks.update(vc);
+        String toWrite = "";
         if(knockout.equals("newGame")){
-            pw.println("Game "+ (nGame+1));
+            toWrite += "Game "+ (nGame+1);
+            toWrite += "\n";
+        
+            pw.write(toWrite);
             pw.flush();
-            printHeader();
-            return;
+            Update u = new Update(toWrite, clocks.toIntArray());
+            updates.add(u);
+            
+            printHeader(clocks);
+            return clocks.clone();
         }
         if(!knockout.equals("X")){
-            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ trialN +" trials.");
+            toWrite += "Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ trialN +" trials.\n";
         }
         if(knockout.equals("X")){
             if(trialsA == trialsB){
-                pw.println("Game "+(nGame)+" was a draw.");
+                toWrite += "Game "+(nGame)+" was a draw.\n";
             }
             else if(trialsA>trialsB){
-                pw.println("Game "+(nGame)+" was won by team A by points.");
+                toWrite += "Game "+(nGame)+" was won by team A by points.\n";
             }
             else if(trialsA<trialsB){
-                pw.println("Game "+(nGame)+" was won by team B by points.");
+                toWrite += "Game "+(nGame)+" was won by team B by points.\n";
             }
         }
-        pw.println("Game "+ (nGame+1));
+        toWrite += "Game "+ (nGame+1) + "\n";
+        
+        pw.write(toWrite);
         pw.flush();
-        printHeader();
+        Update u = new Update(toWrite, clocks.toIntArray());
+        updates.add(u);
+        
+        printHeader(clocks);
+        return clocks.clone();
     }
     
     /**
@@ -325,8 +395,10 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param nTrial int - Number of the new trial.
      */
     @Override
-    public synchronized void newTrial(int nTrial){
+    public synchronized VectorClock newTrial(int nTrial, VectorClock vc){
+        clocks.update(vc);
         trialN = nTrial;
+        return clocks.clone();
     }
     
     /**
@@ -334,8 +406,10 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param rope int - The rope value.
      */
     @Override
-    public synchronized void setRope(int rope){
+    public synchronized VectorClock setRope(int rope, VectorClock vc){
+        clocks.update(vc);
         ropePos = rope;
+        return clocks.clone();
     }
 
     /**
@@ -344,10 +418,12 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param knockout String - Representing if a knockout existed in that trial.
      */
     @Override
-    public synchronized void setWins(int[] wins, String knockout){
+    public synchronized VectorClock setWins(int[] wins, String knockout, VectorClock vc){
+        clocks.update(vc);
         trialsA = wins[0];
         trialsB = wins[1];
         this.knockout = knockout;
+        return clocks.clone();
     }
 
     /**
@@ -356,42 +432,73 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
      * @param nGame int - Number of the game the wins are refering.
      */
     @Override
-    public synchronized void setGameWins(int[] gameWins, int nGame){
+    public synchronized VectorClock setGameWins(int[] gameWins, int nGame, VectorClock vc){
+        clocks.update(vc);
         gamesA = gameWins[0];
         gamesB = gameWins[1];
-        finishMatch(nGame);
+        finishMatch(nGame, clocks);
+        return clocks.clone();
     }
     
     /**
      * Method used to print the final line that declares the winner
      * @param nGame int - Number of the last game
      */
-    private void finishMatch(int nGame){
-       
+    private void finishMatch(int nGame, VectorClock vc){
+        String toWrite = "";
         if(!knockout.equals("X")){
-            pw.println("Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ trialN +" trials.");
+            toWrite += "Game "+(nGame)+" was won by team "+knockout+" by knock out in "+ trialN +" trials.\n";
         }
         if(knockout.equals("X")){
             if(trialsA == trialsB){
-                pw.println("Game "+(nGame)+" was a draw.");
+                toWrite += "Game "+(nGame)+" was a draw.\n";
             }
             else if(trialsA>trialsB){
-                pw.println("Game "+(nGame)+" was won by team A by points.");
+                toWrite += "Game "+(nGame)+" was won by team A by points.\n";
             }
             else if(trialsA<trialsB){
-                pw.println("Game "+(nGame)+" was won by team B by points.");
+                toWrite += "Game "+(nGame)+" was won by team B by points.\n";
             }
         }
         if(gamesA == gamesB){
-            pw.println("Match was a draw.");
+            toWrite += "Match was a draw.";
         }
         else if(gamesA > gamesB){
-            pw.println("Match was won by team A ("+gamesA+"-"+gamesB+").");
+            toWrite += "Match was won by team A ("+gamesA+"-"+gamesB+").";
         }
         else if(gamesA < gamesB){
-            pw.println("Match was won by team B ("+gamesA+"-"+gamesB+").");
+            toWrite += "Match was won by team B ("+gamesA+"-"+gamesB+").";
         }
+        
+        pw.write(toWrite);
         pw.flush();
+        Update u = new Update(toWrite, vc.toIntArray());
+        updates.add(u);
+        
+        Map<Integer, Update> tab = new Hashtable<>();
+        for (int i = 0; i < this.updates.size(); i++) {
+            tab.put(i, updates.get(i));
+        }
+        ArrayList<Map.Entry<Integer, Update>> l = new ArrayList(tab.entrySet());
+        Collections.sort(l, new Comparator<Map.Entry<Integer, Update>>()
+        {
+            @Override
+            public int compare(Map.Entry<Integer, Update> o1, Map.Entry<Integer, Update> o2) 
+            {
+                return o1.getValue().compareTo(o2.getValue());
+            }
+        });
+        
+        for (int i = 0; i < l.size(); i++) {
+            reorder.write(l.get(l.size()-i-1).getValue().getText());
+            int a = 0;
+        }
+
+        reorder.flush();
+        reorder.close();
+        
+        pw.flush();
+        pw.close();
         
     }
 
@@ -403,5 +510,4 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
         nTeamPlayers = settings.getnTeamPlayers();
         nTrialPlayers = settings.getNtrialPlayers();
     }
-
 }

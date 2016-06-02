@@ -102,7 +102,7 @@ public class Referee extends Thread{
                         
                         ownClock.increment();
                         returnClock = bench.signalCoaches(ownClock.clone());
-                        ownClock.updats(returnClock);
+                        ownClock.update(returnClock);
                         
                         internalState= refState.TEAMS_READY;
                         repo.newTrial(trialsDone+1, ownClock.clone());

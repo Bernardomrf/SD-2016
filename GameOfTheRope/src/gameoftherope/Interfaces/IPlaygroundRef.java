@@ -5,6 +5,7 @@
  */
 package gameoftherope.Interfaces;
 
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -17,46 +18,62 @@ public interface IPlaygroundRef extends Remote{
 
     /**
      * Method used to reset current trial and call a new one.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void callTrial() throws RemoteException;
+    public VectorClock callTrial(VectorClock vc) throws RemoteException;
     
     /**
      * Method used to start a new trial.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void startTrial() throws RemoteException;
+    public VectorClock startTrial(VectorClock vc) throws RemoteException;
                                 
     /**
      * Method that blocks until trial is ongoing.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void waitForTrialConclusion() throws RemoteException; 
+    public VectorClock waitForTrialConclusion(VectorClock vc) throws RemoteException; 
     
     /**
      * Method used to evaluate who won the trial.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void assertTrialDecision() throws RemoteException;
+    public VectorClock assertTrialDecision(VectorClock vc) throws RemoteException;
     
     /**
      * Method used to check if a knockout occured during the trial.
      * 
      * @return String - Representation of knockout or not and for what team
+     * @throws java.rmi.RemoteException
      */
     public String checkKnockout() throws RemoteException;
 
     /**
      * Method used to return the current position of the rope
      * @return int - Position of the rope
+     * @throws java.rmi.RemoteException
      */
     public int getRope() throws RemoteException;
     
     /**
      * Method used to get the number of trial wins if each team.
      * @return int[] - Number of trial wins if each team.
+     * @throws java.rmi.RemoteException
      */
     public int[] getWins() throws RemoteException;
 
     /**
      * Method used to get the number of game wins if each team.
      * @return int[] - Number of wins if each team.
+     * @throws java.rmi.RemoteException
      */
     public int[] getGameWins() throws RemoteException;
     

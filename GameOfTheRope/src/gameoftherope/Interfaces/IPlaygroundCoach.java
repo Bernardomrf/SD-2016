@@ -5,6 +5,7 @@
  */
 package gameoftherope.Interfaces;
 
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -17,7 +18,10 @@ public interface IPlaygroundCoach extends Remote {
     
     /**
      * Method used to wait for the trial to end.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void waitForTrial() throws RemoteException; // Esperar que o trial acabe 
+    public VectorClock waitForTrial(VectorClock vc) throws RemoteException; // Esperar que o trial acabe 
     
 }

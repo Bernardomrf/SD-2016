@@ -5,6 +5,7 @@
  */
 package gameoftherope.Interfaces;
 
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -17,9 +18,11 @@ public interface IPlaygroundPlayer extends Remote{
 
     /**
      * Method used to stand in position on the playground waiting.
+     * @param vc
      * @return nTrials - number of trials
+     * @throws java.rmi.RemoteException
      */
-    public int standInPosition() throws RemoteException; // Esperar pelo startTrial que espera pelo coach
+    public Object[] standInPosition(VectorClock vc) throws RemoteException; // Esperar pelo startTrial que espera pelo coach
     
     /**
      * Method used to pull the rope, changes are made to the rope before sleep is performed.
@@ -27,13 +30,19 @@ public interface IPlaygroundPlayer extends Remote{
      * @param strenght int - Strength of the player that is pulling the rope.
      * @param team String - A String representing what team the coach belongs to. 
      *                      Valid options are only "A" or "B".
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException 
      */
-    public void pullTheRope(int strenght, String team) throws RemoteException; // altera uma variavel partilhada incrementando/decrementando dependendo da equipa
+    public VectorClock pullTheRope(int strenght, String team, VectorClock vc) throws RemoteException; // altera uma variavel partilhada incrementando/decrementando dependendo da equipa
     
     /**
      * Method used to represent the state after players play.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void iamDone() throws RemoteException; // incrementa uma variavel de jogadores que já acabaram, ultimo faz notify ao arbitro
+    public VectorClock iamDone(VectorClock vc) throws RemoteException; // incrementa uma variavel de jogadores que já acabaram, ultimo faz notify ao arbitro
                             // Muda o estado para o bench
  
 }

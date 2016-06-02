@@ -5,6 +5,7 @@
  */
 package gameoftherope.Interfaces;
 
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -18,6 +19,6 @@ public interface IRefSiteCoach extends Remote{
     /** 
      * Method does not block and notifies the coaches.
      */
-    public void informReferee() throws RemoteException;
+    public VectorClock informReferee(VectorClock vc) throws RemoteException;
     
 }

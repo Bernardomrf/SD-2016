@@ -32,6 +32,7 @@ public class Coach extends Thread{
     
     private final VectorClock ownClock;
     private VectorClock returnClock;
+    private Object returns[];
     
     /**
      * Constructor for Coach class.
@@ -80,7 +81,11 @@ public class Coach extends Thread{
                         repo.changeCoachState(internalState, team, ownClock.clone());
                         break;
                     case ASSEMBLE_TEAM:
-                        repo.setPlayersPositions(bench.callContestants(team), team, ownClock.clone());
+                        ownClock.increment();
+                        returns = bench.callContestants(team, ownClock.clone());
+                        ownClock.update((VectorClock)returns[1]);
+                        
+                        repo.setPlayersPositions((int[])returns[0], team, ownClock.clone());
                         
                         ownClock.increment();
                         returnClock = bench.playersReady(team, ownClock.clone()); // bloqueia espera que os jogadores estejam todos no campo

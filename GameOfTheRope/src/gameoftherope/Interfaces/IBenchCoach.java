@@ -5,6 +5,7 @@
  */
 package gameoftherope.Interfaces;
 
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -19,29 +20,38 @@ public interface IBenchCoach extends Remote{
      * Method blocks and waits for all players to be seated at the bench.
      * 
      * @param team String - A String representing what team the coach belongs to. 
+     * @param vc 
+     * @return  
+     * @throws java.rmi.RemoteException  
      *                     
      */
-    public void reviewNotes(String team) throws RemoteException;  //Esperar que os jogadores se sentem                      
+    public VectorClock reviewNotes(String team, VectorClock vc) throws RemoteException;  //Esperar que os jogadores se sentem                      
     
     /**
      * This method generates an array of random player numbers to be called to play.
      * Method does not block, and notifies players.
      * 
      * @param team String - A String representing what team the coach belongs to. 
+     * @param vc 
      *                      
      * @return int[] - An array containing the players that will play.
+     * @throws java.rmi.RemoteException
      */
-    public int [] callContestants(String team) throws RemoteException; //Chamar n jogadores aleatoriamente para a trial e chamar informReferee
+    public Object[] callContestants(String team, VectorClock vc) throws RemoteException; //Chamar n jogadores aleatoriamente para a trial e chamar informReferee
     
     /**
      * Method blocks and waits for the referee to come to the bench.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void waitForRefCommand() throws RemoteException; //Esperar que o árbitro faça callTrial
+    public VectorClock waitForRefCommand(VectorClock vc) throws RemoteException; //Esperar que o árbitro faça callTrial
     
     /**
      * Method to check if the match has finished.
      * 
      * @return boolean - true if the match has finished, false if not.
+     * @throws java.rmi.RemoteException
      */
     public boolean hasMatchFinished() throws RemoteException;
     
@@ -49,9 +59,11 @@ public interface IBenchCoach extends Remote{
      * It's called by coaches only.
      *
      * @param team String - A String representing what team the coach belongs to. 
+     * @param vc 
+     * @return  
      * @throws java.rmi.RemoteException 
      *                      
      */
-    public void playersReady(String team) throws RemoteException;
+    public VectorClock playersReady(String team, VectorClock vc) throws RemoteException;
     
 }

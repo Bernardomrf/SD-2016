@@ -5,6 +5,7 @@
  */
 package gameoftherope.Interfaces;
 
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -21,31 +22,40 @@ public interface IBenchPlayer extends Remote{
      * @param team String - A String representing what team the coach belongs to. 
      *                      Valid options are only "A" or "B".
      * @param id int - ID of the player that is going to seat at the bench.
+     * @param vc
      * @return boolean - Returns true if the player after being woken up is going to play or false if not.
+     * @throws java.rmi.RemoteException
      */
-    public boolean seatAtTheBench(String team, int id) throws RemoteException; // Fica bloqueado no banco
+    public Object[] seatAtTheBench(String team, int id, VectorClock vc) throws RemoteException; // Fica bloqueado no banco
     
     /**
      * Method increments the number of players that are seated.
      * 
      * @param team String - A String representing what team the coach belongs to. 
      *                      Valid options are only "A" or "B".
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void seatDown(String team) throws RemoteException;
+    public VectorClock seatDown(String team, VectorClock vc) throws RemoteException;
     
     /**
      * This method makes players ready to play.
      * 
      * @param team String - A String representing what team the coach belongs to. 
      *                      Valid options are only "A" or "B".
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException 
      */
-    public void followCoachAdvice(String team) throws RemoteException; // passa para o playgound; Jogadores no banco decrementa, jogadores para jogar aumenta
+    public VectorClock followCoachAdvice(String team, VectorClock vc) throws RemoteException; // passa para o playgound; Jogadores no banco decrementa, jogadores para jogar aumenta
                                     // Variavel independente para cada equipa
     
     /**
      * Method to check if the match has finished.
      * 
      * @return boolean - true if the match has finished, false if not.
+     * @throws java.rmi.RemoteException
      */
     public boolean hasMatchFinished() throws RemoteException;
 

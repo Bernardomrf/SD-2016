@@ -5,6 +5,7 @@
  */
 package gameoftherope.Interfaces;
 
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -17,28 +18,41 @@ public interface IBenchRef extends Remote{
 
     /** 
      * Method does not block and notifies the coaches.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void signalCoaches() throws RemoteException; //acorda os treinadores
+    public VectorClock signalCoaches(VectorClock vc) throws RemoteException; //acorda os treinadores
     
     /**
      * Method to set the match has finished.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void setMatchFinish() throws RemoteException;
+    public VectorClock setMatchFinish(VectorClock vc) throws RemoteException;
     
     /**
      * Method unused in this implementation of the interface.
+     * @throws java.rmi.RemoteException
      */
     public void close() throws RemoteException;
     
     /**
      * Method called by the referee to wait for all players to be ready before 
      * starting the match.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void waitForPlayers() throws RemoteException;
+    public VectorClock waitForPlayers(VectorClock vc) throws RemoteException;
     
     /**
      * Method called by the referee to wait for all coaches to be ready before 
      * starting the match.
+     * @param vc
+     * @return 
+     * @throws java.rmi.RemoteException
      */
-    public void waitForCoaches() throws RemoteException;
+    public VectorClock waitForCoaches(VectorClock vc) throws RemoteException;
 }

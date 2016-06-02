@@ -6,6 +6,7 @@
 package gameoftherope.Interfaces;
 
 import gameoftherope.EntityStateEnum.playerState;
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -22,8 +23,10 @@ public interface IGeneralRepositoryPlayer extends Remote{
      * @param strength int - Current strength of the player.
      * @param id int - ID of the player in the team.
      * @param team String - Team of the corresponding player.
+     * @param vc
+     * @throws java.rmi.RemoteException
      */
-    public void changePlayerState(playerState state, int id, String team, int strength) throws RemoteException;
+    public void changePlayerState(playerState state, int id, String team, int strength, VectorClock vc) throws RemoteException;
     
     /**
      * Method to initializate the player state.
@@ -31,7 +34,9 @@ public interface IGeneralRepositoryPlayer extends Remote{
      * @param strength int - Initial strength of the player.
      * @param id int - ID of the player in the team.
      * @param team String - Team of the corresponding player.
+     * @param vc
+     * @throws java.rmi.RemoteException
      */
-    public void initPlayer(playerState state, int strength, int id, String team) throws RemoteException;
+    public void initPlayer(playerState state, int strength, int id, String team, VectorClock vc) throws RemoteException;
     
 }

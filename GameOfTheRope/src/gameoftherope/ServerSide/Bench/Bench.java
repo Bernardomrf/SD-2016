@@ -11,6 +11,7 @@ import gameoftherope.Interfaces.IBenchCoach;
 import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IBenchRef;
 import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
+import gameoftherope.VectorClock.VectorClock;
 import java.util.Random;
 
 /**
@@ -37,6 +38,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
     private int playersReadyB;
     private int coachesWaiting;
 
+    private final VectorClock clocks;
+    
     /**
      * Constructor for Bench class
      * @param configHostName - Host name for configs
@@ -55,6 +58,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
         playersReadyA = 0;
         playersReadyB = 0;
         coachesWaiting = 0;
+        
+        clocks = new VectorClock(13, 0);
     }
     
     /**  
@@ -65,7 +70,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
      *                      Valid options are only "A" or "B".
      */
     @Override
-    public synchronized void reviewNotes(String team) {
+    public synchronized VectorClock reviewNotes(String team, VectorClock vc) {
+        clocks.update(vc);
         if (team.equals("A")){
             while (nBenchPlayersA != nTeamPlayers){
                 try {
@@ -82,6 +88,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
                 }
             }
         }
+        return clocks.clone();
     }
 
     /**
@@ -94,21 +101,22 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
      * @return int[] - An array containing the players that will play.
      */
     @Override
-    public synchronized int [] callContestants(String team) {
+    public synchronized Object[] callContestants(String team, VectorClock vc) {
+        Object[] returns = new Object[2];
         if (team.equals("A")){
             callPlayersA = nTrialPlayers;
             playersToPlayA = generateRandom(nTeamPlayers);
             notifyAll();
-            return playersToPlayA;
-
+            returns[0] = playersToPlayA;
         }
         else if (team.equals("B")){
             callPlayersB = nTrialPlayers;
             playersToPlayB = generateRandom(nTeamPlayers);
             notifyAll();
-            return playersToPlayB;
+            returns[0] = playersToPlayB;
         }
-        return null;
+        returns[1] = clocks.clone();
+        return returns;
     }
 
     /**
@@ -120,7 +128,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
      *                      Valid options are only "A" or "B".
      */
     @Override
-    public synchronized void followCoachAdvice(String team) {
+    public synchronized VectorClock followCoachAdvice(String team, VectorClock vc) {
+        clocks.update(vc);
         if (team.equals("A")){
             playersReadyA++;
         }
@@ -128,6 +137,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
             playersReadyB++;
         }
         notifyAll();
+        return clocks.clone();
     }
 
     /**
@@ -135,20 +145,22 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
      * It's called by coaches only. 
      */
     @Override
-    public synchronized void waitForRefCommand() {
+    public synchronized VectorClock waitForRefCommand(VectorClock vc) {
+        clocks.update(vc);
         coachesWaiting++;
         notifyAll();
         while(wakeCoaches == 0){
             try {
                 wait();
                 if (matchFinish){
-                    return;
+                    return clocks.clone();
                 }
             } catch (InterruptedException ex) {
             }
         }
         wakeCoaches--;
         coachesWaiting--;
+        return clocks.clone();
     }
     
     /** 
@@ -156,9 +168,11 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
      * It's called by the referee only.
      */
     @Override
-    public synchronized void signalCoaches(){
+    public synchronized VectorClock signalCoaches(VectorClock vc){
+        clocks.update(vc);
         wakeCoaches = nCoaches;
         notifyAll();
+        return clocks.clone();
     }
     
     /**
@@ -173,46 +187,62 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
      * @return boolean - Returns true if the player after being woken up is going to play or false if not.
      */
     @Override
-    public synchronized boolean seatAtTheBench(String team, int id) {
+    public synchronized Object[] seatAtTheBench(String team, int id, VectorClock vc) {
+        clocks.update(vc);
+        Object[] returns = new Object[2];
         if (team.equals("A")){
             while(callPlayersA == 0){
                 try {
                     wait();
                     if (matchFinish){
-                        return false;
+                        returns[0] = false;
+                        returns[1] = clocks.clone();
+                        return returns;
                     }
                 } catch (InterruptedException ex) {}
                 if(!contains(playersToPlayA, id)){
                     if (callPlayersA != 0){
                         nBenchPlayersA--;
-                        return false;
+                        returns[0] = false;
+                        returns[1] = clocks.clone();
+                        return returns;
                     }
                 }
             }
             callPlayersA--;
             nBenchPlayersA--;
-            return true;
+            returns[0] = true;
+            returns[1] = clocks.clone();
+            return returns;
         }
         else if (team.equals("B")){
             while(callPlayersB == 0){
                 try {
                     wait();
                     if (matchFinish){
-                        return false;
+                        returns[0] = false;
+                        returns[1] = clocks.clone();
+                        return returns;
                     }
                 } catch (InterruptedException ex) {}
                 if(!contains(playersToPlayB, id)){
                     if (callPlayersB != 0){
                         nBenchPlayersB--;
-                        return false;
+                        returns[0] = false;
+                        returns[1] = clocks.clone();
+                        return returns;
                     }
                 }
             }
             callPlayersB--;
             nBenchPlayersB--;
-            return true;
+            returns[0] = true;
+            returns[1] = clocks.clone();
+            return returns;
         }
-        return false;
+        returns[0] = false;
+        returns[1] = clocks.clone();
+        return returns;
     }
 
     /**
@@ -232,7 +262,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
      * Method can be called by the referee only.
      */
     @Override
-    public synchronized void setMatchFinish() {
+    public synchronized VectorClock setMatchFinish(VectorClock vc) {
+        clocks.update(vc);
         matchFinish = true;
         while(coachesWaiting != nCoaches){
             try {
@@ -240,6 +271,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
             } catch (InterruptedException ex) {}
         }
         notifyAll();
+        return clocks.clone();
     }
 
     /**
@@ -251,7 +283,8 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
      *                      Valid options are only "A" or "B".
      */
     @Override
-    public synchronized void seatDown(String team) {
+    public synchronized VectorClock seatDown(String team, VectorClock vc) {
+        clocks.update(vc);
         if (team.equals("A")){
             nBenchPlayersA++;
         }
@@ -259,6 +292,7 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
             nBenchPlayersB++;
         }
         notifyAll();
+        return clocks.clone();
     }
 
     /**
@@ -269,13 +303,14 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
      *                      Valid options are only "A" or "B".
      */
     @Override
-    public synchronized void playersReady(String team) {
+    public synchronized VectorClock playersReady(String team, VectorClock vc) {
+        clocks.update(vc);
         if (team.equals("A")){
             while (playersReadyA != nTrialPlayers) {            
                 try {
                     wait();
                     if (matchFinish){
-                        return;
+                        return clocks.clone();
                     }
                 } catch (InterruptedException ex) {}
             }
@@ -286,12 +321,13 @@ public class Bench implements IBenchCoach, IBenchPlayer, IBenchRef, IBench{
                 try {
                     wait();
                     if (matchFinish){
-                        return;
+                        return clocks.clone();
                     }
                 } catch (InterruptedException ex) {}
             }
             playersReadyB = 0;
         }
+        return clocks.clone();
     }
     
     private boolean contains(int [] array, int value){

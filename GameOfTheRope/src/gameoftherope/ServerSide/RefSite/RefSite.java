@@ -10,6 +10,7 @@ import gameoftherope.Interfaces.IRefSite;
 import gameoftherope.Interfaces.IRefSiteCoach;
 import gameoftherope.Interfaces.IRefSiteRef;
 import gameoftherope.ServerSide.ConfigRepository.ConfigRepository;
+import gameoftherope.VectorClock.VectorClock;
 
 /**
  * Class to implement the bench monitor.
@@ -22,6 +23,8 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach, IRefSite{
     private int nCoaches;
     private int coachesReady;
     
+    private final VectorClock clocks;
+    
     /**
      * Constructor for RefSite class
      * @param configHostName - Host name for configs
@@ -30,6 +33,8 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach, IRefSite{
     public RefSite(){
         config();
         coachesReady = 0;
+        
+        clocks = new VectorClock(13, 0);
     }
 
     /**
@@ -38,11 +43,13 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach, IRefSite{
      * Method can be called by the referee only.
      */
     @Override
-    public synchronized void announceNewGame() {
+    public synchronized VectorClock announceNewGame(VectorClock vc) {
+        clocks.update(vc);
         try {
             Thread.sleep((int)(Math.random() * 4000 + 1000));
         } catch (InterruptedException ex) {
         }
+        return clocks.clone();
     }
 
     /**
@@ -69,7 +76,8 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach, IRefSite{
      * Method can be called by the referee only.
      */
     @Override
-    public synchronized void waitForCoach() {
+    public synchronized VectorClock waitForCoach(VectorClock vc) {
+        clocks.update(vc);
         while(coachesReady != nCoaches){
             try {
                 wait();
@@ -77,6 +85,7 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach, IRefSite{
             }
         }
         coachesReady = 0;
+        return clocks.clone();
     }
 
     /** 
@@ -84,9 +93,11 @@ public class RefSite implements IRefSiteRef, IRefSiteCoach, IRefSite{
      * It's called by the referee only.
      */
     @Override
-    public synchronized void informReferee() {
+    public synchronized VectorClock informReferee(VectorClock vc) {
+        clocks.update(vc);
         coachesReady++;
         notifyAll();
+        return clocks.clone();
     }
     
     private void config(){

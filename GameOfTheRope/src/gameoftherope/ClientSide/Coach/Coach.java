@@ -11,6 +11,7 @@ import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IGeneralRepositoryCoach;
 import gameoftherope.Interfaces.IPlaygroundCoach;
 import gameoftherope.Interfaces.IRefSiteCoach;
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.RemoteException;
 
 /**
@@ -29,6 +30,8 @@ public class Coach extends Thread{
     private coachState internalState;
     private final String team;
     
+    private final VectorClock ownClock;
+    private VectorClock returnClock;
     
     /**
      * Constructor for Coach class.
@@ -48,7 +51,14 @@ public class Coach extends Thread{
         this.refSite = refSite;
         this.team = team;
         this.repo = repo;
-        repo.initCoach(internalState, team);
+        
+        if (team.equals("A")){
+            ownClock = new VectorClock(13,1);
+        }else{
+            ownClock = new VectorClock(13,2);
+        }
+       
+        repo.initCoach(internalState, team, ownClock.clone());
     }
     
     @Override
@@ -58,27 +68,42 @@ public class Coach extends Thread{
             while(goOn){
                 switch(internalState){
                     case WAIT_REFEREE_COMMAND:
-                        bench.waitForRefCommand(); //bloqueante - espera pelo arbitro
+                        ownClock.increment();
+                        returnClock = bench.waitForRefCommand(ownClock.clone()); //bloqueante - espera pelo arbitro
+                        ownClock.update(returnClock);
+                        
                         if(bench.hasMatchFinished()){
                             goOn = false;
                             break;
                         }
                         internalState = coachState.ASSEMBLE_TEAM;
-                        repo.changeCoachState(internalState, team);
+                        repo.changeCoachState(internalState, team, ownClock.clone());
                         break;
                     case ASSEMBLE_TEAM:
-
-                        repo.setPlayersPositions(bench.callContestants(team), team);
-                        bench.playersReady(team); // bloqueia espera que os jogadores estejam todos no campo
-                        refSite.informReferee(); //transiçao
+                        repo.setPlayersPositions(bench.callContestants(team), team, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = bench.playersReady(team, ownClock.clone()); // bloqueia espera que os jogadores estejam todos no campo
+                        ownClock.update(returnClock);
+                        
+                        ownClock.increment();
+                        returnClock = refSite.informReferee(ownClock.clone()); //transiçao
+                        ownClock.update(returnClock);
+                        
                         internalState = coachState.WATCH_TRIAL;
-                        repo.changeCoachState(internalState, team);
+                        repo.changeCoachState(internalState, team, ownClock.clone());
                         break;
                     case WATCH_TRIAL:
-                        playground.waitForTrial(); //bloqueante - espera pelo arbitro
-                        bench.reviewNotes(team); //bloqueante - espera pelos jogadors
+                        ownClock.increment();
+                        returnClock = playground.waitForTrial(ownClock.clone()); //bloqueante - espera pelo arbitro
+                        ownClock.update(returnClock);
+                        
+                        ownClock.increment();
+                        returnClock = bench.reviewNotes(team, ownClock.clone()); //bloqueante - espera pelos jogadors
+                        ownClock.update(returnClock);
+                        
                         internalState = coachState.WAIT_REFEREE_COMMAND;
-                        repo.changeCoachState(internalState, team);
+                        repo.changeCoachState(internalState, team, ownClock.clone());
                         break;
                 }
             }

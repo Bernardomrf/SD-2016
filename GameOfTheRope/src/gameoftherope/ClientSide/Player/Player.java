@@ -11,6 +11,7 @@ import gameoftherope.Interfaces.IBenchPlayer;
 import gameoftherope.Interfaces.IConfigRepository;
 import gameoftherope.Interfaces.IGeneralRepositoryPlayer;
 import gameoftherope.Interfaces.IPlaygroundPlayer;
+import gameoftherope.VectorClock.VectorClock;
 import java.rmi.RemoteException;
 
 /**
@@ -35,6 +36,10 @@ public class Player extends Thread{
     private int nTrials;
     private int nPlayerTrials;
     
+    private Object[] returns;
+    private final VectorClock ownClock;
+    private VectorClock returnClock;
+    
     /**
      * Constructor for PLayer class
      *
@@ -58,7 +63,14 @@ public class Player extends Thread{
         this.id = id;
         this.iWillPlay = false;
         this.nPlayerTrials = 0;
-        repo.initPlayer(internalState, strength, id, team);
+        
+        if (team.equals("A")){
+            ownClock = new VectorClock(13,3+id);
+        }else{
+            ownClock = new VectorClock(13,8+id);
+        }
+        
+        repo.initPlayer(internalState, strength, id, team, ownClock.clone());
     }
     
     @Override
@@ -67,9 +79,16 @@ public class Player extends Thread{
             while(goOn){
                 switch(internalState){
                     case SEAT_AT_THE_BENCH:
-
-                        bench.seatDown(team);
-                        iWillPlay = bench.seatAtTheBench(team, id); // bloqueante - espera pelo coach
+                        
+                        ownClock.increment();
+                        returnClock = bench.seatDown(team, ownClock.clone());
+                        ownClock.update(returnClock);
+                        
+                        ownClock.increment();
+                        returns = bench.seatAtTheBench(team, id, ownClock.clone()); // bloqueante - espera pelo coach
+                        ownClock.update((VectorClock)returns[1]);
+                        iWillPlay = (boolean)returns[0];
+                        
                         if(bench.hasMatchFinished()){
                             goOn = false;
                             break;
@@ -81,13 +100,20 @@ public class Player extends Thread{
                             }*/
                             break;
                         }
-                        bench.followCoachAdvice(team);
+                        ownClock.increment();
+                        returnClock = bench.followCoachAdvice(team, ownClock.clone());
+                        ownClock.update(returnClock);
+                        
                         // sai do banco(variaveis!!!!)
                         internalState= playerState.STAND_IN_POSITION;
-                        repo.changePlayerState(internalState, id, team, strength);
+                        repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
                         break;
                     case STAND_IN_POSITION:
-                        nTrials = playground.standInPosition();
+                        ownClock.increment();
+                        returns = playground.standInPosition(ownClock.clone());
+                        ownClock.update((VectorClock)returns[1]);
+                        nTrials = (int)returns[0];
+                        
                         if(nPlayerTrials<nTrials){
                             strength+=nTrials-nPlayerTrials-1;
                             if(strength>maxStrength){
@@ -97,17 +123,25 @@ public class Player extends Thread{
                         }
                         // bloqueante - espera pelo arbitro
                         internalState= playerState.DO_YOUR_BEST;
-                        repo.changePlayerState(internalState, id, team, strength);
+                        repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
                         break;
                     case DO_YOUR_BEST:
-                        playground.pullTheRope(strength, team); // puxa a corda(variaveis!!!!)
-                        repo.changePlayerState(internalState, id, team, strength);
-                        playground.iamDone(); //o sexto jogador a chamar faz notify ao arbitro
+                        ownClock.increment();
+                        returnClock = playground.pullTheRope(strength, team, ownClock.clone()); // puxa a corda(variaveis!!!!)
+                        ownClock.update(returnClock);
+                        
+                        repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = playground.iamDone(ownClock.clone()); //o sexto jogador a chamar faz notify ao arbitro
+                        ownClock.update(returnClock);
+                        
                         if(strength > 0){
                             strength--;
                         }
+                        
                         internalState= playerState.SEAT_AT_THE_BENCH;
-                        repo.changePlayerState(internalState, id, team, strength);
+                        repo.changePlayerState(internalState, id, team, strength, ownClock.clone());
                         break;
                 }
             }

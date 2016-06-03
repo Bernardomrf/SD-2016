@@ -138,11 +138,10 @@ public class Referee extends Thread{
                         ownClock.update(returnClock);
                         
                         internalState= refState.WAIT_FOR_TRIAL_CONCLUSION;
-                        
-                        FALTA DAQUI PARA BAIXO!!!
-                        
-                        
-                        repo.changeRefState(internalState, ownClock.clone());
+                                                
+                        ownClock.increment();
+                        returnClock = repo.changeRefState(internalState, ownClock.clone());
+                        ownClock.update(returnClock);
                         break;
                     case WAIT_FOR_TRIAL_CONCLUSION:
                         ownClock.increment();
@@ -166,14 +165,27 @@ public class Referee extends Thread{
                             //System.out.println("Knockout " + knockOut);
                             internalState= refState.END_OF_A_GAME;
                             rope = playground.getRope();
-                            repo.setRope(rope, ownClock.clone());
-                            repo.changeRefState(internalState, ownClock.clone());
+                            
+                            ownClock.increment();
+                            returnClock = repo.setRope(rope, ownClock.clone());
+                            ownClock.update(returnClock);
+                            
+                            ownClock.increment();
+                            returnClock = repo.changeRefState(internalState, ownClock.clone());
+                            ownClock.update(returnClock);
                         }
                         else{
                             rope = playground.getRope();
-                            repo.setRope(rope, ownClock.clone());
+                            
+                            ownClock.increment();
+                            returnClock = repo.setRope(rope, ownClock.clone());
+                            ownClock.update(returnClock);
+                            
                             internalState= refState.START_OF_A_GAME;
-                            repo.changeRefState(internalState, ownClock.clone());
+                            
+                            ownClock.increment();
+                            returnClock = repo.changeRefState(internalState, ownClock.clone());
+                            ownClock.update(returnClock);
                         }
                         break;
                     case END_OF_A_GAME:
@@ -183,17 +195,38 @@ public class Referee extends Thread{
                         gamesDone ++;
                         if (gamesDone == nGames){
                             internalState= refState.END_OF_THE_MATCH;
-                            repo.setWins(wins, knockOut, ownClock.clone());
-                            repo.changeRefState(internalState, ownClock.clone());
+                            
+                            ownClock.increment();
+                            returnClock = repo.setWins(wins, knockOut, ownClock.clone());
+                            ownClock.update(returnClock);
+                            
+                            ownClock.increment();
+                            returnClock = repo.changeRefState(internalState, ownClock.clone());
+                            ownClock.update(returnClock);
                         }
                         else{
                             rope = playground.getRope();
-                            repo.setRope(rope, ownClock.clone());
+                            
+                            ownClock.increment();
+                            returnClock = repo.setRope(rope, ownClock.clone());
                             internalState= refState.START_OF_A_GAME;
-                            repo.setWins(wins, knockOut, ownClock.clone());
-                            repo.newGame(gamesDone, ownClock.clone());
-                            repo.newTrial(trialsDone, ownClock.clone());
-                            repo.changeRefState(internalState, ownClock.clone());
+                            ownClock.update(returnClock);
+                            
+                            ownClock.increment();
+                            returnClock = repo.setWins(wins, knockOut, ownClock.clone());
+                            ownClock.update(returnClock);
+                            
+                            ownClock.increment();
+                            returnClock = repo.newGame(gamesDone, ownClock.clone());
+                            ownClock.update(returnClock);
+                            
+                            ownClock.increment();
+                            returnClock = repo.newTrial(trialsDone, ownClock.clone());
+                            ownClock.update(returnClock);
+                            
+                            ownClock.increment();
+                            returnClock = repo.changeRefState(internalState, ownClock.clone());
+                            ownClock.update(returnClock);
                         }
                         break;
                     case END_OF_THE_MATCH:
@@ -203,7 +236,10 @@ public class Referee extends Thread{
                         ownClock.update(returnClock);
                         
                         gameWins = playground.getGameWins();
-                        repo.setGameWins(gameWins, gamesDone, ownClock.clone());
+                        
+                        ownClock.increment();
+                        returnClock = repo.setGameWins(gameWins, gamesDone, ownClock.clone());
+                        ownClock.update(returnClock);
                         goOn = false;
                         break;    
 

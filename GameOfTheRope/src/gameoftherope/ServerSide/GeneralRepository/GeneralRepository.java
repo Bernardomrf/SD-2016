@@ -247,7 +247,7 @@ public class GeneralRepository implements IGeneralRepositoryCoach, IGeneralRepos
     public synchronized VectorClock initRef(refState state, VectorClock vc){
         clocks.update(vc);
         refereeState = state;
-        return clocks.update(vc);
+        return clocks.clone();
     }
     
     /**

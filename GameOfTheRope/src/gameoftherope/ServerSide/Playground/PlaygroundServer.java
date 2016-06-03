@@ -28,10 +28,13 @@ public class PlaygroundServer {
         int rmiRegPortNumb = 22130;
 
         try {
+            for(int i = 0; i < args.length; i++){
+                System.out.println(args[i]);
+            }
             rmiRegHostName = args[0];
             rmiRegPortNumb = Integer.parseInt(args[1]);
         } catch (Exception e) {
-            System.err.println("Bad arguments!");
+            e.printStackTrace();
             //System.exit(1);
         }
 

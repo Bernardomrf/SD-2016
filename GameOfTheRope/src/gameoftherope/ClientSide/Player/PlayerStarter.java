@@ -21,7 +21,7 @@ import java.rmi.registry.Registry;
 public class PlayerStarter {
 
     public static void main(String args[]) throws NotBoundException, RemoteException {
-        String rmiRegHostName = "localhost";
+        String rmiRegHostName = "l040101-ws01.ua.pt";
         int rmiRegPortNumb = 22130;
         
         String team = "A";

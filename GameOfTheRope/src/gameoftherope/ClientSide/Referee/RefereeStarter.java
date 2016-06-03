@@ -22,17 +22,8 @@ import java.rmi.registry.Registry;
 public class RefereeStarter {
 
     public static void main(String args[]) throws NotBoundException, RemoteException {
-        String rmiRegHostName = "localhost";
+        String rmiRegHostName = "l040101-ws01.ua.pt";
         int rmiRegPortNumb = 22130;
-        
-        try {
-            rmiRegHostName = args[0];
-            rmiRegPortNumb = Integer.parseInt(args[1]);
-        } catch (Exception e) {
-            System.err.println("Bad arguments!");
-            //System.exit(1);
-        }
-
 
         /* look for the remote object by name in the remote host registry */
         String nameEntryBench = "BenchRef";

@@ -22,16 +22,8 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class RefSiteServer {
     public static void main(String[] args) throws NotBoundException {
-        String rmiRegHostName = "localhost";
+        String rmiRegHostName = "l040101-ws01.ua.pt";
         int rmiRegPortNumb = 22130;
-
-        try {
-            rmiRegHostName = args[0];
-            rmiRegPortNumb = Integer.parseInt(args[1]);
-        } catch (Exception e) {
-            System.err.println("Bad arguments!");
-            //System.exit(1);
-        }
 
         /* create and install the security manager */
         if (System.getSecurityManager() == null) {
